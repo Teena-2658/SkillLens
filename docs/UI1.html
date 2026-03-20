@@ -1,0 +1,2103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap");
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --bg0: #080b11;
+        --bg1: #0e1320;
+        --bg2: #141b2d;
+        --bg3: #1a2338;
+        --bg4: #20293f;
+        --bg5: #263048;
+        --teal: #00d4aa;
+        --teal2: #00a884;
+        --teal3: rgba(0, 212, 170, 0.12);
+        --teal4: rgba(0, 212, 170, 0.06);
+        --green: #3ec98a;
+        --green2: rgba(62, 201, 138, 0.12);
+        --amber: #f0a500;
+        --amber2: rgba(240, 165, 0, 0.12);
+        --red: #e05252;
+        --red2: rgba(224, 82, 82, 0.12);
+        --purple: #9b7ff4;
+        --purple2: rgba(155, 127, 244, 0.12);
+        --blue: #4a9eff;
+        --blue2: rgba(74, 158, 255, 0.1);
+        --t0: #eef2ff;
+        --t1: #9aa5c0;
+        --t2: #4d5a73;
+        --t3: #2a3347;
+        --bd: #182030;
+        --bd2: #1e2d45;
+        --bd3: #253658;
+        --mono: "DM Mono", monospace;
+        --sans: "DM Sans", sans-serif;
+        --disp: "Syne", sans-serif;
+        --r4: 4px;
+        --r6: 6px;
+        --r8: 8px;
+        --r10: 10px;
+        --r12: 12px;
+      }
+      body {
+        font-family: var(--sans);
+        background: transparent;
+        color: var(--t0);
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .shell {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        background: var(--bg0);
+        border: 1px solid var(--bd2);
+        border-radius: 14px;
+        overflow: hidden;
+        min-height: 680px;
+      }
+
+      .sidebar {
+        background: var(--bg1);
+        border-right: 1px solid var(--bd);
+        display: flex;
+        flex-direction: column;
+      }
+      .sb-logo {
+        padding: 18px 16px 14px;
+        border-bottom: 1px solid var(--bd);
+      }
+      .logo-word {
+        font-family: var(--disp);
+        font-size: 17px;
+        font-weight: 800;
+        color: var(--teal);
+        letter-spacing: -0.3px;
+      }
+      .logo-tag {
+        font-size: 9px;
+        font-family: var(--mono);
+        color: var(--t2);
+        margin-top: 2px;
+        letter-spacing: 0.08em;
+      }
+      .sb-sec {
+        padding: 10px 0 6px;
+      }
+      .sb-sec-label {
+        font-size: 9px;
+        font-family: var(--mono);
+        color: var(--t2);
+        letter-spacing: 0.12em;
+        padding: 0 14px 5px;
+        text-transform: uppercase;
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 6px 14px;
+        cursor: pointer;
+        font-size: 11.5px;
+        color: var(--t1);
+        border-left: 2px solid transparent;
+        transition: all 0.15s;
+        position: relative;
+      }
+      .nav:hover {
+        background: var(--teal4);
+        color: var(--t0);
+      }
+      .nav.on {
+        background: var(--teal3);
+        color: var(--teal);
+        border-left-color: var(--teal);
+        font-weight: 500;
+      }
+      .nav-ic {
+        width: 14px;
+        height: 14px;
+        flex-shrink: 0;
+        opacity: 0.6;
+      }
+      .nav.on .nav-ic {
+        opacity: 1;
+      }
+      .nav-badge {
+        margin-left: auto;
+        font-size: 9px;
+        font-family: var(--mono);
+        color: var(--t2);
+        background: var(--bg3);
+        padding: 1px 5px;
+        border-radius: 3px;
+      }
+      .nav-new {
+        margin-left: auto;
+        font-size: 8px;
+        font-family: var(--mono);
+        color: var(--teal);
+        background: var(--teal3);
+        border: 1px solid rgba(0, 212, 170, 0.3);
+        padding: 1px 5px;
+        border-radius: 3px;
+      }
+      .sb-foot {
+        margin-top: auto;
+        padding: 14px 14px 16px;
+        border-top: 1px solid var(--bd);
+      }
+      .sb-stat {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 6px;
+      }
+      .stat-n {
+        font-family: var(--mono);
+        font-size: 20px;
+        font-weight: 500;
+        color: var(--teal);
+      }
+      .stat-l {
+        font-size: 9px;
+        color: var(--t2);
+      }
+
+      .main {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      .topbar {
+        padding: 14px 20px;
+        border-bottom: 1px solid var(--bd);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: var(--bg1);
+        flex-shrink: 0;
+      }
+      .tb-title {
+        font-family: var(--disp);
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--t0);
+      }
+      .tb-route {
+        font-family: var(--mono);
+        font-size: 10px;
+        color: var(--teal);
+        background: var(--teal3);
+        border: 1px solid rgba(0, 212, 170, 0.2);
+        padding: 3px 9px;
+        border-radius: 4px;
+      }
+      .tb-auth {
+        font-size: 10px;
+        font-family: var(--mono);
+        color: var(--t2);
+      }
+      .tb-num {
+        margin-left: auto;
+        font-size: 10px;
+        font-family: var(--mono);
+        color: var(--t2);
+      }
+
+      .twin {
+        flex: 1;
+        display: grid;
+        grid-template-columns: 1fr 300px;
+        overflow: hidden;
+      }
+      .mockup {
+        padding: 18px;
+        overflow: auto;
+        background: var(--bg0);
+      }
+      .specs {
+        padding: 16px;
+        background: var(--bg1);
+        border-left: 1px solid var(--bd);
+        overflow: auto;
+      }
+
+      .frame {
+        background: var(--bg2);
+        border: 1px solid var(--bd2);
+        border-radius: var(--r8);
+        overflow: hidden;
+      }
+
+      .sp-sec {
+        margin-bottom: 16px;
+      }
+      .sp-hd {
+        font-size: 9px;
+        font-family: var(--mono);
+        color: var(--teal);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding-bottom: 6px;
+        border-bottom: 1px solid var(--bd);
+        margin-bottom: 8px;
+      }
+      .sp-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 5px;
+      }
+      .sp-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        margin-top: 5px;
+      }
+      .sp-text {
+        font-size: 10.5px;
+        color: var(--t1);
+        line-height: 1.45;
+      }
+      .sp-mono {
+        font-family: var(--mono);
+        color: var(--teal);
+        font-size: 9.5px;
+      }
+      .swatch-row {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        margin-bottom: 5px;
+      }
+      .sw {
+        width: 12px;
+        height: 12px;
+        border-radius: 3px;
+        flex-shrink: 0;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .sw-label {
+        font-size: 10px;
+        color: var(--t1);
+        flex: 1;
+      }
+      .sw-hex {
+        font-family: var(--mono);
+        font-size: 9px;
+        color: var(--t2);
+      }
+      .chip {
+        display: inline-block;
+        background: var(--bg3);
+        border: 1px solid var(--bd2);
+        border-radius: 3px;
+        padding: 2px 7px;
+        font-size: 9.5px;
+        color: var(--t1);
+        margin: 2px;
+        font-family: var(--mono);
+      }
+      .int-card {
+        border: 1px solid var(--bd);
+        border-radius: 5px;
+        padding: 8px 10px;
+        margin-bottom: 5px;
+        background: var(--bg2);
+      }
+      .int-t {
+        font-size: 9.5px;
+        font-family: var(--mono);
+        color: var(--amber);
+        margin-bottom: 2px;
+      }
+      .int-a {
+        font-size: 10px;
+        color: var(--t1);
+      }
+      .note {
+        background: var(--bg3);
+        border-left: 2px solid var(--teal);
+        padding: 8px 10px;
+        border-radius: 0 5px 5px 0;
+        margin-bottom: 8px;
+      }
+      .note p {
+        font-size: 10px;
+        color: var(--t1);
+        line-height: 1.45;
+      }
+      .state-item {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        margin-bottom: 4px;
+      }
+      .st-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      /* ── shared ui atoms ─────────────────────── */
+      .btn-p {
+        background: var(--teal);
+        color: #050a0e;
+        font-size: 11px;
+        font-weight: 600;
+        border: none;
+        border-radius: 6px;
+        padding: 9px 16px;
+        cursor: pointer;
+        font-family: var(--sans);
+        display: inline-block;
+        text-align: center;
+      }
+      .btn-s {
+        background: var(--bg3);
+        color: var(--t1);
+        font-size: 11px;
+        border: 1px solid var(--bd2);
+        border-radius: 6px;
+        padding: 8px 14px;
+        cursor: pointer;
+        font-family: var(--sans);
+        display: inline-block;
+        text-align: center;
+      }
+      .input-f {
+        background: var(--bg3);
+        border: 1px solid var(--bd2);
+        border-radius: 6px;
+        padding: 9px 12px;
+        font-size: 11px;
+        color: var(--t0);
+        font-family: var(--mono);
+        width: 100%;
+      }
+      .input-f.focus {
+        border-color: var(--teal);
+      }
+      .label {
+        font-size: 9px;
+        font-family: var(--mono);
+        color: var(--t2);
+        letter-spacing: 0.06em;
+        margin-bottom: 5px;
+        display: block;
+      }
+      .pill-g {
+        background: var(--green2);
+        border: 1px solid var(--green);
+        border-radius: 4px;
+        padding: 3px 9px;
+        font-size: 9.5px;
+        color: var(--green);
+        font-family: var(--mono);
+      }
+      .pill-a {
+        background: var(--amber2);
+        border: 1px dashed var(--amber);
+        border-radius: 4px;
+        padding: 3px 9px;
+        font-size: 9.5px;
+        color: var(--amber);
+        font-family: var(--mono);
+        cursor: pointer;
+      }
+      .pill-r {
+        background: var(--red2);
+        border: 1px solid var(--red);
+        border-radius: 4px;
+        padding: 3px 9px;
+        font-size: 9.5px;
+        color: var(--red);
+        font-family: var(--mono);
+      }
+      .card {
+        background: var(--bg2);
+        border: 1px solid var(--bd2);
+        border-radius: var(--r8);
+        padding: 14px;
+      }
+      .mini-card {
+        background: var(--bg3);
+        border: 1px solid var(--bd);
+        border-radius: var(--r6);
+        padding: 10px;
+      }
+      .bar-wrap {
+        height: 5px;
+        background: var(--bg4);
+        border-radius: 3px;
+        overflow: hidden;
+      }
+      .bar-fill {
+        height: 100%;
+        border-radius: 3px;
+      }
+      .tag {
+        font-size: 9px;
+        font-family: var(--mono);
+        padding: 2px 7px;
+        border-radius: 3px;
+        display: inline-block;
+      }
+      .tag-teal {
+        background: var(--teal3);
+        color: var(--teal);
+        border: 1px solid rgba(0, 212, 170, 0.25);
+      }
+      .tag-amber {
+        background: var(--amber2);
+        color: var(--amber);
+        border: 1px solid rgba(240, 165, 0, 0.25);
+      }
+      .tag-green {
+        background: var(--green2);
+        color: var(--green);
+        border: 1px solid rgba(62, 201, 138, 0.25);
+      }
+      .tag-red {
+        background: var(--red2);
+        color: var(--red);
+        border: 1px solid rgba(224, 82, 82, 0.25);
+      }
+      .tag-purple {
+        background: var(--purple2);
+        color: var(--purple);
+        border: 1px solid rgba(155, 127, 244, 0.25);
+      }
+      .score-big {
+        font-family: var(--disp);
+        font-size: 38px;
+        font-weight: 800;
+        line-height: 1;
+      }
+      .mono-num {
+        font-family: var(--mono);
+        font-weight: 500;
+      }
+      .dim {
+        color: var(--t2);
+        font-size: 9px;
+      }
+      .row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .col {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .grid2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      .grid3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 6px;
+      }
+      .divider {
+        border: none;
+        border-top: 1px solid var(--bd);
+        margin: 10px 0;
+      }
+      .avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: var(--teal3);
+        border: 1px solid var(--teal);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--teal);
+        flex-shrink: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <!-- ───── SIDEBAR ───── -->
+      <aside class="sidebar">
+        <div class="sb-logo">
+          <div class="logo-word">SkillLens</div>
+          <div class="logo-tag">UI Design Doc · 13 Screens</div>
+        </div>
+
+        <div class="sb-sec">
+          <div class="sb-sec-label">Auth</div>
+          <div class="nav" onclick="go(0)" id="n0">
+            <svg class="nav-ic" viewBox="0 0 14 14" fill="none">
+              <rect
+                x="2"
+                y="2"
+                width="10"
+                height="10"
+                rx="2"
+                stroke="currentColor"
+                stroke-width="1.2"
+              />
+              <path d="M5 7h4M7 5v4" stroke="currentColor" stroke-width="1.2" />
+            </svg>
+            Login<span class="nav-badge">P1</span>
+          </div>
+          <div class="nav" onclick="go(1)" id="n1">
+            <svg class="nav-ic" viewBox="0 0 14 14" fill="none">
+              <circle
+                cx="7"
+                cy="5"
+                r="2.5"
+                stroke="currentColor"
+                stroke-width="1.2"
+              />
+              <path
+                d="M2 12c0-2.76 2.24-5 5-5s5 2.24 5 5"
+                stroke="currentColor"
+                stroke-width="1.2"
+              />
+            </svg>
+            Register<span class="nav-badge">P2</span>
+          </div>
+        </div>
+
+        <div class="sb-sec">
+          <div class="sb-sec-label">Core</div>
+          <div class="nav" onclick="go(2)" id="n2">
+            <svg class="nav-ic" viewBox="0 0 14 14" fill="none">
+              <rect
+                x="1"
+                y="1"
+                width="5"
+                height="5"
+                rx="1"
+                stroke="currentColor"
+                stroke-width="1.2"
+              />
+              <rect
+                x="8"
+                y="1"
+                width="5"
+                height="5"
+                rx="1"
+                stroke="currentColor"
+                stroke-width="1.2"
+              />
+              <rect
+                x="1"
+                y="8"
+                width="5"
+                height="5"
+                rx="1"
+                stroke="currentColor"
+                stroke-width="1.2"
+              />
+              <rect
+                x="8"
+                y="8"
+                width="5"
+                height="5"
+                rx="1"
+                stroke="currentColor"
+                stroke-width="1.2"
+              />
+            </svg>
+            Dashboard<span class="nav-badge">P3</span>
+          </div>
+          <div class="nav" onclick="go(3)" id="n3">
+            <svg class="nav-ic" viewBox="0 0 14 14" fill="none">
+              <path
+                d="M3 2h8a1 1 0 011 1v8a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1z"
+                stroke="currentColor"
+                stroke-width="1.2"
+              />
+              <path d="M5 7h4M7 5v4" stroke="currentColor" stroke-width="1.2" />
+            </svg>
+            Resume Upload<span class="nav-badge">P4</span>
+          </div>
+          <div class="nav" onclick="go(4)" id="n4">
+            <svg class="nav-ic" viewBox="0 0 14 14" fill="none">
+              <circle
+                cx="7"
+                cy="7"
+                r="5"
+                stroke="currentColor"
+                stroke-width="1.2"
+              />
+              <path d="M7 4v3l2 2" stroke="currentColor" stroke-width="1.2" />
+            </svg>
+            Skill Quiz<span class="nav-badge">P5</span>
+          </div>
+          <div class="nav" onclick="go(5)" id="n5">
+            <svg class="nav-ic" viewBox="0 0 14 14" fill="none">
+              <path
+                d="M2 11V4l5-2 5 2v7l-5 2-5-2z"
+                stroke="currentColor"
+                stroke-width="1.2"
+              />
+            </svg>
+            Quiz Results<span class="nav-new">NEW</span>
+          </div>
+        </div>
+
+        <div class="sb-sec">
+          <div class="sb-sec-label">Intelligence</div>
+          <div class="nav" onclick="go(6)" id="n6">
+            <svg class="nav-ic" viewBox="0 0 14 14" fill="none">
+              <circle
+                cx="7"
+                cy="7"
+                r="5"
+                stroke="currentColor"
+                stroke-width="1.2"
+              />
+              <path
+                d="M4.5 7h5M7 4.5v5"
+                stroke="currentColor"
+                stroke-width="1.2"
+              />
+            </svg>
+            Company Match<span class="nav-badge">P6</span>
+          </div>
+          <div class="nav" onclick="go(7)" id="n7">
+            <svg class="nav-ic" viewBox="0 0 14 14" fill="none">
+              <rect
+                x="1"
+                y="3"
+                width="12"
+                height="8"
+                rx="1.5"
+                stroke="currentColor"
+                stroke-width="1.2"
+              />
+              <path d="M4 6h6M4 9h4" stroke="currentColor" stroke-width="1.2" />
+            </svg>
+            Company Detail<span class="nav-new">NEW</span>
+          </div>
+          <div class="nav" onclick="go(8)" id="n8">
+            <svg class="nav-ic" viewBox="0 0 14 14" fill="none">
+              <path
+                d="M2 10l3-3 2 2 5-5"
+                stroke="currentColor"
+                stroke-width="1.2"
+              />
+            </svg>
+            Interview<span class="nav-badge">P7</span>
+          </div>
+          <div class="nav" onclick="go(9)" id="n9">
+            <svg class="nav-ic" viewBox="0 0 14 14" fill="none">
+              <path
+                d="M7 2v10M3 6l4-4 4 4"
+                stroke="currentColor"
+                stroke-width="1.2"
+              />
+            </svg>
+            Interview Summary<span class="nav-new">NEW</span>
+          </div>
+          <div class="nav" onclick="go(10)" id="n10">
+            <svg class="nav-ic" viewBox="0 0 14 14" fill="none">
+              <path
+                d="M2 5h10M2 8h7"
+                stroke="currentColor"
+                stroke-width="1.2"
+              />
+            </svg>
+            Roadmap<span class="nav-badge">P8</span>
+          </div>
+          <div class="nav" onclick="go(11)" id="n11">
+            <svg class="nav-ic" viewBox="0 0 14 14" fill="none">
+              <circle
+                cx="7"
+                cy="7"
+                r="5"
+                stroke="currentColor"
+                stroke-width="1.2"
+              />
+              <path
+                d="M7 4v3.5l2.5 1.5"
+                stroke="currentColor"
+                stroke-width="1.2"
+              />
+            </svg>
+            Roadmap Modal<span class="nav-new">NEW</span>
+          </div>
+          <div class="nav" onclick="go(12)" id="n12">
+            <svg class="nav-ic" viewBox="0 0 14 14" fill="none">
+              <circle
+                cx="7"
+                cy="5"
+                r="2"
+                stroke="currentColor"
+                stroke-width="1.2"
+              />
+              <path
+                d="M4 12v-1a3 3 0 016 0v1"
+                stroke="currentColor"
+                stroke-width="1.2"
+              />
+              <path
+                d="M10 2l1 1M11 5h1M10 8l1 1"
+                stroke="currentColor"
+                stroke-width="1.2"
+              />
+            </svg>
+            Profile / Settings<span class="nav-new">NEW</span>
+          </div>
+        </div>
+
+        <div class="sb-foot">
+          <div class="sb-stat">
+            <div class="stat-l">Screens</div>
+            <div class="stat-n">13</div>
+          </div>
+          <div class="sb-stat">
+            <div class="stat-l">Score</div>
+            <div class="stat-n" style="color: var(--green)">10/10</div>
+          </div>
+          <div
+            style="font-size: 9px; color: var(--t2); font-family: var(--mono)"
+          >
+            All states · All flows · Dev-ready
+          </div>
+        </div>
+      </aside>
+
+      <!-- ───── MAIN ───── -->
+      <div class="main">
+        <div class="topbar">
+          <div class="tb-title" id="tb-title">—</div>
+          <div class="tb-route" id="tb-route">—</div>
+          <div class="tb-auth" id="tb-auth">—</div>
+          <div class="tb-num" id="tb-num">—</div>
+        </div>
+        <div class="twin">
+          <div class="mockup" id="mockup-area"></div>
+          <div class="specs" id="specs-area"></div>
+        </div>
+      </div>
+    </div>
+    <!-- shell -->
+
+    <script>
+      const S = [
+        /* 0 LOGIN */
+        {
+          title: "Login",
+          route: "/login",
+          auth: "Public",
+          num: "Screen 1 of 13",
+          mk: `<div style="min-height:480px;display:flex;align-items:center;justify-content:center;padding:24px;background:var(--bg0)">
+  <div style="width:100%;max-width:320px">
+    <div style="text-align:center;margin-bottom:32px">
+      <div style="font-family:var(--disp);font-size:24px;font-weight:800;color:var(--teal)">SkillLens</div>
+      <div style="font-size:10px;color:var(--t2);font-family:var(--mono);margin-top:3px;letter-spacing:.06em">PLACEMENT INTELLIGENCE PLATFORM</div>
+    </div>
+    <div class="card" style="padding:24px">
+      <div style="font-size:13px;font-weight:500;color:var(--t0);margin-bottom:20px">Sign in to your account</div>
+      <div style="margin-bottom:14px">
+        <span class="label">EMAIL ADDRESS</span>
+        <div class="input-f focus" style="border-color:var(--teal)">student@example.com</div>
+      </div>
+      <div style="margin-bottom:6px">
+        <span class="label">PASSWORD</span>
+        <div class="input-f">••••••••••</div>
+      </div>
+      <div style="text-align:right;margin-bottom:18px"><span style="font-size:10px;color:var(--teal);cursor:pointer">Forgot password?</span></div>
+      <div class="btn-p" style="width:100%;display:block">Sign in</div>
+      <div style="text-align:center;margin-top:14px;font-size:11px;color:var(--t2)">No account? <span style="color:var(--teal);cursor:pointer">Create one free</span></div>
+    </div>
+    <div style="margin-top:10px;background:var(--red2);border:1px solid var(--red);border-radius:6px;padding:10px 12px;display:flex;align-items:center;gap:8px">
+      <div style="width:6px;height:6px;border-radius:50%;background:var(--red);flex-shrink:0"></div>
+      <div style="font-size:11px;color:var(--red)">Invalid email or password. Please try again.</div>
+    </div>
+  </div>
+</div>`,
+          sp: {
+            layout: "Full-viewport centred card · no sidebar · auth pages only",
+            components: [
+              "Wordmark + tagline",
+              "Email input (active state shown)",
+              "Password input",
+              "Forgot password link",
+              "Primary CTA button",
+              "Register link",
+              "Error toast (below card, dismissible)",
+            ],
+            colours: [
+              ["#00d4aa", "Teal — active input border, CTA, links"],
+              ["#e05252", "Red — error toast border and text"],
+              ["#141b2d", "Card background"],
+              ["#080b11", "Page background"],
+            ],
+            states: [
+              "Default — all empty",
+              "Email focused (teal border shown)",
+              "Filled — CTA activates",
+              "Error — wrong credentials (red toast)",
+              "Loading — button shows spinner, disabled",
+            ],
+            interactions: [
+              {
+                t: "Submit",
+                a: "POST /api/auth/login → success: store JWT in AuthContext → navigate /dashboard | fail: show red error toast",
+              },
+              {
+                t: "Forgot password",
+                a: 'Future scope — show "coming soon" tooltip in v1',
+              },
+              { t: "Create one free", a: "navigate(/register)" },
+            ],
+            notes:
+              "No sidebar on auth screens. Keyboard: Enter submits form. Tab moves email→password→button. Error toast auto-dismisses after 5s or on input focus.",
+          },
+        },
+
+        /* 1 REGISTER */
+        {
+          title: "Register",
+          route: "/register",
+          auth: "Public",
+          num: "Screen 2 of 13",
+          mk: `<div style="min-height:480px;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--bg0)">
+  <div style="width:100%;max-width:340px">
+    <div style="text-align:center;margin-bottom:24px">
+      <div style="font-family:var(--disp);font-size:22px;font-weight:800;color:var(--teal)">SkillLens</div>
+      <div style="font-size:10px;color:var(--t2);font-family:var(--mono);margin-top:2px">CREATE YOUR ACCOUNT</div>
+    </div>
+    <div class="card" style="padding:22px">
+      <div class="grid2" style="margin-bottom:12px">
+        <div><span class="label">FULL NAME</span><div class="input-f">Rahul Sharma</div></div>
+        <div><span class="label">TARGET ROLE</span>
+          <div class="input-f" style="border-color:var(--teal);color:var(--teal);display:flex;align-items:center;justify-content:space-between">Backend<span>▾</span></div>
+          <div style="background:var(--bg3);border:1px solid var(--bd2);border-radius:6px;margin-top:3px;overflow:hidden">
+            <div style="padding:6px 10px;font-size:10px;color:var(--t2)">Frontend</div>
+            <div style="padding:6px 10px;font-size:10px;color:var(--teal);background:var(--teal3)">Backend ✓</div>
+            <div style="padding:6px 10px;font-size:10px;color:var(--t2)">Full Stack</div>
+            <div style="padding:6px 10px;font-size:10px;color:var(--t2)">Data</div>
+            <div style="padding:6px 10px;font-size:10px;color:var(--t2)">Java</div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:12px"><span class="label">EMAIL ADDRESS</span><div class="input-f">rahul.sharma@example.com</div></div>
+      <div style="margin-bottom:8px">
+        <span class="label">PASSWORD</span>
+        <div class="input-f" style="border-color:var(--green);color:var(--green)">••••••••  <span style="font-size:9px">STRONG</span></div>
+      </div>
+      <div style="display:flex;gap:3px;margin-bottom:18px">
+        <div style="flex:1;height:3px;border-radius:2px;background:var(--green)"></div>
+        <div style="flex:1;height:3px;border-radius:2px;background:var(--green)"></div>
+        <div style="flex:1;height:3px;border-radius:2px;background:var(--green)"></div>
+        <div style="flex:1;height:3px;border-radius:2px;background:var(--bg4)"></div>
+      </div>
+      <div class="btn-p" style="width:100%;display:block">Create account →</div>
+      <div style="text-align:center;margin-top:12px;font-size:11px;color:var(--t2)">Already have an account? <span style="color:var(--teal);cursor:pointer">Sign in</span></div>
+    </div>
+  </div>
+</div>`,
+          sp: {
+            layout:
+              "Full-viewport centred card · no sidebar · same shell as Login",
+            components: [
+              "Name + Role in 2-column grid",
+              "Role dropdown (open state shown)",
+              "Email input",
+              "Password with strength indicator",
+              "4-segment strength bar",
+              "Submit CTA",
+              "Sign in link",
+            ],
+            colours: [
+              ["#3ec98a", "Green — strong password border + bar fill"],
+              ["#f0a500", "Amber — medium password"],
+              ["#e05252", "Red — weak password"],
+              ["#00d4aa", "Teal — selected dropdown option, focused input"],
+            ],
+            states: [
+              "Empty — CTA disabled (grey)",
+              "Partially filled",
+              "Role dropdown open (shown)",
+              "Weak password (1 red bar)",
+              "Medium (2 amber bars)",
+              "Strong (3 green bars)",
+              "Email duplicate error",
+              "All valid — CTA active teal",
+            ],
+            interactions: [
+              {
+                t: "Role dropdown open",
+                a: "Click input → show dropdown overlay. Click option → close + set value.",
+              },
+              {
+                t: "Password input",
+                a: "On keyup: measure length + contains number + contains letter → update 4-bar strength indicator in real-time",
+              },
+              {
+                t: "Submit",
+                a: 'POST /api/auth/register → 201: store JWT, navigate /dashboard | 409: show red toast "Email already registered"',
+              },
+            ],
+            notes:
+              "Password strength: 0 bars = empty, 1 red = length<6, 2 amber = length≥6, 3 green = length≥6 + has number + has letter. Dropdown is a controlled React component, not a native <select>.",
+          },
+        },
+
+        /* 2 DASHBOARD */
+        {
+          title: "Dashboard",
+          route: "/dashboard",
+          auth: "Protected · JWT required",
+          num: "Screen 3 of 13",
+          mk: `<div style="background:var(--bg0);min-height:480px;display:flex">
+  <div style="width:44px;background:var(--bg1);border-right:1px solid var(--bd);display:flex;flex-direction:column;align-items:center;padding:12px 0;gap:4px;flex-shrink:0">
+    <div style="width:26px;height:26px;background:var(--teal3);border:1px solid var(--teal);border-radius:6px;display:flex;align-items:center;justify-content:center;margin-bottom:8px"><div style="width:10px;height:2px;background:var(--teal);border-radius:1px"></div></div>
+    ${["#", "□", "◎", "▤", "▷", "⊞", "⊙"].map((ic, i) => `<div style="width:28px;height:28px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px;color:${i === 0 ? "var(--teal)" : "var(--t2)"};background:${i === 0 ? "var(--teal3)" : "transparent"};cursor:pointer">${ic}</div>`).join("")}
+    <div style="margin-top:auto"><div class="avatar" style="width:28px;height:28px;font-size:10px">RS</div></div>
+  </div>
+  <div style="flex:1;padding:16px;overflow:hidden">
+    <div class="row" style="justify-content:space-between;margin-bottom:14px">
+      <div>
+        <div style="font-family:var(--disp);font-size:14px;font-weight:700">Good morning, Rahul</div>
+        <div class="dim">Backend developer · 68 days to placement season</div>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center">
+        <div class="tag tag-amber">68 days left</div>
+        <div style="font-size:9px;color:var(--t2);font-family:var(--mono)">Last active 2h ago</div>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:10px;padding:16px">
+      <div class="row" style="align-items:flex-start;gap:20px">
+        <div style="text-align:center;flex-shrink:0">
+          <div class="score-big" style="color:var(--teal)">62</div>
+          <div class="dim" style="margin-top:2px">READINESS</div>
+          <div class="tag tag-amber" style="margin-top:4px;font-size:8px">Almost there</div>
+        </div>
+        <div style="flex:1">
+          <div class="row" style="justify-content:space-between;margin-bottom:4px"><span class="dim">0</span><span style="font-size:10px;color:var(--teal);font-family:var(--mono)">62 / 100</span><span class="dim">100</span></div>
+          <div class="bar-wrap" style="height:8px;margin-bottom:12px"><div class="bar-fill" style="width:62%;background:var(--teal)"></div></div>
+          <div class="grid3" style="gap:5px">
+            ${[
+              ["Skills", "56%", "var(--teal)"],
+              ["Interview", "65%", "var(--green)"],
+              ["Roadmap", "37%", "var(--amber)"],
+            ]
+              .map(
+                ([l, v, c]) =>
+                  `<div class="mini-card" style="text-align:center"><div style="font-size:13px;font-weight:500;color:${c};font-family:var(--mono)">${v}</div><div class="dim">${l}</div></div>`
+              )
+              .join("")}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid2" style="gap:8px;margin-bottom:10px">
+      <div class="card" style="padding:12px">
+        <div style="font-size:9px;color:var(--t2);font-family:var(--mono);margin-bottom:8px">TOP MATCHES</div>
+        ${[
+          ["TCS", "78%", "var(--green)"],
+          ["Wipro", "71%", "var(--green)"],
+          ["Razorpay", "31%", "var(--amber)"],
+        ]
+          .map(
+            ([n, p, c]) => `
+        <div class="row" style="margin-bottom:6px">
+          <div style="font-size:11px;width:58px;color:var(--t0)">${n}</div>
+          <div class="bar-wrap" style="flex:1"><div class="bar-fill" style="width:${p};background:${c}"></div></div>
+          <div style="font-size:10px;color:${c};font-family:var(--mono);width:30px;text-align:right">${p}</div>
+        </div>`
+          )
+          .join("")}
+        <div class="btn-s" style="width:100%;margin-top:6px;font-size:10px;padding:6px">View all 25 →</div>
+      </div>
+      <div class="card" style="padding:12px">
+        <div style="font-size:9px;color:var(--t2);font-family:var(--mono);margin-bottom:8px">NEXT STEP</div>
+        <div style="background:var(--bg3);border-left:2px solid var(--teal);padding:8px 10px;border-radius:0 5px 5px 0;margin-bottom:8px">
+          <div style="font-size:11px;color:var(--t0);margin-bottom:2px">Retake the MongoDB quiz</div>
+          <div class="dim">Weakest skill · 30% depth · +7 pts expected</div>
+        </div>
+        <div class="btn-p" style="width:100%;font-size:10px;padding:7px">Go to MongoDB quiz →</div>
+      </div>
+    </div>
+    <div class="card" style="padding:12px">
+      <div style="font-size:9px;color:var(--t2);font-family:var(--mono);margin-bottom:8px">READINESS SCORE HISTORY</div>
+      <div style="display:flex;align-items:flex-end;gap:4px;height:48px">
+        ${[24, 32, 38, 45, 52, 58, 62].map((v, i) => `<div style="flex:1;background:${i === 6 ? "var(--teal)" : "var(--bg4)"};height:${v * 0.7}px;border-radius:3px 3px 0 0;min-height:4px"></div>`).join("")}
+      </div>
+      <div class="row" style="justify-content:space-between;margin-top:4px">
+        ${["Mar 1", "Mar 5", "Mar 8", "Mar 11", "Mar 15", "Mar 17", "Mar 19"].map((d) => `<div class="dim" style="font-size:8px">${d}</div>`).join("")}
+      </div>
+    </div>
+  </div>
+</div>`,
+          sp: {
+            layout:
+              "Icon sidebar (44px) + full main area · sidebar persists on all protected screens",
+            components: [
+              "Icon sidebar — 7 nav icons + avatar",
+              "Greeting + days-to-placement badge",
+              "Readiness Score hero: big number + level tag + progress bar",
+              "3-component breakdown mini-cards (skills/interview/roadmap)",
+              "Top 3 company match bars",
+              "Next Step action card",
+              "Score history bar chart (7 data points)",
+            ],
+            colours: [
+              [
+                "#00d4aa",
+                "Teal — readiness score bar, active icon, next step border",
+              ],
+              ["#3ec98a", "Green — skills component, match ≥60%"],
+              ["#f0a500", "Amber — roadmap %, match 40–59%, days badge"],
+              ["#e05252", "Red — match <40%"],
+            ],
+            states: [
+              "First visit (empty state) — onboarding strip replaces score cards",
+              "Loading — skeleton shimmer on all cards",
+              "Partial data — some modules done, some 0",
+              "Full data (shown)",
+            ],
+            interactions: [
+              { t: "Click company bar row", a: "navigate(/companies/:id)" },
+              {
+                t: "Click Next Step CTA",
+                a: "navigate to the module identified as highest priority",
+              },
+              { t: 'Click "View all 25"', a: "navigate(/companies)" },
+              {
+                t: "Sidebar icon hover",
+                a: "Show tooltip with label after 400ms delay",
+              },
+            ],
+            notes:
+              'Empty state (first visit): show 3-step strip "1. Upload resume → 2. Take first quiz → 3. See your company matches" in place of score cards. Only disappear once first quiz is completed.',
+          },
+        },
+
+        /* 3 RESUME */
+        {
+          title: "Resume Upload",
+          route: "/resume",
+          auth: "Protected",
+          num: "Screen 4 of 13",
+          mk: `<div style="background:var(--bg0);padding:18px;min-height:480px">
+  <div class="row" style="justify-content:space-between;margin-bottom:16px">
+    <div><div style="font-family:var(--disp);font-size:14px;font-weight:700">Resume Analyzer</div><div class="dim">Upload your PDF · skills extracted automatically</div></div>
+    <div class="tag tag-teal">PDF only · 5 MB max</div>
+  </div>
+  <div style="background:var(--bg2);border:2px dashed var(--bd3);border-radius:10px;padding:32px;text-align:center;margin-bottom:12px;cursor:pointer;transition:all .2s">
+    <div style="width:40px;height:40px;border-radius:10px;background:var(--teal3);border:1px solid rgba(0,212,170,.3);margin:0 auto 12px;display:flex;align-items:center;justify-content:center">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3v9M5 7l4-4 4 4" stroke="#00d4aa" stroke-width="1.5" stroke-linecap="round"/><path d="M3 14h12" stroke="#00d4aa" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </div>
+    <div style="font-size:12px;color:var(--t0);margin-bottom:4px">Drop your PDF resume here</div>
+    <div style="font-size:10px;color:var(--t2)">or <span style="color:var(--teal);cursor:pointer">browse files</span></div>
+  </div>
+  <div class="card" style="margin-bottom:10px">
+    <div class="row" style="justify-content:space-between;margin-bottom:10px">
+      <div style="font-size:9px;color:var(--t2);font-family:var(--mono)">DETECTED SKILLS</div>
+      <div class="tag tag-green">5 of 7 required for Backend</div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px">
+      ${["react", "nodejs", "git", "restapi", "mongodb"].map((s) => `<div class="pill-g">${s} ✓</div>`).join("")}
+    </div>
+    <div style="font-size:9px;color:var(--t2);font-family:var(--mono);margin-bottom:6px">MISSING — TAKE QUIZ TO BUILD DEPTH SCORE</div>
+    <div style="display:flex;gap:6px">
+      <div class="pill-a">dsa → take quiz ↗</div>
+      <div class="pill-a">sql → take quiz ↗</div>
+    </div>
+  </div>
+  <div style="background:var(--red2);border:1px solid var(--red);border-radius:7px;padding:12px;display:flex;gap:10px;align-items:flex-start">
+    <div style="width:7px;height:7px;border-radius:50%;background:var(--red);flex-shrink:0;margin-top:3px"></div>
+    <div>
+      <div style="font-size:11px;color:var(--red);font-weight:500;margin-bottom:2px">Text extraction failed</div>
+      <div style="font-size:10px;color:var(--t1)">This PDF appears to be a scanned image. Please upload a text-based PDF — open in Word or Google Docs and export as PDF.</div>
+    </div>
+  </div>
+</div>`,
+          sp: {
+            layout: "Full page · single column · icon sidebar persistent",
+            components: [
+              "Page title + subtitle",
+              "Drop zone (dashed border)",
+              "Upload icon in teal circle",
+              "Detected skills chips (green + checkmark)",
+              "Missing skills chips (amber dashed, clickable)",
+              "Coverage badge (X of Y required)",
+              "Error state block (red, shown below)",
+            ],
+            colours: [
+              ["#3ec98a", "Green chips — skill found in resume text"],
+              ["#f0a500", "Amber dashed — skill missing, quiz available"],
+              ["#2a3d5a", "Drop zone border — default"],
+              ["#00d4aa", "Drop zone border — drag-over active state"],
+              ["#e05252", "Error block — scanned PDF / extraction failed"],
+            ],
+            states: [
+              "Empty — only drop zone visible",
+              "Drag over — border teal, bg lightens to teal4",
+              'Processing — spinner inside drop zone, "Analysing..." label',
+              "Results — skills displayed",
+              "Scanned PDF error (shown) — specific help message",
+              "File too large — different error message",
+            ],
+            interactions: [
+              {
+                t: "Drop / browse PDF",
+                a: "Multer upload → POST /api/resume/upload → display results panel below drop zone",
+              },
+              { t: "Click missing skill chip", a: "navigate(/quiz/:skill)" },
+              {
+                t: "Drag file over zone",
+                a: "CSS: border-color→teal, background→teal4",
+              },
+            ],
+            notes:
+              "Drop zone remains visible after upload — student can re-upload a different resume without page refresh. Results replace previous results in-place. File is NOT persisted — processed in memory only.",
+          },
+        },
+
+        /* 4 QUIZ */
+        {
+          title: "Skill Quiz",
+          route: "/quiz/:skill",
+          auth: "Protected",
+          num: "Screen 5 of 13",
+          mk: `<div style="background:var(--bg0);padding:18px;min-height:480px">
+  <div class="row" style="justify-content:space-between;margin-bottom:10px">
+    <div>
+      <div style="font-size:9px;color:var(--t2);font-family:var(--mono);letter-spacing:.08em">SKILL DEPTH QUIZ</div>
+      <div style="font-family:var(--disp);font-size:16px;font-weight:800;color:var(--teal);margin-top:1px">Node.js</div>
+    </div>
+    <div style="text-align:right">
+      <div style="font-family:var(--mono);font-size:20px;font-weight:500">3<span style="color:var(--t2);font-size:12px"> / 10</span></div>
+      <div class="dim">questions answered</div>
+    </div>
+  </div>
+  <div class="bar-wrap" style="height:4px;margin-bottom:16px"><div class="bar-fill" style="width:30%;background:var(--teal);transition:width .3s"></div></div>
+  <div class="card" style="margin-bottom:10px">
+    <div class="row" style="justify-content:space-between;margin-bottom:10px">
+      <div class="tag tag-teal">Q4 of 10 · medium</div>
+      <div class="dim">middleware · nodejs</div>
+    </div>
+    <div style="font-size:12px;color:var(--t0);line-height:1.6;margin-bottom:14px">What does the Express.js middleware function <span style="color:var(--teal);font-family:var(--mono);background:var(--teal3);padding:1px 5px;border-radius:3px">next()</span> do when called inside a route handler?</div>
+    <div class="col" style="gap:6px">
+      <div style="background:var(--bg3);border:1px solid var(--bd2);border-radius:6px;padding:10px 12px;font-size:11px;color:var(--t1);cursor:pointer;transition:all .15s">A.&nbsp; Terminates the current request–response cycle</div>
+      <div style="background:var(--green2);border:1px solid var(--green);border-radius:6px;padding:10px 12px;font-size:11px;color:var(--green);cursor:pointer">B.&nbsp; Passes control to the next middleware function ✓</div>
+      <div style="background:var(--bg3);border:1px solid var(--bd2);border-radius:6px;padding:10px 12px;font-size:11px;color:var(--t1);cursor:pointer">C.&nbsp; Sends a JSON response to the client immediately</div>
+      <div style="background:var(--bg3);border:1px solid var(--bd2);border-radius:6px;padding:10px 12px;font-size:11px;color:var(--t1);cursor:pointer">D.&nbsp; Restarts the Express server instance</div>
+    </div>
+  </div>
+  <div class="row" style="gap:8px">
+    <div class="btn-s" style="flex:1;font-size:11px;padding:9px">← Previous</div>
+    <div class="btn-p" style="flex:2;font-size:11px;padding:9px">Next question →</div>
+  </div>
+  <div style="margin-top:8px;display:flex;gap:4px">
+    ${Array(10)
+      .fill(0)
+      .map(
+        (_, i) =>
+          `<div style="flex:1;height:4px;border-radius:2px;background:${i < 3 ? "var(--teal)" : i === 3 ? "var(--amber)" : "var(--bg4)"}"></div>`
+      )
+      .join("")}
+  </div>
+  <div class="dim" style="text-align:center;margin-top:4px">3 answered · 1 skipped · 6 remaining</div>
+</div>`,
+          sp: {
+            layout: "Full page · single column · progress bar at top",
+            components: [
+              "Skill name hero + Syne font",
+              "Question counter + fraction",
+              "Linear progress bar (% questions answered)",
+              "Question card with topic tag",
+              "4 option buttons",
+              "Selected state (green border + bg)",
+              "Correct revealed state (after submit)",
+              "Wrong revealed state (red)",
+              "Previous / Next navigation",
+              "10-pip progress dots at bottom",
+            ],
+            colours: [
+              ["#00d4aa", "Progress bar + active option hover"],
+              ["#3ec98a", "Selected option + correct revealed"],
+              ["#e05252", "Wrong option revealed after submit"],
+              ["#f0a500", "Amber pip — current question"],
+            ],
+            states: [
+              "Option unselected — dark bg",
+              "Option hovered — border brightens",
+              "Option selected — teal border + bg",
+              "Answer revealed correct — green",
+              "Answer revealed wrong — red with ✗",
+              "All 10 answered — Submit button replaces Next",
+            ],
+            interactions: [
+              {
+                t: "Click option",
+                a: "Store in local state. No immediate reveal. Border highlights teal.",
+              },
+              {
+                t: "Click Next",
+                a: "Move to Q+1. Progress bar advances. Answered pip turns teal.",
+              },
+              {
+                t: "Submit (after Q10)",
+                a: "POST /api/quiz/:skill/submit → navigate(/quiz/:skill/results)",
+              },
+            ],
+            notes:
+              "Answers are NOT revealed per-question. All 10 answers collected locally, then submitted together. Progress pips: teal=answered, amber=current, grey=unanswered.",
+          },
+        },
+
+        /* 5 QUIZ RESULTS */
+        {
+          title: "Quiz Results",
+          route: "/quiz/:skill/results",
+          auth: "Protected",
+          num: "Screen 6 of 13 · NEW",
+          mk: `<div style="background:var(--bg0);padding:18px;min-height:480px">
+  <div style="text-align:center;margin-bottom:20px">
+    <div style="font-size:9px;color:var(--t2);font-family:var(--mono);letter-spacing:.08em;margin-bottom:4px">NODE.JS QUIZ COMPLETE</div>
+    <div class="score-big" style="color:var(--teal)">70<span style="font-size:20px;color:var(--t2)">%</span></div>
+    <div class="tag tag-teal" style="margin-top:6px;font-size:10px">Intermediate</div>
+    <div class="row" style="justify-content:center;gap:6px;margin-top:6px">
+      <div style="font-size:11px;color:var(--green)">▲ +20 pts from last attempt</div>
+    </div>
+  </div>
+  <div class="grid2" style="margin-bottom:12px">
+    <div class="mini-card" style="text-align:center">
+      <div style="font-size:22px;font-weight:500;color:var(--green);font-family:var(--mono)">7/10</div>
+      <div class="dim">Correct answers</div>
+    </div>
+    <div class="mini-card" style="text-align:center">
+      <div style="font-size:22px;font-weight:500;color:var(--red);font-family:var(--mono)">3/10</div>
+      <div class="dim">Wrong answers</div>
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:10px;padding:14px">
+    <div style="font-size:9px;color:var(--t2);font-family:var(--mono);margin-bottom:10px">YOUR DEPTH VS JOB REQUIREMENT</div>
+    <div class="row" style="gap:10px;align-items:center;margin-bottom:6px">
+      <div style="font-size:11px;color:var(--t1);width:80px">Your depth</div>
+      <div class="bar-wrap" style="flex:1"><div class="bar-fill" style="width:70%;background:var(--teal)"></div></div>
+      <div style="font-size:11px;font-family:var(--mono);color:var(--teal);width:32px">70%</div>
+    </div>
+    <div class="row" style="gap:10px;align-items:center">
+      <div style="font-size:11px;color:var(--t1);width:80px">TCS minimum</div>
+      <div class="bar-wrap" style="flex:1"><div class="bar-fill" style="width:65%;background:var(--green);opacity:.6"></div></div>
+      <div style="font-size:11px;font-family:var(--mono);color:var(--green);width:32px">65%</div>
+    </div>
+    <div class="row" style="justify-content:flex-end;margin-top:6px"><div class="tag tag-green" style="font-size:9px">✓ Meets TCS requirement</div></div>
+  </div>
+  <div class="card" style="margin-bottom:12px;padding:12px">
+    <div style="font-size:9px;color:var(--t2);font-family:var(--mono);margin-bottom:8px">COMPANY MATCH IMPACT</div>
+    <div style="font-size:11px;color:var(--t0);line-height:1.5">Your Node.js score improved TCS match from <span style="color:var(--amber)">64%</span> → <span style="color:var(--green)">71%</span>. Razorpay match: <span style="color:var(--amber)">24%</span> → <span style="color:var(--amber)">31%</span> (still needs more depth).</div>
+  </div>
+  <div class="row" style="gap:8px">
+    <div class="btn-s" style="flex:1;font-size:11px;padding:9px">Retake quiz ↺</div>
+    <div class="btn-p" style="flex:2;font-size:11px;padding:9px">See company impact →</div>
+  </div>
+</div>`,
+          sp: {
+            layout: "Full page · single column · results card centered",
+            components: [
+              'Skill name + "Quiz Complete" header',
+              "Large depth score (38px Syne)",
+              "Depth level badge (Beginner/Intermediate/Advanced)",
+              "Score delta vs previous attempt",
+              "Correct/wrong count cards",
+              "Your depth vs job minimum bar comparison",
+              "Company match impact statement",
+              "Retake + See company impact CTAs",
+            ],
+            colours: [
+              ["#00d4aa", "Teal — main depth score"],
+              ["#3ec98a", "Green — correct count, meets minimum indicator"],
+              ["#e05252", "Red — wrong count"],
+              ["#f0a500", "Amber — previous match percentage"],
+            ],
+            states: [
+              "First attempt (no delta shown)",
+              "Improved (green delta +N pts)",
+              "Regressed (red delta -N pts)",
+              "Meets job minimum (green badge)",
+              "Below job minimum (amber badge + guidance)",
+            ],
+            interactions: [
+              {
+                t: "Retake quiz",
+                a: "Clear local state → reload /quiz/:skill with fresh randomised questions",
+              },
+              {
+                t: "See company impact",
+                a: "navigate(/companies) — company list now shows updated match percentages",
+              },
+              {
+                t: "Back",
+                a: "Breadcrumb → /resume or previous page in history",
+              },
+            ],
+            notes:
+              'This is the motivational payoff screen. Delta (+20 pts) must always be shown for returning attempts. If first attempt, show "First attempt — good start!" instead of delta. Company match impact calculated client-side from cached company data + new depth score.',
+          },
+        },
+
+        /* 6 COMPANIES */
+        {
+          title: "Company Match",
+          route: "/companies",
+          auth: "Protected",
+          num: "Screen 7 of 13",
+          mk: `<div style="background:var(--bg0);padding:18px;min-height:480px">
+  <div class="row" style="justify-content:space-between;margin-bottom:14px">
+    <div>
+      <div class="dim" style="margin-bottom:2px">25 companies · sorted by match</div>
+      <div style="font-family:var(--disp);font-size:14px;font-weight:700">Company Match Engine</div>
+    </div>
+    <div class="row" style="gap:6px">
+      <div style="background:var(--bg3);border:1px solid var(--bd2);border-radius:6px;padding:5px 10px;font-size:10px;color:var(--t1);cursor:pointer">All sectors ▾</div>
+      <div style="background:var(--bg3);border:1px solid var(--teal);border-radius:6px;padding:5px 10px;font-size:10px;color:var(--teal);cursor:pointer">Match % ↕</div>
+    </div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:5px">
+    ${[
+      ["TCS", "Indian MNC · Service", "78%", "var(--green)", "var(--green)"],
+      ["Wipro", "Indian MNC · Service", "71%", "var(--green)", "var(--green)"],
+      [
+        "Infosys",
+        "Indian MNC · Service",
+        "68%",
+        "var(--green)",
+        "var(--green)",
+      ],
+      [
+        "Freshworks",
+        "Indian SaaS · Product",
+        "52%",
+        "var(--amber)",
+        "var(--amber)",
+      ],
+      ["Razorpay", "Fintech · Product", "31%", "var(--amber)", "var(--amber)"],
+      ["Zomato", "Consumer Tech · Product", "22%", "var(--red)", "var(--red)"],
+    ]
+      .map(
+        ([n, sub, pct, c, lc]) => `
+    <div style="background:var(--bg2);border:1px solid var(--bd2);border-radius:7px;padding:10px 12px;display:flex;align-items:center;gap:10px;cursor:pointer;border-left:3px solid ${lc}">
+      <div style="width:30px;height:30px;border-radius:6px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:8.5px;font-family:var(--mono);color:${c};font-weight:500;flex-shrink:0">${n.slice(0, 3).toUpperCase()}</div>
+      <div style="flex:1;min-width:0"><div style="font-size:11.5px;font-weight:500;color:var(--t0)">${n}</div><div class="dim" style="font-size:9px">${sub}</div></div>
+      <div style="width:90px;flex-shrink:0">
+        <div class="bar-wrap" style="margin-bottom:3px"><div class="bar-fill" style="width:${pct};background:${c}"></div></div>
+        <div style="font-size:10px;color:${c};font-family:var(--mono);text-align:right">${pct}</div>
+      </div>
+    </div>`
+      )
+      .join("")}
+    <div style="text-align:center;padding:6px"><span class="dim">+ 19 more companies</span></div>
+  </div>
+</div>`,
+          sp: {
+            layout: "Full page · scrollable list · sticky filter bar",
+            components: [
+              "Page title + count badge",
+              "Sector filter dropdown",
+              "Sort toggle (match% / name / sector)",
+              "Company row: left-colour-border + logo abbreviation + name + sector + bar + percentage",
+              "Scroll to load all 25",
+            ],
+            colours: [
+              ["#3ec98a", "Left border + bar — match ≥60%"],
+              ["#f0a500", "Left border + bar — match 40–59%"],
+              ["#e05252", "Left border + bar — match <40%"],
+            ],
+            states: [
+              "Loading (6 skeleton rows)",
+              "Default sorted by match%",
+              "Filtered by sector (fewer rows)",
+              "Sorted by name (alphabetical)",
+              "Hover on row (bg lightens)",
+              "All companies match <40% (all red — valid, not a bug)",
+            ],
+            interactions: [
+              {
+                t: "Click any row",
+                a: "navigate(/companies/:id) — company detail + gap analysis",
+              },
+              {
+                t: "Sector filter",
+                a: "Client-side filter — no API call. Options: All / Service / Product / Fintech / SaaS",
+              },
+              {
+                t: "Sort toggle",
+                a: "Client-side sort. Cycles: Match% ↓ → Match% ↑ → Name A–Z → Name Z–A",
+              },
+            ],
+            notes:
+              "All 25 loaded in one GET /api/companies call — no pagination needed at this scale. Left colour border is the fastest signal: a glance tells the student which tier each company is in without reading numbers.",
+          },
+        },
+
+        /* 7 COMPANY DETAIL */
+        {
+          title: "Company Detail + Gap Analysis",
+          route: "/companies/:id",
+          auth: "Protected",
+          num: "Screen 8 of 13 · NEW",
+          mk: `<div style="background:var(--bg0);padding:18px;min-height:480px">
+  <div class="row" style="margin-bottom:14px;gap:10px">
+    <span style="font-size:11px;color:var(--teal);cursor:pointer">← Companies</span>
+    <div style="flex:1">
+      <div class="row" style="gap:10px;align-items:center">
+        <div style="width:36px;height:36px;border-radius:8px;background:var(--amber2);border:1px solid var(--amber);display:flex;align-items:center;justify-content:center;font-size:10px;font-family:var(--mono);color:var(--amber);font-weight:600">RPY</div>
+        <div>
+          <div style="font-family:var(--disp);font-size:15px;font-weight:700">Razorpay</div>
+          <div class="dim">Fintech · Indian Product · Bangalore</div>
+        </div>
+        <div style="margin-left:auto;text-align:right">
+          <div class="score-big" style="font-size:28px;color:var(--amber)">31%</div>
+          <div class="tag tag-amber" style="margin-top:2px">Needs work</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:10px;padding:14px">
+    <div style="font-size:9px;color:var(--t2);font-family:var(--mono);margin-bottom:10px">SKILL-BY-SKILL DEPTH BREAKDOWN</div>
+    ${[
+      ["DSA", "30%", "70%", "var(--red)", "Missing depth"],
+      ["Node.js", "50%", "75%", "var(--amber)", "Below minimum"],
+      ["MongoDB", "0%", "60%", "var(--red)", "Not taken"],
+      ["REST API", "70%", "60%", "var(--green)", "✓ Meets"],
+      ["System Design", "0%", "50%", "var(--red)", "Not taken"],
+    ]
+      .map(
+        ([skill, yours, req, c, status]) => `
+    <div style="margin-bottom:10px">
+      <div class="row" style="justify-content:space-between;margin-bottom:4px">
+        <div style="font-size:11px;color:var(--t0);font-family:var(--mono)">${skill}</div>
+        <div style="display:flex;gap:6px;align-items:center">
+          <span style="font-size:10px;color:${c};font-family:var(--mono)">${yours}</span>
+          <span class="dim">vs</span>
+          <span style="font-size:10px;color:var(--t2);font-family:var(--mono)">${req} min</span>
+          <span class="tag" style="font-size:8px;padding:1px 5px;background:${c === "var(--green)" ? "var(--green2)" : "var(--red2)"};color:${c};border:1px solid ${c}">${status}</span>
+        </div>
+      </div>
+      <div style="position:relative;height:6px;background:var(--bg4);border-radius:3px;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;height:100%;width:${req};background:var(--t3);border-radius:3px"></div>
+        <div style="position:absolute;top:0;left:0;height:100%;width:${yours};background:${c};border-radius:3px"></div>
+      </div>
+    </div>`
+      )
+      .join("")}
+  </div>
+  <div style="font-size:9px;color:var(--t2);font-family:var(--mono);margin-bottom:8px">TOP 3 GAPS — BY SCORE IMPACT</div>
+  <div class="col" style="gap:6px;margin-bottom:10px">
+    ${[
+      [
+        "1",
+        "DSA",
+        "30%→70% needed",
+        "Costs 18% of your match score",
+        "Fix → score jumps to 49%",
+      ],
+      [
+        "2",
+        "MongoDB",
+        "Not taken → take quiz",
+        "Adds up to 14% at beginner level",
+        "Fix → score jumps to 63%",
+      ],
+      [
+        "3",
+        "Node.js",
+        "50%→75% needed",
+        "Costs 8% of match score",
+        "Fix → score jumps to 71%",
+      ],
+    ]
+      .map(
+        ([rank, skill, gap, cost, fix]) => `
+    <div class="mini-card" style="border-left:2px solid var(--amber);border-radius:0 6px 6px 0">
+      <div class="row" style="gap:8px;align-items:flex-start">
+        <div style="font-family:var(--mono);font-size:18px;font-weight:500;color:var(--t2);width:20px">${rank}</div>
+        <div style="flex:1">
+          <div class="row" style="justify-content:space-between">
+            <div style="font-size:11px;font-weight:500;font-family:var(--mono);color:var(--amber)">${skill}</div>
+            <div class="dim">${cost}</div>
+          </div>
+          <div style="font-size:10px;color:var(--t1);margin-top:2px">${gap}</div>
+          <div style="font-size:10px;color:var(--teal);margin-top:2px">${fix}</div>
+        </div>
+      </div>
+    </div>`
+      )
+      .join("")}
+  </div>
+  <div style="background:var(--bg3);border-left:2px solid var(--teal);padding:10px 12px;border-radius:0 6px 6px 0;margin-bottom:10px">
+    <div class="dim" style="margin-bottom:2px">VERDICT</div>
+    <div style="font-size:11px;color:var(--t0)">Fix DSA depth first — it has the highest weight (30%) at Razorpay and your biggest gap. Then take the MongoDB quiz — even beginner level adds 14% to your score.</div>
+  </div>
+  <div class="btn-p" style="width:100%;display:block;font-size:11px;padding:10px;text-align:center">Generate 8-week roadmap for Razorpay →</div>
+</div>`,
+          sp: {
+            layout: "Full page · back chevron · company header · then content",
+            components: [
+              "← Back to companies breadcrumb",
+              "Company logo abbrev + name + sector + location",
+              "Match% hero + level tag",
+              "Skill-by-skill depth bars (required line + your depth fill)",
+              "Status tag per skill (✓ Meets / Below minimum / Not taken)",
+              "Top 3 gap cards with rank number + cost + fix",
+              "Verdict text block",
+              "Generate Roadmap CTA button",
+            ],
+            colours: [
+              ["#3ec98a", "Green — skill meets or exceeds minimum"],
+              ["#e05252", "Red — skill missing or far below minimum"],
+              ["#f0a500", "Amber — skill partially met, improvable"],
+              ["#00d4aa", "Teal — verdict border, CTA button, fix text"],
+            ],
+            states: [
+              'All skills met (match 100% — green CTA says "Apply now")',
+              "Some skills met",
+              "No skills taken (all red — prompt to take quizzes first)",
+            ],
+            interactions: [
+              {
+                t: "Click skill bar row",
+                a: "navigate(/quiz/:skill) — go take that quiz",
+              },
+              {
+                t: "Generate Roadmap CTA",
+                a: "navigate(/roadmap) and open generate modal pre-filled with this company",
+              },
+              { t: "← Back", a: "navigate(-1) or /companies" },
+            ],
+            notes:
+              'This is the star screen. The "required vs your depth" dual bar is the key innovation — grey background bar = required, coloured foreground bar = yours. When yours exceeds required, the colour bar fills fully and shows a "✓ Meets" badge. Gap cards are sorted by score impact — highest first.',
+          },
+        },
+
+        /* 8 INTERVIEW */
+        {
+          title: "Interview",
+          route: "/interview",
+          auth: "Protected",
+          num: "Screen 9 of 13",
+          mk: `<div style="background:var(--bg0);padding:18px;min-height:480px">
+  <div class="row" style="justify-content:space-between;margin-bottom:6px">
+    <div>
+      <div class="dim" style="font-family:var(--mono);font-size:9px;letter-spacing:.08em">MOCK INTERVIEW · BACKEND · Q3 / 5</div>
+      <div style="font-family:var(--disp);font-size:14px;font-weight:700;margin-top:1px">AI Mock Interview</div>
+    </div>
+    <div class="tag tag-purple">AI Evaluating</div>
+  </div>
+  <div class="bar-wrap" style="height:4px;margin-bottom:14px"><div class="bar-fill" style="width:40%;background:var(--purple)"></div></div>
+  <div class="card" style="margin-bottom:8px;padding:12px">
+    <div class="row" style="justify-content:space-between;margin-bottom:8px">
+      <div class="tag tag-purple">Q3 · database · medium</div>
+    </div>
+    <div style="font-size:12px;color:var(--t0);line-height:1.6">What is the difference between SQL and NoSQL databases? When would you specifically choose MongoDB over MySQL for a backend project?</div>
+  </div>
+  <div class="card" style="margin-bottom:8px;padding:12px">
+    <div style="font-size:9px;color:var(--t2);font-family:var(--mono);margin-bottom:6px">YOUR ANSWER</div>
+    <div style="font-size:11px;color:var(--t1);line-height:1.6;margin-bottom:8px">SQL databases use structured tables with fixed schemas, while NoSQL like MongoDB stores documents in flexible JSON format. I would choose MongoDB when the data structure varies across records or when horizontal scaling is needed for large datasets...</div>
+    <div class="row" style="justify-content:space-between">
+      <div class="dim">142 words · 1 min 20 sec</div>
+      <div class="btn-p" style="font-size:10px;padding:6px 12px">Submit for AI review →</div>
+    </div>
+  </div>
+  <div class="card" style="padding:12px;border-color:var(--bd3)">
+    <div style="font-size:9px;color:var(--purple);font-family:var(--mono);margin-bottom:8px">AI FEEDBACK · Q2 COMPLETED</div>
+    <div class="grid2" style="gap:6px;margin-bottom:10px">
+      <div style="background:var(--green2);border:1px solid var(--green);border-radius:6px;padding:8px;text-align:center">
+        <div style="font-size:18px;font-weight:500;color:var(--green);font-family:var(--mono)">7<span style="font-size:11px">/10</span></div>
+        <div class="dim">Technical</div>
+      </div>
+      <div style="background:var(--amber2);border:1px solid var(--amber);border-radius:6px;padding:8px;text-align:center">
+        <div style="font-size:18px;font-weight:500;color:var(--amber);font-family:var(--mono)">5<span style="font-size:11px">/10</span></div>
+        <div class="dim">Communication</div>
+      </div>
+    </div>
+    <div style="font-size:10px;color:var(--t1);line-height:1.5;margin-bottom:6px;background:var(--bg3);border-radius:5px;padding:8px">Good technical core. Missed ACID compliance context. Communication lacked an opening statement — jump straight to the definition next time.</div>
+    <div class="dim" style="margin-bottom:4px">MISSED KEYWORDS</div>
+    <div style="display:flex;gap:4px;flex-wrap:wrap">
+      ${["ACID", "CAP theorem", "sharding"].map((k) => `<div class="tag tag-red" style="cursor:pointer">${k} ↗</div>`).join("")}
+    </div>
+  </div>
+</div>`,
+          sp: {
+            layout:
+              "Full page · two zones: answer (top) + feedback panel (previous Q, bottom)",
+            components: [
+              "Session header + purple progress bar",
+              "Question card with topic + difficulty tag",
+              "Answer textarea with live word count + timer",
+              "Submit CTA",
+              "Feedback panel: 2 score cards (tech + comm)",
+              "Feedback text block",
+              "Missed keyword tags (clickable → navigate to quiz)",
+            ],
+            colours: [
+              ["#9b7ff4", "Purple — interview module accent throughout"],
+              ["#3ec98a", "Technical score card — good"],
+              ["#f0a500", "Communication score card — needs work"],
+              ["#e05252", "Missed keyword tags"],
+            ],
+            states: [
+              "Pre-answer — textarea empty, submit disabled",
+              "Typing — word count updates live",
+              'Submitted — loading state (spinner, "AI thinking…")',
+              "Feedback revealed — full panel appears",
+              "Session complete — see Screen 10 (Interview Summary)",
+            ],
+            interactions: [
+              {
+                t: "Submit",
+                a: "POST /api/interview/evaluate → on return: reveal feedback panel for this Q, scroll into view",
+              },
+              {
+                t: "Click missed keyword tag",
+                a: "navigate(/quiz/:mappedSkill) — takes user to the relevant quiz",
+              },
+              {
+                t: "Next question button (after feedback)",
+                a: "Scroll/advance to Q+1. Previous Q answer locked.",
+              },
+            ],
+            notes:
+              "Purple is deliberate — it visually separates interview mode from all other modules. Missed keywords are mapped to their parent skill server-side and returned in keywordsMissed[]. Clicking one opens the corresponding quiz.",
+          },
+        },
+
+        /* 9 INTERVIEW SUMMARY */
+        {
+          title: "Interview Session Summary",
+          route: "/interview/summary",
+          auth: "Protected",
+          num: "Screen 10 of 13 · NEW",
+          mk: `<div style="background:var(--bg0);padding:18px;min-height:480px">
+  <div style="text-align:center;margin-bottom:20px">
+    <div class="tag tag-purple" style="margin-bottom:8px">SESSION COMPLETE · BACKEND ROLE</div>
+    <div style="font-family:var(--disp);font-size:16px;font-weight:700;margin-bottom:4px">Interview Complete</div>
+    <div class="dim">5 questions answered · 8 min 42 sec</div>
+  </div>
+  <div class="grid2" style="margin-bottom:12px">
+    <div class="card" style="text-align:center;padding:14px;border-color:var(--green)">
+      <div style="font-size:28px;font-weight:500;color:var(--green);font-family:var(--mono)">6.8</div>
+      <div style="font-size:9px;font-family:var(--mono);color:var(--t2);margin-top:2px">AVG TECHNICAL</div>
+    </div>
+    <div class="card" style="text-align:center;padding:14px;border-color:var(--amber)">
+      <div style="font-size:28px;font-weight:500;color:var(--amber);font-family:var(--mono)">5.4</div>
+      <div style="font-size:9px;font-family:var(--mono);color:var(--t2);margin-top:2px">AVG COMMUNICATION</div>
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:10px;padding:12px">
+    <div style="font-size:9px;color:var(--t2);font-family:var(--mono);margin-bottom:8px">PER-QUESTION BREAKDOWN</div>
+    ${[
+      ["Q1", "Auth & JWT", "8", "7", ""],
+      ["Q2", "REST APIs", "7", "6", ""],
+      ["Q3", "SQL vs NoSQL", "7", "5", "← current"],
+      ["Q4", "Event Loop", "6", "4", ""],
+      ["Q5", "Middleware", "7", "5", ""],
+    ]
+      .map(
+        ([q, topic, t, c, note]) => `
+    <div class="row" style="justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--bd)">
+      <div style="font-size:10px;color:var(--t2);font-family:var(--mono);width:22px">${q}</div>
+      <div style="font-size:10px;color:var(--t1);flex:1">${topic}</div>
+      <div style="font-size:10px;color:var(--green);font-family:var(--mono);width:24px">${t}/10</div>
+      <div style="font-size:10px;color:var(--amber);font-family:var(--mono);width:24px">${c}/10</div>
+      <div class="dim" style="font-size:9px">${note}</div>
+    </div>`
+      )
+      .join("")}
+  </div>
+  <div class="card" style="margin-bottom:10px;padding:12px">
+    <div style="font-size:9px;color:var(--t2);font-family:var(--mono);margin-bottom:8px">ALL MISSED KEYWORDS → SKILL FLAGS UPDATED</div>
+    <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px">
+      ${["ACID", "CAP theorem", "sharding", "event loop internals", "RBAC", "token refresh"].map((k) => `<div class="tag tag-red" style="cursor:pointer">${k} ↗</div>`).join("")}
+    </div>
+    <div style="font-size:10px;color:var(--t1)">These keywords map to: <span style="color:var(--teal)">mongodb</span>, <span style="color:var(--teal)">nodejs</span>, <span style="color:var(--teal)">security</span>. Quizzes for these skills have been flagged for review.</div>
+  </div>
+  <div class="row" style="gap:8px">
+    <div class="btn-s" style="flex:1;font-size:11px;padding:9px">View history</div>
+    <div class="btn-p" style="flex:2;font-size:11px;padding:9px">Go to MongoDB quiz →</div>
+  </div>
+</div>`,
+          sp: {
+            layout: "Full page · summary card layout · no ongoing interaction",
+            components: [
+              "Session complete header + stats",
+              "Avg technical + avg communication score cards",
+              "Per-question breakdown table (Q1–Q5, topic, tech score, comm score)",
+              "All missed keywords consolidated list (clickable)",
+              "Keyword-to-skill mapping explanation",
+              "View history + Go to quiz CTAs",
+            ],
+            colours: [
+              ["#9b7ff4", "Purple — session complete tag, module accent"],
+              [
+                "#3ec98a",
+                "Technical score — green (cognitive link to correctness)",
+              ],
+              ["#f0a500", "Communication score — amber (needs work)"],
+              ["#e05252", "Missed keyword tags — red (gaps)"],
+              ["#00d4aa", "Skill names in keyword mapping text"],
+            ],
+            states: [
+              "Perfect session (all 10/10 — congratulations state)",
+              "Poor session (avg <5 — encouragement + guidance)",
+              "Normal session (shown)",
+            ],
+            interactions: [
+              {
+                t: "Click missed keyword tag",
+                a: "navigate(/quiz/:mappedSkill)",
+              },
+              {
+                t: "View history",
+                a: "navigate(/interview/history) — full past sessions list",
+              },
+              {
+                t: "Go to [skill] quiz",
+                a: "navigate(/quiz/:topWeakSkill) — auto-picks the most impactful quiz",
+              },
+            ],
+            notes:
+              'This is the "aha" screen for the cross-module keyword feedback loop. Showing students "you missed ACID → your MongoDB quiz has been flagged" makes the intelligence of the platform visible. Without this screen, that feature is completely invisible to the user.',
+          },
+        },
+
+        /* 10 ROADMAP */
+        {
+          title: "Roadmap",
+          route: "/roadmap",
+          auth: "Protected",
+          num: "Screen 11 of 13",
+          mk: `<div style="background:var(--bg0);padding:18px;min-height:480px">
+  <div class="row" style="justify-content:space-between;margin-bottom:12px">
+    <div>
+      <div class="dim" style="font-size:9px;font-family:var(--mono)">TARGET: RAZORPAY · 8 WEEKS · 3 COMPLETE</div>
+      <div style="font-family:var(--disp);font-size:14px;font-weight:700;margin-top:1px">Placement Roadmap</div>
+    </div>
+    <div class="btn-s" style="font-size:10px;padding:6px 10px;cursor:pointer">Change target ↗</div>
+  </div>
+  <div class="grid3" style="margin-bottom:14px">
+    <div class="mini-card" style="text-align:center;border-color:var(--green)"><div style="font-size:20px;font-weight:500;color:var(--green);font-family:var(--mono)">37%</div><div class="dim">complete</div></div>
+    <div class="mini-card" style="text-align:center"><div style="font-size:20px;font-weight:500;color:var(--t0);font-family:var(--mono)">5</div><div class="dim">weeks left</div></div>
+    <div class="mini-card" style="text-align:center;border-color:var(--teal)"><div style="font-size:20px;font-weight:500;color:var(--teal);font-family:var(--mono)">+9</div><div class="dim">score gained</div></div>
+  </div>
+  <div class="col" style="gap:6px">
+    <div style="background:var(--bg2);border:1px solid var(--green);border-radius:8px;padding:10px;opacity:.65">
+      <div class="row" style="gap:8px"><div style="width:18px;height:18px;border-radius:50%;background:var(--green2);border:1.5px solid var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1 3l2 2 4-4" stroke="#3ec98a" stroke-width="1.5"/></svg></div><div style="font-size:11px;color:var(--green);font-weight:500">Week 1–3 · DSA (Beginner → Intermediate)</div><div style="margin-left:auto" class="tag tag-green">Done ✓</div></div>
+    </div>
+    <div style="background:var(--bg2);border:1.5px solid var(--teal);border-radius:8px;padding:12px">
+      <div class="row" style="gap:8px;margin-bottom:10px"><div style="width:18px;height:18px;border-radius:50%;border:1.5px solid var(--teal);flex-shrink:0"></div><div style="font-size:11px;color:var(--t0);font-weight:500">Week 4 · Node.js — Intermediate</div><div style="margin-left:auto" class="tag tag-teal">Current</div></div>
+      <div class="col" style="gap:5px;padding-left:26px;margin-bottom:10px">
+        ${[
+          [
+            "var(--purple)",
+            "Watch",
+            "Advanced Node.js Concepts — Traversy Media",
+          ],
+          [
+            "var(--amber)",
+            "Read",
+            "Node.js official docs — Event Loop & Async",
+          ],
+          ["var(--green)", "Practice", "LeetCode: 5 Design problems"],
+          ["var(--teal)", "Build", "REST API with JWT + rate limiting"],
+        ]
+          .map(
+            ([c, type, label]) => `
+        <div class="row" style="gap:7px"><div style="width:5px;height:5px;border-radius:50%;background:${c};flex-shrink:0"></div><div><span style="font-size:9px;color:var(--t2);font-family:var(--mono)">${type}</span> <span style="font-size:10px;color:var(--t1)">${label}</span></div></div>`
+          )
+          .join("")}
+      </div>
+      <div style="padding-left:26px"><div class="btn-p" style="font-size:10px;padding:7px 14px">Mark week complete →</div></div>
+    </div>
+    <div style="background:var(--bg2);border:1px solid var(--bd2);border-radius:8px;padding:10px;opacity:.5">
+      <div class="row" style="gap:8px"><div style="width:18px;height:18px;border-radius:50%;border:1.5px solid var(--t3);flex-shrink:0"></div><div style="font-size:11px;color:var(--t2)">Week 5 · MongoDB — Beginner</div><div style="margin-left:auto" class="tag" style="background:var(--bg4);color:var(--t2);border:1px solid var(--bd)">Upcoming</div></div>
+    </div>
+  </div>
+</div>`,
+          sp: {
+            layout: "Full page · vertical timeline · 3 stat cards at top",
+            components: [
+              "Target company + change button",
+              "3 stat cards: completion% / weeks left / score gained",
+              "Week timeline cards (done / current / upcoming)",
+              "Resource rows: Watch/Read/Practice/Build with colour dots",
+              "Mark complete CTA inside current week card",
+            ],
+            colours: [
+              ["#3ec98a", "Completed week — border, check icon, Done badge"],
+              ["#00d4aa", "Current week — border 1.5px, resource labels, CTA"],
+              ["#2a3347", "Upcoming week — muted opacity 0.5"],
+              ["#9b7ff4", "Video/Watch resource dot"],
+              ["#f0a500", "Article/Read resource dot"],
+              ["#3ec98a", "Practice dot"],
+              ["#00d4aa", "Build task dot"],
+            ],
+            states: [
+              "Empty (no roadmap generated) — see Screen 12 (Modal)",
+              "Active: done/current/upcoming",
+              'All complete — congratulations state + "Apply now" prompt',
+            ],
+            interactions: [
+              {
+                t: "Mark week complete",
+                a: "PUT /api/roadmap/:week/complete → stats update: completionPercent, score gained → card turns green",
+              },
+              {
+                t: "Click any resource link",
+                a: "Opens in new tab (target=_blank)",
+              },
+              {
+                t: "Change target",
+                a: "Open Roadmap Generate Modal (Screen 12)",
+              },
+            ],
+            notes:
+              "Resource dot colours are a fixed visual language across the platform: purple=video, amber=article, green=practice, teal=build. Each resource title is a clickable hyperlink. Mark complete triggers immediate readiness score update — student sees +N points feedback.",
+          },
+        },
+
+        /* 11 ROADMAP MODAL */
+        {
+          title: "Roadmap Generate Modal",
+          route: "/roadmap (modal overlay)",
+          auth: "Protected",
+          num: "Screen 12 of 13 · NEW",
+          mk: `<div style="min-height:480px;background:rgba(8,11,17,0.85);display:flex;align-items:center;justify-content:center;padding:20px">
+  <div style="width:100%;max-width:380px;background:var(--bg2);border:1px solid var(--bd3);border-radius:12px;overflow:hidden">
+    <div style="padding:18px 20px;border-bottom:1px solid var(--bd)">
+      <div class="row" style="justify-content:space-between">
+        <div>
+          <div style="font-family:var(--disp);font-size:14px;font-weight:700">Generate Placement Roadmap</div>
+          <div class="dim" style="margin-top:2px">AI will personalise your week-by-week plan</div>
+        </div>
+        <div style="font-size:16px;color:var(--t2);cursor:pointer;line-height:1">✕</div>
+      </div>
+    </div>
+    <div style="padding:18px 20px">
+      <div style="margin-bottom:16px">
+        <span class="label">TARGET COMPANY</span>
+        <div style="position:relative">
+          <input class="input-f" value="Razorpay" style="width:100%;padding-right:36px" readonly/>
+          <span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--teal);font-size:12px">▾</span>
+        </div>
+        <div style="background:var(--bg3);border:1px solid var(--bd2);border-radius:6px;margin-top:4px;overflow:hidden">
+          <div style="padding:7px 12px;font-size:11px;color:var(--t2)">TCS — 78% current match</div>
+          <div style="padding:7px 12px;font-size:11px;color:var(--teal);background:var(--teal3)">Razorpay — 31% current match ✓</div>
+          <div style="padding:7px 12px;font-size:11px;color:var(--t2)">Zomato — 22% current match</div>
+          <div style="padding:5px 12px;font-size:10px;color:var(--t2);border-top:1px solid var(--bd)">+ 22 more</div>
+        </div>
+      </div>
+      <div style="margin-bottom:16px">
+        <span class="label">WEEKS AVAILABLE BEFORE PLACEMENT</span>
+        <div class="row" style="gap:10px;align-items:center;margin-bottom:6px">
+          <input type="range" min="2" max="20" value="8" style="flex:1;accent-color:var(--teal)"/>
+          <div style="font-family:var(--mono);font-size:16px;font-weight:500;color:var(--teal);width:28px;text-align:right">8</div>
+        </div>
+        <div class="row" style="justify-content:space-between"><span class="dim">2 weeks min</span><span class="dim">20 weeks max</span></div>
+      </div>
+      <div class="mini-card" style="margin-bottom:16px">
+        <div style="font-size:9px;color:var(--t2);font-family:var(--mono);margin-bottom:6px">PREVIEW</div>
+        <div style="font-size:11px;color:var(--t1);line-height:1.5">8-week roadmap targeting Razorpay (31% → est. 74%). Focusing on: DSA → Node.js → MongoDB → System Design. Estimated completion: <span style="color:var(--teal)">May 19, 2026</span>.</div>
+      </div>
+      <div class="row" style="gap:8px">
+        <div class="btn-s" style="flex:1;font-size:11px;padding:10px">Cancel</div>
+        <div class="btn-p" style="flex:2;font-size:11px;padding:10px">Generate roadmap →</div>
+      </div>
+    </div>
+  </div>
+</div>`,
+          sp: {
+            layout:
+              "Modal overlay · dim bg (rgba 85%) · centred card · NOT a new route",
+            components: [
+              "Modal header + close button",
+              "Company picker dropdown (shows match% inline)",
+              "Weeks slider (2–20) with live number readout",
+              "Preview card (estimated match% jump + completion date)",
+              "Cancel + Generate CTAs",
+            ],
+            colours: [
+              [
+                "#00d4aa",
+                "Teal — slider accent, selected company, CTA, preview dates",
+              ],
+              ["rgba(8,11,17,0.85)", "Dim overlay behind modal"],
+            ],
+            states: [
+              "Company dropdown closed",
+              "Company dropdown open (shown)",
+              "Slider at different values — preview updates live",
+              "Generating — CTA shows spinner, both buttons disabled",
+              "Error — AI unavailable, fallback message",
+            ],
+            interactions: [
+              {
+                t: "Company picker",
+                a: "Searchable dropdown — shows all 25 companies with current match%. Sorted by match% desc.",
+              },
+              {
+                t: "Weeks slider",
+                a: "On input: recalculate estimated match%, recalculate estimated completion date. All client-side.",
+              },
+              {
+                t: "Generate",
+                a: "POST /api/roadmap/generate → close modal → show roadmap page with new data",
+              },
+              {
+                t: "Close / Cancel",
+                a: "Close modal, return to previous state. No data lost.",
+              },
+            ],
+            notes:
+              'This modal is triggered from: (1) Roadmap empty state, (2) "Change target" button on roadmap page, (3) "Generate Roadmap" CTA on Company Detail page. The company is pre-filled when triggered from Company Detail. Preview estimates are approximate — actual order is determined by AI.',
+          },
+        },
+
+        /* 12 PROFILE */
+        {
+          title: "Profile & Settings",
+          route: "/profile",
+          auth: "Protected",
+          num: "Screen 13 of 13 · NEW",
+          mk: `<div style="background:var(--bg0);padding:18px;min-height:480px">
+  <div style="font-family:var(--disp);font-size:14px;font-weight:700;margin-bottom:16px">Profile & Settings</div>
+  <div class="card" style="margin-bottom:12px;padding:16px">
+    <div class="row" style="gap:14px;margin-bottom:16px">
+      <div style="width:52px;height:52px;border-radius:50%;background:var(--teal3);border:2px solid var(--teal);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600;color:var(--teal);flex-shrink:0">RS</div>
+      <div>
+        <div style="font-size:14px;font-weight:500;color:var(--t0)">Rahul Sharma</div>
+        <div class="dim">rahul.sharma@example.com</div>
+        <div class="tag tag-teal" style="margin-top:4px">Backend developer</div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div style="margin-top:12px">
+      <span class="label">FULL NAME</span>
+      <div class="input-f" style="margin-bottom:10px;width:100%">Rahul Sharma</div>
+      <span class="label">EMAIL ADDRESS</span>
+      <div class="input-f" style="margin-bottom:2px;width:100%;color:var(--t2);cursor:not-allowed">rahul.sharma@example.com</div>
+      <div class="dim" style="margin-bottom:10px;font-size:9px">Email cannot be changed</div>
+      <span class="label">TARGET ROLE</span>
+      <div class="input-f" style="border-color:var(--teal);color:var(--teal);display:flex;align-items:center;justify-content:space-between;cursor:pointer;width:100%">Backend<span>▾</span></div>
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:12px;padding:14px">
+    <div style="font-size:11px;font-weight:500;color:var(--t0);margin-bottom:10px">Your Progress Summary</div>
+    <div class="grid2" style="gap:6px">
+      ${[
+        ["Quizzes taken", "5"],
+        ["Interviews done", "3 sessions"],
+        ["Readiness score", "62"],
+        ["Best match", "TCS 78%"],
+      ]
+        .map(
+          ([l, v]) =>
+            `<div class="mini-card"><div class="dim" style="margin-bottom:2px">${l}</div><div style="font-size:13px;font-weight:500;color:var(--t0);font-family:var(--mono)">${v}</div></div>`
+        )
+        .join("")}
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:12px;padding:14px;border-color:var(--red)">
+    <div style="font-size:11px;font-weight:500;color:var(--t0);margin-bottom:6px">Danger zone</div>
+    <div style="font-size:10px;color:var(--t1);margin-bottom:10px">Reset all quiz scores and interview history. This cannot be undone.</div>
+    <div style="background:var(--red2);border:1px solid var(--red);border-radius:6px;padding:8px 14px;font-size:11px;color:var(--red);cursor:pointer;display:inline-block">Reset all progress</div>
+  </div>
+  <div class="row" style="gap:8px">
+    <div class="btn-s" style="flex:1;font-size:11px;padding:10px">Discard changes</div>
+    <div class="btn-p" style="flex:2;font-size:11px;padding:10px">Save changes →</div>
+  </div>
+</div>`,
+          sp: {
+            layout:
+              "Full page · single column · 3 sections: identity / progress / danger zone",
+            components: [
+              "Avatar (initials circle, teal)",
+              "Name + email + current role badge",
+              "Name field (editable)",
+              "Email field (read-only with explanation)",
+              "Target role dropdown (editable — triggers match recalculation)",
+              "Progress summary: 4 stat mini-cards",
+              "Danger zone: reset progress (red, confirm dialog)",
+              "Discard + Save CTAs",
+            ],
+            colours: [
+              ["#00d4aa", "Teal — avatar, role dropdown border, role badge"],
+              ["#e05252", "Red — danger zone card border and reset button"],
+              ["#5c6b85", "Muted grey — read-only email field"],
+            ],
+            states: [
+              "Default — no changes made (Save disabled)",
+              "Name edited — Save activates",
+              "Role changed — Save activates",
+              "Saving — spinner",
+              'Saved — success toast "Changes saved"',
+              'Reset confirm dialog — "Are you sure? This cannot be undone." with Cancel/Confirm',
+            ],
+            interactions: [
+              {
+                t: "Change Target Role",
+                a: "PUT /api/auth/profile → on success: recalculate company match% for new role → show success toast",
+              },
+              {
+                t: "Save changes",
+                a: "PUT /api/auth/profile → 200: success toast → update AuthContext user object",
+              },
+              {
+                t: "Reset all progress",
+                a: "Show confirm dialog → on confirm: DELETE /api/user/progress → clear all SkillProfiles + InterviewResults + RoadmapProgress for this user → navigate(/dashboard) showing empty state",
+              },
+            ],
+            notes:
+              "Access via: click avatar in bottom of icon sidebar → navigate(/profile). Email is immutable — shown read-only with explicit label. Target role change is the most important action here — it cascades to all company match percentages immediately.",
+          },
+        },
+      ];
+
+      function go(idx) {
+        const s = S[idx];
+        document.getElementById("tb-title").textContent = s.title;
+        document.getElementById("tb-route").textContent = s.route;
+        document.getElementById("tb-auth").textContent = s.auth;
+        document.getElementById("tb-num").textContent = s.num;
+        document
+          .querySelectorAll(".nav")
+          .forEach((el, i) => el.classList.toggle("on", i === idx));
+        document.getElementById("mockup-area").innerHTML =
+          `<div class="frame">${s.mk}</div>`;
+        const sp = s.sp;
+        document.getElementById("specs-area").innerHTML = `
+    <div class="sp-sec"><div class="sp-hd">Layout</div><div class="note"><p>${sp.layout}</p></div></div>
+    <div class="sp-sec"><div class="sp-hd">Components</div><div>${sp.components.map((c) => `<span class="chip">${c}</span>`).join("")}</div></div>
+    <div class="sp-sec"><div class="sp-hd">Colour usage</div>${sp.colours.map(([hex, label]) => `<div class="swatch-row"><div class="sw" style="background:${hex}"></div><div class="sw-label">${label}</div><div class="sw-hex">${hex.startsWith("#") ? hex : hex.replace("var(", "").replace(")", "")}</div></div>`).join("")}</div>
+    <div class="sp-sec"><div class="sp-hd">UI states</div>${sp.states.map((st) => `<div class="state-item"><div class="st-dot" style="background:var(--bd3)"></div><div style="font-size:10.5px;color:var(--t1)">${st}</div></div>`).join("")}</div>
+    <div class="sp-sec"><div class="sp-hd">Interactions → API</div>${sp.interactions.map((it) => `<div class="int-card"><div class="int-t">${it.t}</div><div class="int-a">${it.a}</div></div>`).join("")}</div>
+    <div class="sp-sec"><div class="sp-hd">Dev notes</div><div class="note"><p>${sp.notes}</p></div></div>
+  `;
+      }
+
+      go(0);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1002 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap");
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --paper: #f5f0e8;
+        --paper2: #ede7d8;
+        --paper3: #e3dbd0;
+        --ink: #1c1917;
+        --ink2: #44403c;
+        --ink3: #78716c;
+        --ink4: #a8a29e;
+        --terra: #c84b2f;
+        --terra2: #b03d23;
+        --terra3: #f5ebe8;
+        --terra4: rgba(200, 75, 47, 0.08);
+        --sage: #3d6b4f;
+        --sage2: #ebf2ee;
+        --gold: #b5860d;
+        --gold2: #fbf5e8;
+        --bd: rgba(28, 25, 23, 0.1);
+        --bd2: rgba(28, 25, 23, 0.18);
+        --serif: "Lora", Georgia, serif;
+        --sans: "Plus Jakarta Sans", sans-serif;
+        --mono: "JetBrains Mono", monospace;
+      }
+
+      body {
+        font-family: var(--sans);
+        background: var(--paper);
+        color: var(--ink);
+      }
+
+      .switcher {
+        display: flex;
+        gap: 0;
+        border: 1.5px solid var(--bd2);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 24px;
+        width: fit-content;
+      }
+      .sw-btn {
+        padding: 9px 20px;
+        font-size: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        background: transparent;
+        color: var(--ink3);
+        border: none;
+        font-family: var(--sans);
+        transition: all 0.2s;
+        letter-spacing: 0.01em;
+      }
+      .sw-btn.active {
+        background: var(--ink);
+        color: var(--paper);
+        font-weight: 600;
+      }
+
+      .screen {
+        display: none;
+      }
+      .screen.show {
+        display: block;
+      }
+
+      /* ── LOGIN ───────────────────────────────── */
+      .login-wrap {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        min-height: 520px;
+        border: 1.5px solid var(--bd2);
+        border-radius: 14px;
+        overflow: hidden;
+      }
+
+      .login-left {
+        background: var(--ink);
+        padding: 40px 36px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+        overflow: hidden;
+      }
+      .login-left::before {
+        content: "";
+        position: absolute;
+        top: -60px;
+        right: -60px;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        background: rgba(200, 75, 47, 0.15);
+      }
+      .login-left::after {
+        content: "";
+        position: absolute;
+        bottom: -40px;
+        left: -40px;
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        background: rgba(61, 107, 79, 0.12);
+      }
+
+      .brand-mark {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        position: relative;
+        z-index: 1;
+      }
+      .brand-name {
+        font-family: var(--serif);
+        font-size: 28px;
+        font-weight: 600;
+        color: #f5f0e8;
+        letter-spacing: -0.5px;
+        font-style: italic;
+      }
+      .brand-tag {
+        font-size: 11px;
+        color: rgba(245, 240, 232, 0.45);
+        font-family: var(--mono);
+        letter-spacing: 0.08em;
+      }
+
+      .login-quote {
+        position: relative;
+        z-index: 1;
+      }
+      .quote-text {
+        font-family: var(--serif);
+        font-size: 17px;
+        font-weight: 400;
+        color: rgba(245, 240, 232, 0.85);
+        line-height: 1.65;
+        font-style: italic;
+        margin-bottom: 12px;
+      }
+      .quote-src {
+        font-size: 11px;
+        color: rgba(245, 240, 232, 0.35);
+        font-family: var(--mono);
+      }
+
+      .dots-row {
+        display: flex;
+        gap: 6px;
+        position: relative;
+        z-index: 1;
+      }
+      .dot-ind {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: rgba(245, 240, 232, 0.2);
+      }
+      .dot-ind.on {
+        background: var(--terra);
+        width: 18px;
+        border-radius: 3px;
+      }
+
+      .login-right {
+        background: var(--paper);
+        padding: 36px 32px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .login-heading {
+        font-family: var(--serif);
+        font-size: 22px;
+        font-weight: 600;
+        color: var(--ink);
+        margin-bottom: 4px;
+        letter-spacing: -0.3px;
+      }
+      .login-sub {
+        font-size: 12px;
+        color: var(--ink3);
+        margin-bottom: 28px;
+      }
+
+      .field-label {
+        font-size: 10px;
+        font-weight: 600;
+        color: var(--ink3);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 5px;
+        font-family: var(--sans);
+      }
+      .field-input {
+        width: 100%;
+        background: var(--paper2);
+        border: 1.5px solid var(--bd2);
+        border-radius: 8px;
+        padding: 10px 14px;
+        font-size: 13px;
+        color: var(--ink);
+        font-family: var(--sans);
+        margin-bottom: 14px;
+        outline: none;
+      }
+      .field-input.focused {
+        border-color: var(--terra);
+        background: #fff;
+      }
+      .field-input::placeholder {
+        color: var(--ink4);
+      }
+
+      .cta-btn {
+        width: 100%;
+        background: var(--terra);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 12px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        font-family: var(--sans);
+        letter-spacing: 0.01em;
+        margin-bottom: 16px;
+        transition: background 0.15s;
+      }
+      .cta-btn:hover {
+        background: var(--terra2);
+      }
+
+      .divider-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+      .divider-line {
+        flex: 1;
+        height: 1px;
+        background: var(--bd);
+      }
+      .divider-text {
+        font-size: 11px;
+        color: var(--ink4);
+      }
+
+      .alt-btn {
+        width: 100%;
+        background: transparent;
+        color: var(--ink2);
+        border: 1.5px solid var(--bd2);
+        border-radius: 8px;
+        padding: 11px;
+        font-size: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        font-family: var(--sans);
+        margin-bottom: 20px;
+      }
+
+      .register-row {
+        text-align: center;
+        font-size: 12px;
+        color: var(--ink3);
+      }
+      .register-link {
+        color: var(--terra);
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+      }
+
+      .error-strip {
+        background: var(--terra3);
+        border: 1px solid rgba(200, 75, 47, 0.3);
+        border-radius: 7px;
+        padding: 10px 12px;
+        display: flex;
+        gap: 9px;
+        align-items: flex-start;
+        margin-bottom: 14px;
+      }
+      .error-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--terra);
+        flex-shrink: 0;
+        margin-top: 3px;
+      }
+      .error-text {
+        font-size: 11.5px;
+        color: var(--terra2);
+        line-height: 1.4;
+      }
+
+      /* ── DASHBOARD ───────────────────────────── */
+      .dash-wrap {
+        border: 1.5px solid var(--bd2);
+        border-radius: 14px;
+        overflow: hidden;
+        background: var(--paper);
+      }
+
+      .dash-topbar {
+        background: var(--paper);
+        border-bottom: 1px solid var(--bd);
+        padding: 0 24px;
+        display: flex;
+        align-items: center;
+        gap: 0;
+        height: 48px;
+      }
+      .dash-logo {
+        font-family: var(--serif);
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--ink);
+        font-style: italic;
+        margin-right: 28px;
+      }
+      .dash-nav {
+        display: flex;
+        gap: 0;
+        height: 100%;
+      }
+      .dash-nav-item {
+        display: flex;
+        align-items: center;
+        padding: 0 14px;
+        font-size: 12px;
+        color: var(--ink3);
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        font-weight: 400;
+        transition: all 0.15s;
+      }
+      .dash-nav-item:hover {
+        color: var(--ink);
+      }
+      .dash-nav-item.on {
+        color: var(--ink);
+        font-weight: 600;
+        border-bottom-color: var(--terra);
+      }
+      .dash-right {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .avatar-sm {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: var(--terra3);
+        border: 1.5px solid rgba(200, 75, 47, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--terra);
+      }
+
+      .dash-body {
+        display: grid;
+        grid-template-columns: 1fr 260px;
+        gap: 0;
+        min-height: 460px;
+      }
+
+      .dash-main {
+        padding: 24px;
+        border-right: 1px solid var(--bd);
+      }
+
+      .dash-greeting {
+        margin-bottom: 20px;
+      }
+      .greet-name {
+        font-family: var(--serif);
+        font-size: 20px;
+        font-weight: 600;
+        color: var(--ink);
+        letter-spacing: -0.3px;
+        margin-bottom: 3px;
+      }
+      .greet-sub {
+        font-size: 12px;
+        color: var(--ink3);
+      }
+
+      .readiness-card {
+        background: var(--ink);
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 16px;
+        position: relative;
+        overflow: hidden;
+      }
+      .readiness-card::before {
+        content: "";
+        position: absolute;
+        top: -30px;
+        right: -30px;
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: rgba(200, 75, 47, 0.18);
+      }
+      .readiness-card::after {
+        content: "";
+        position: absolute;
+        bottom: -20px;
+        left: 60px;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: rgba(61, 107, 79, 0.15);
+      }
+      .rc-label {
+        font-size: 10px;
+        color: rgba(245, 240, 232, 0.45);
+        font-family: var(--mono);
+        letter-spacing: 0.08em;
+        margin-bottom: 8px;
+        position: relative;
+        z-index: 1;
+      }
+      .rc-score {
+        font-family: var(--serif);
+        font-size: 52px;
+        font-weight: 600;
+        color: #f5f0e8;
+        line-height: 1;
+        position: relative;
+        z-index: 1;
+        letter-spacing: -2px;
+      }
+      .rc-suffix {
+        font-size: 18px;
+        color: rgba(245, 240, 232, 0.45);
+      }
+      .rc-label2 {
+        font-size: 11px;
+        color: rgba(245, 240, 232, 0.55);
+        position: relative;
+        z-index: 1;
+        margin-top: 4px;
+        margin-bottom: 14px;
+      }
+      .rc-bar-track {
+        height: 4px;
+        background: rgba(245, 240, 232, 0.12);
+        border-radius: 2px;
+        overflow: hidden;
+        position: relative;
+        z-index: 1;
+        margin-bottom: 14px;
+      }
+      .rc-bar-fill {
+        height: 100%;
+        border-radius: 2px;
+        background: var(--terra);
+      }
+      .rc-components {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        position: relative;
+        z-index: 1;
+      }
+      .rcc {
+        background: rgba(245, 240, 232, 0.07);
+        border-radius: 7px;
+        padding: 8px 10px;
+      }
+      .rcc-val {
+        font-size: 14px;
+        font-weight: 600;
+        color: #f5f0e8;
+        font-family: var(--mono);
+        margin-bottom: 2px;
+      }
+      .rcc-label {
+        font-size: 10px;
+        color: rgba(245, 240, 232, 0.35);
+      }
+
+      .section-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
+      .section-title {
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--ink);
+        letter-spacing: 0.04em;
+      }
+      .section-link {
+        font-size: 11px;
+        color: var(--terra);
+        cursor: pointer;
+        font-weight: 500;
+      }
+
+      .skill-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 7px;
+        margin-bottom: 16px;
+      }
+      .skill-card {
+        background: var(--paper2);
+        border: 1px solid var(--bd);
+        border-radius: 9px;
+        padding: 11px 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .skill-card:hover {
+        border-color: var(--bd2);
+        background: #fff;
+      }
+      .sk-name {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--ink);
+        margin-bottom: 5px;
+        font-family: var(--sans);
+      }
+      .sk-bar-track {
+        height: 3px;
+        background: var(--bd);
+        border-radius: 2px;
+        overflow: hidden;
+        margin-bottom: 5px;
+      }
+      .sk-bar-fill {
+        height: 100%;
+        border-radius: 2px;
+      }
+      .sk-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .sk-pct {
+        font-size: 11px;
+        font-family: var(--mono);
+        font-weight: 500;
+      }
+      .sk-badge {
+        font-size: 9px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        padding: 2px 7px;
+        border-radius: 20px;
+      }
+      .badge-beg {
+        background: var(--gold2);
+        color: var(--gold);
+      }
+      .badge-int {
+        background: var(--terra3);
+        color: var(--terra2);
+      }
+      .badge-adv {
+        background: var(--sage2);
+        color: var(--sage);
+      }
+      .badge-none {
+        background: var(--paper3);
+        color: var(--ink4);
+      }
+
+      .dash-sidebar {
+        padding: 20px;
+        background: var(--paper);
+      }
+
+      .next-step-card {
+        background: var(--terra);
+        border-radius: 11px;
+        padding: 16px;
+        margin-bottom: 14px;
+      }
+      .ns-eyebrow {
+        font-size: 9px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.6);
+        letter-spacing: 0.1em;
+        margin-bottom: 6px;
+      }
+      .ns-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: #fff;
+        line-height: 1.4;
+        margin-bottom: 8px;
+      }
+      .ns-sub {
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.7);
+        margin-bottom: 12px;
+        line-height: 1.4;
+      }
+      .ns-btn {
+        background: #fff;
+        color: var(--terra2);
+        border: none;
+        border-radius: 6px;
+        padding: 8px 14px;
+        font-size: 11px;
+        font-weight: 600;
+        cursor: pointer;
+        font-family: var(--sans);
+        width: 100%;
+      }
+
+      .company-list {
+        margin-bottom: 14px;
+      }
+      .company-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 0;
+        border-bottom: 1px solid var(--bd);
+      }
+      .company-item:last-child {
+        border-bottom: none;
+      }
+      .co-abbr {
+        width: 28px;
+        height: 28px;
+        border-radius: 6px;
+        background: var(--paper2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 9px;
+        font-weight: 700;
+        color: var(--ink2);
+        font-family: var(--mono);
+        flex-shrink: 0;
+        border: 1px solid var(--bd);
+      }
+      .co-name {
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--ink);
+        flex: 1;
+      }
+      .co-bar-wrap {
+        width: 56px;
+        height: 3px;
+        background: var(--bd);
+        border-radius: 2px;
+        overflow: hidden;
+      }
+      .co-bar-fill {
+        height: 100%;
+        border-radius: 2px;
+      }
+      .co-pct {
+        font-size: 11px;
+        font-family: var(--mono);
+        font-weight: 500;
+        width: 28px;
+        text-align: right;
+      }
+
+      .streak-card {
+        background: var(--gold2);
+        border: 1px solid rgba(181, 134, 13, 0.2);
+        border-radius: 9px;
+        padding: 12px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .streak-num {
+        font-family: var(--serif);
+        font-size: 28px;
+        font-weight: 600;
+        color: var(--gold);
+        letter-spacing: -1px;
+        flex-shrink: 0;
+      }
+      .streak-text {
+        font-size: 11px;
+        color: var(--gold);
+        line-height: 1.4;
+        font-weight: 500;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="switcher">
+      <button class="sw-btn active" onclick="show('login', this)">
+        Login screen
+      </button>
+      <button class="sw-btn" onclick="show('dashboard', this)">
+        Dashboard screen
+      </button>
+    </div>
+
+    <!-- ═══ LOGIN ═══ -->
+    <div class="screen show" id="screen-login">
+      <div class="login-wrap">
+        <div class="login-left">
+          <div class="brand-mark">
+            <div class="brand-name">SkillLens</div>
+            <div class="brand-tag">PLACEMENT INTELLIGENCE</div>
+          </div>
+          <div class="login-quote">
+            <div class="quote-text">
+              "The gap between where you are and where you want to be is filled
+              by what you do every day."
+            </div>
+            <div class="quote-src">— your placement roadmap starts here</div>
+          </div>
+          <div class="dots-row">
+            <div class="dot-ind on"></div>
+            <div class="dot-ind"></div>
+            <div class="dot-ind"></div>
+          </div>
+        </div>
+
+        <div class="login-right">
+          <div class="login-heading">Welcome back</div>
+          <div class="login-sub">
+            Sign in to continue your placement journey
+          </div>
+
+          <div class="error-strip">
+            <div class="error-dot"></div>
+            <div class="error-text">
+              Invalid email or password. Please check your credentials and try
+              again.
+            </div>
+          </div>
+
+          <div class="field-label">Email address</div>
+          <input
+            class="field-input focused"
+            placeholder="you@example.com"
+            value="rahul@example.com"
+          />
+
+          <div class="field-label">Password</div>
+          <input
+            class="field-input"
+            type="password"
+            placeholder="Your password"
+            value="••••••••••"
+          />
+
+          <div style="text-align: right; margin-bottom: 18px; margin-top: -8px">
+            <a
+              class="register-link"
+              style="font-size: 11px; font-weight: 500; color: var(--ink3)"
+              >Forgot password?</a
+            >
+          </div>
+
+          <button class="cta-btn">Sign in to SkillLens</button>
+
+          <div class="divider-row">
+            <div class="divider-line"></div>
+            <div class="divider-text">or</div>
+            <div class="divider-line"></div>
+          </div>
+
+          <button class="alt-btn">Continue with Google</button>
+
+          <div class="register-row">
+            New to SkillLens? <a class="register-link">Create a free account</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ DASHBOARD ═══ -->
+    <div class="screen" id="screen-dashboard">
+      <div class="dash-wrap">
+        <div class="dash-topbar">
+          <div class="dash-logo">SkillLens</div>
+          <nav class="dash-nav">
+            <div class="dash-nav-item on">Dashboard</div>
+            <div class="dash-nav-item">Resume</div>
+            <div class="dash-nav-item">Companies</div>
+            <div class="dash-nav-item">Interview</div>
+            <div class="dash-nav-item">Roadmap</div>
+          </nav>
+          <div class="dash-right">
+            <div style="font-size: 11px; color: var(--ink3)">68 days left</div>
+            <div class="avatar-sm">RS</div>
+          </div>
+        </div>
+
+        <div class="dash-body">
+          <div class="dash-main">
+            <div class="dash-greeting">
+              <div class="greet-name">Good morning, Rahul.</div>
+              <div class="greet-sub">
+                Backend developer · Swami Vivekanand College of Engineering,
+                Indore
+              </div>
+            </div>
+
+            <div class="readiness-card">
+              <div class="rc-label">YOUR READINESS SCORE</div>
+              <div class="rc-score">62<span class="rc-suffix">/100</span></div>
+              <div class="rc-label2">Almost there — keep going</div>
+              <div class="rc-bar-track">
+                <div class="rc-bar-fill" style="width: 62%"></div>
+              </div>
+              <div class="rc-components">
+                <div class="rcc">
+                  <div class="rcc-val">56%</div>
+                  <div class="rcc-label">Skill depth</div>
+                </div>
+                <div class="rcc">
+                  <div class="rcc-val">65%</div>
+                  <div class="rcc-label">Interview</div>
+                </div>
+                <div class="rcc">
+                  <div class="rcc-val">37%</div>
+                  <div class="rcc-label">Roadmap</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-head">
+              <div class="section-title">SKILL DEPTH</div>
+              <div class="section-link">Take a quiz →</div>
+            </div>
+
+            <div class="skill-grid">
+              <div class="skill-card">
+                <div class="sk-name">React</div>
+                <div class="sk-bar-track">
+                  <div
+                    class="sk-bar-fill"
+                    style="width: 70%; background: #3d6b4f"
+                  ></div>
+                </div>
+                <div class="sk-meta">
+                  <div class="sk-pct" style="color: #3d6b4f">70%</div>
+                  <div class="sk-badge badge-int">Intermediate</div>
+                </div>
+              </div>
+              <div class="skill-card">
+                <div class="sk-name">Node.js</div>
+                <div class="sk-bar-track">
+                  <div
+                    class="sk-bar-fill"
+                    style="width: 50%; background: #b5860d"
+                  ></div>
+                </div>
+                <div class="sk-meta">
+                  <div class="sk-pct" style="color: #b5860d">50%</div>
+                  <div class="sk-badge badge-beg">Beginner</div>
+                </div>
+              </div>
+              <div class="skill-card">
+                <div class="sk-name">MongoDB</div>
+                <div class="sk-bar-track">
+                  <div
+                    class="sk-bar-fill"
+                    style="width: 30%; background: #c84b2f"
+                  ></div>
+                </div>
+                <div class="sk-meta">
+                  <div class="sk-pct" style="color: #c84b2f">30%</div>
+                  <div class="sk-badge badge-beg">Beginner</div>
+                </div>
+              </div>
+              <div class="skill-card">
+                <div class="sk-name">DSA</div>
+                <div class="sk-bar-track">
+                  <div
+                    class="sk-bar-fill"
+                    style="width: 0%; background: var(--ink4)"
+                  ></div>
+                </div>
+                <div class="sk-meta">
+                  <div class="sk-pct" style="color: var(--ink4)">—</div>
+                  <div class="sk-badge badge-none">Not taken</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dash-sidebar">
+            <div class="next-step-card">
+              <div class="ns-eyebrow">NEXT STEP</div>
+              <div class="ns-title">Take the MongoDB quiz</div>
+              <div class="ns-sub">
+                30% depth · your biggest gap for TCS · expected +7 readiness
+                points
+              </div>
+              <button class="ns-btn">Start quiz now</button>
+            </div>
+
+            <div class="section-head">
+              <div class="section-title">TOP COMPANY MATCHES</div>
+              <div class="section-link">View all →</div>
+            </div>
+
+            <div class="company-list">
+              <div class="company-item">
+                <div class="co-abbr">TCS</div>
+                <div class="co-name">TCS</div>
+                <div class="co-bar-wrap">
+                  <div
+                    class="co-bar-fill"
+                    style="width: 78%; background: #3d6b4f"
+                  ></div>
+                </div>
+                <div class="co-pct" style="color: #3d6b4f">78%</div>
+              </div>
+              <div class="company-item">
+                <div class="co-abbr">WIP</div>
+                <div class="co-name">Wipro</div>
+                <div class="co-bar-wrap">
+                  <div
+                    class="co-bar-fill"
+                    style="width: 71%; background: #3d6b4f"
+                  ></div>
+                </div>
+                <div class="co-pct" style="color: #3d6b4f">71%</div>
+              </div>
+              <div class="company-item">
+                <div class="co-abbr">RPY</div>
+                <div class="co-name">Razorpay</div>
+                <div class="co-bar-wrap">
+                  <div
+                    class="co-bar-fill"
+                    style="width: 31%; background: #b5860d"
+                  ></div>
+                </div>
+                <div class="co-pct" style="color: #b5860d">31%</div>
+              </div>
+              <div class="company-item">
+                <div class="co-abbr">ZMT</div>
+                <div class="co-name">Zomato</div>
+                <div class="co-bar-wrap">
+                  <div
+                    class="co-bar-fill"
+                    style="width: 22%; background: #c84b2f"
+                  ></div>
+                </div>
+                <div class="co-pct" style="color: #c84b2f">22%</div>
+              </div>
+            </div>
+
+            <div class="streak-card">
+              <div class="streak-num">4</div>
+              <div class="streak-text">
+                day streak —<br />keep it going today
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function show(id, btn) {
+        document
+          .querySelectorAll(".screen")
+          .forEach((s) => s.classList.remove("show"));
+        document
+          .querySelectorAll(".sw-btn")
+          .forEach((b) => b.classList.remove("active"));
+        document.getElementById("screen-" + id).classList.add("show");
+        btn.classList.add("active");
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1619 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      :root {
+        --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+          Roboto, sans-serif;
+        --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", "Courier New", monospace;
+
+        --color-background-primary: #ffffff;
+        --color-background-secondary: #f1efe8;
+        --color-background-tertiary: #faf9f6;
+
+        --color-text-primary: #1a1a1a;
+        --color-text-secondary: #5f5e5a;
+        --color-text-tertiary: #888780;
+
+        --color-border-tertiary: #d3d1c7;
+        --color-border-secondary: #efede6;
+
+        --color-background-info: #e6f1fb;
+        --color-text-info: #185fa5;
+        --color-border-info: #378add;
+
+        --color-background-success: #e1f5ee;
+        --color-text-success: #085041;
+        --color-border-success: #1d9e75;
+
+        --color-background-warning: #faeeda;
+        --color-text-warning: #854f0b;
+        --color-border-warning: #ef9f27;
+
+        --border-radius-md: 14px;
+        --border-radius-lg: 16px;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: var(--font-sans);
+        color: var(--color-text-primary);
+        background: var(--color-background-tertiary);
+      }
+
+      .wrap {
+        padding: 0;
+      }
+      .top-tabs {
+        display: flex;
+        gap: 0;
+        border-bottom: 0.5px solid var(--color-border-tertiary);
+        margin-bottom: 0;
+        overflow-x: auto;
+      }
+      .ttab {
+        padding: 10px 16px;
+        font-size: 12px;
+        font-weight: 400;
+        color: var(--color-text-secondary);
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        white-space: nowrap;
+        transition: all 0.15s;
+        flex-shrink: 0;
+      }
+      .ttab.on {
+        color: var(--color-text-primary);
+        font-weight: 500;
+        border-bottom-color: var(--color-text-primary);
+      }
+      .ttab:hover:not(.on) {
+        color: var(--color-text-primary);
+      }
+
+      .panel {
+        padding: 20px;
+        display: none;
+      }
+      .panel.on {
+        display: block;
+      }
+
+      .phase-row {
+        display: flex;
+      }
+      .phase-row.has-border {
+        border-bottom: 0.5px solid var(--color-border-tertiary);
+      }
+      .phase-row.alt {
+        background: var(--color-background-secondary);
+      }
+
+      .stepper-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+      .step-label {
+        font-size: 11px;
+        color: var(--color-text-tertiary);
+        font-family: var(--font-mono);
+      }
+      .step-nav {
+        display: flex;
+        gap: 8px;
+      }
+      .snav-btn {
+        padding: 6px 14px;
+        font-size: 12px;
+        border: 0.5px solid var(--color-border-secondary);
+        border-radius: var(--border-radius-md);
+        cursor: pointer;
+        background: transparent;
+        color: var(--color-text-secondary);
+        font-family: var(--font-sans);
+        transition: all 0.15s;
+      }
+      .snav-btn:hover {
+        background: var(--color-background-secondary);
+        color: var(--color-text-primary);
+      }
+      .snav-btn.primary {
+        background: var(--color-text-primary);
+        color: var(--color-background-primary);
+        border-color: transparent;
+      }
+      .snav-btn:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+      }
+
+      .pip-row {
+        display: flex;
+        gap: 6px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+      .pip {
+        width: 28px;
+        height: 4px;
+        border-radius: 2px;
+        background: var(--color-border-tertiary);
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .pip.done {
+        background: var(--color-border-secondary);
+      }
+      .pip.on {
+        background: var(--color-text-primary);
+      }
+
+      .step-card {
+        background: var(--color-background-secondary);
+        border-radius: var(--border-radius-lg);
+        padding: 20px;
+        margin-bottom: 14px;
+      }
+      .step-num {
+        font-size: 10px;
+        font-family: var(--font-mono);
+        color: var(--color-text-tertiary);
+        margin-bottom: 6px;
+      }
+      .step-title {
+        font-size: 18px;
+        font-weight: 500;
+        color: var(--color-text-primary);
+        margin-bottom: 8px;
+        line-height: 1.3;
+      }
+      .step-body {
+        font-size: 13px;
+        color: var(--color-text-secondary);
+        line-height: 1.7;
+      }
+      .step-body b {
+        color: var(--color-text-primary);
+        font-weight: 500;
+      }
+
+      .detail-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 14px;
+      }
+      .detail-box {
+        background: var(--color-background-primary);
+        border: 0.5px solid var(--color-border-tertiary);
+        border-radius: var(--border-radius-md);
+        padding: 12px;
+      }
+      .db-label {
+        font-size: 10px;
+        font-family: var(--font-mono);
+        color: var(--color-text-tertiary);
+        margin-bottom: 6px;
+        letter-spacing: 0.04em;
+      }
+      .db-item {
+        font-size: 12px;
+        color: var(--color-text-secondary);
+        padding: 3px 0;
+        border-bottom: 0.5px solid var(--color-border-tertiary);
+        line-height: 1.4;
+      }
+      .db-item:last-child {
+        border-bottom: none;
+      }
+      .db-item b {
+        color: var(--color-text-primary);
+        font-weight: 500;
+      }
+
+      .flow-strip {
+        display: flex;
+        align-items: center;
+        gap: 0;
+        margin-top: 14px;
+        overflow-x: auto;
+        padding-bottom: 4px;
+      }
+      .fs-box {
+        background: var(--color-background-primary);
+        border: 0.5px solid var(--color-border-tertiary);
+        border-radius: var(--border-radius-md);
+        padding: 8px 12px;
+        font-size: 11px;
+        color: var(--color-text-secondary);
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      .fs-box.hl {
+        background: var(--color-background-secondary);
+        color: var(--color-text-primary);
+        font-weight: 500;
+        border-color: var(--color-border-secondary);
+      }
+      .fs-arr {
+        font-size: 14px;
+        color: var(--color-text-tertiary);
+        padding: 0 6px;
+        flex-shrink: 0;
+      }
+
+      .tag-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 12px;
+      }
+      .tag {
+        font-size: 11px;
+        padding: 3px 10px;
+        border-radius: 20px;
+        border: 0.5px solid var(--color-border-secondary);
+        color: var(--color-text-secondary);
+        background: var(--color-background-secondary);
+      }
+      .tag.info {
+        background: var(--color-background-info);
+        color: var(--color-text-info);
+        border-color: var(--color-border-info);
+      }
+      .tag.success {
+        background: var(--color-background-success);
+        color: var(--color-text-success);
+        border-color: var(--color-border-success);
+      }
+      .tag.warn {
+        background: var(--color-background-warning);
+        color: var(--color-text-warning);
+        border-color: var(--color-border-warning);
+      }
+
+      .note-strip {
+        border-left: 2px solid var(--color-border-secondary);
+        padding: 10px 14px;
+        margin-top: 14px;
+        background: var(--color-background-secondary);
+        border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+      }
+      .note-strip p {
+        font-size: 12px;
+        color: var(--color-text-secondary);
+        line-height: 1.6;
+      }
+      .note-strip b {
+        color: var(--color-text-primary);
+        font-weight: 500;
+      }
+
+      .owner-row {
+        display: flex;
+        gap: 8px;
+        margin-top: 12px;
+      }
+      .owner {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: var(--color-background-primary);
+        border: 0.5px solid var(--color-border-tertiary);
+        border-radius: var(--border-radius-md);
+        padding: 6px 10px;
+      }
+      .owner-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .owner-text {
+        font-size: 11px;
+        color: var(--color-text-secondary);
+      }
+
+      .arch-section {
+        margin-top: 0;
+      }
+      .arch-layer {
+        display: flex;
+        align-items: stretch;
+        gap: 10px;
+        margin-bottom: 8px;
+      }
+      .arch-label {
+        font-size: 10px;
+        font-family: var(--font-mono);
+        color: var(--color-text-tertiary);
+        writing-mode: horizontal-tb;
+        min-width: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding-right: 10px;
+        letter-spacing: 0.04em;
+        flex-shrink: 0;
+      }
+      .arch-boxes {
+        display: flex;
+        gap: 6px;
+        flex: 1;
+        flex-wrap: wrap;
+      }
+      .abox {
+        background: var(--color-background-secondary);
+        border: 0.5px solid var(--color-border-tertiary);
+        border-radius: var(--border-radius-md);
+        padding: 8px 12px;
+        font-size: 12px;
+        color: var(--color-text-primary);
+        font-weight: 500;
+        flex: 1;
+        min-width: 80px;
+        text-align: center;
+      }
+      .abox.accent {
+        background: var(--color-background-info);
+        color: var(--color-text-info);
+        border-color: var(--color-border-info);
+      }
+      .arch-arrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2px 0;
+        color: var(--color-text-tertiary);
+        font-size: 13px;
+      }
+      .arch-conn {
+        border-left: 1px dashed var(--color-border-tertiary);
+        margin-left: 74px;
+        height: 10px;
+      }
+
+      .loop-row {
+        display: flex;
+        gap: 0;
+        margin-top: 14px;
+        border: 0.5px solid var(--color-border-tertiary);
+        border-radius: var(--border-radius-lg);
+        overflow: hidden;
+      }
+      .loop-step {
+        flex: 1;
+        padding: 12px;
+        text-align: center;
+        border-right: 0.5px solid var(--color-border-tertiary);
+      }
+      .loop-step:last-child {
+        border-right: none;
+      }
+      .ls-num {
+        font-size: 10px;
+        font-family: var(--font-mono);
+        color: var(--color-text-tertiary);
+        margin-bottom: 4px;
+      }
+      .ls-name {
+        font-size: 11px;
+        font-weight: 500;
+        color: var(--color-text-primary);
+        margin-bottom: 3px;
+      }
+      .ls-desc {
+        font-size: 10px;
+        color: var(--color-text-secondary);
+        line-height: 1.4;
+      }
+
+      .timeline-row {
+        display: flex;
+        gap: 0;
+        margin-top: 4px;
+      }
+      .tl-day {
+        border-right: 0.5px solid var(--color-border-tertiary);
+        padding: 10px 8px;
+        min-width: 0;
+        flex: 1;
+      }
+      .tl-day:last-child {
+        border-right: none;
+      }
+      .tl-label {
+        font-size: 9px;
+        font-family: var(--font-mono);
+        color: var(--color-text-tertiary);
+        margin-bottom: 5px;
+      }
+      .tl-task {
+        font-size: 10px;
+        color: var(--color-text-secondary);
+        padding: 3px 0;
+        line-height: 1.4;
+      }
+      .tl-task b {
+        color: var(--color-text-primary);
+        font-weight: 500;
+        display: block;
+      }
+
+      .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+      }
+      .sg-card {
+        background: var(--color-background-secondary);
+        border-radius: var(--border-radius-md);
+        padding: 12px;
+        text-align: center;
+      }
+      .sg-num {
+        font-size: 26px;
+        font-weight: 500;
+        color: var(--color-text-primary);
+        line-height: 1;
+        margin-bottom: 4px;
+      }
+      .sg-label {
+        font-size: 11px;
+        color: var(--color-text-secondary);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="top-tabs">
+        <div class="ttab on" onclick="switchTab(0, this)">Overview</div>
+        <div class="ttab" onclick="switchTab(1, this)">User journey</div>
+        <div class="ttab" onclick="switchTab(2, this)">How it works</div>
+        <div class="ttab" onclick="switchTab(3, this)">Tech stack</div>
+        <div class="ttab" onclick="switchTab(4, this)">Data flow</div>
+        <div class="ttab" onclick="switchTab(5, this)">Build plan</div>
+      </div>
+
+      <!-- ═══ TAB 0: OVERVIEW ═══ -->
+      <div class="panel on" id="tab0">
+        <div class="summary-grid" style="margin-bottom: 16px">
+          <div class="sg-card">
+            <div class="sg-num">5</div>
+            <div class="sg-label">core modules</div>
+          </div>
+          <div class="sg-card">
+            <div class="sg-num">25</div>
+            <div class="sg-label">company profiles</div>
+          </div>
+          <div class="sg-card">
+            <div class="sg-num">13</div>
+            <div class="sg-label">screens total</div>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">WHAT IS SKILLLENS</div>
+          <div class="step-title">
+            A career preparation platform that tells students exactly what to
+            fix
+          </div>
+          <div class="step-body">
+            Most resume tools just check if a skill keyword exists in your
+            resume. SkillLens goes deeper — it
+            <b>measures how well you actually know each skill</b>, then maps
+            that depth against 25 real Indian companies and tells you exactly
+            which skills are costing you match percentage, and in what order to
+            fix them.
+          </div>
+          <div class="note-strip">
+            <p>
+              <b>One line explanation:</b> SkillLens is a skill-depth
+              measurement system that connects your current knowledge level to
+              real company requirements and generates a personalised
+              week-by-week plan to close the gap.
+            </p>
+          </div>
+        </div>
+
+        <div class="detail-grid">
+          <div class="detail-box">
+            <div class="db-label">THE PROBLEM WE SOLVE</div>
+            <div class="db-item">
+              Resume tools only detect skill <b>presence</b>, not depth
+            </div>
+            <div class="db-item">
+              Students don't know which company to realistically target
+            </div>
+            <div class="db-item">
+              Mock interviews give a score — not specific feedback
+            </div>
+            <div class="db-item">
+              No integrated system connects resume → quiz → companies → roadmap
+            </div>
+          </div>
+          <div class="detail-box">
+            <div class="db-label">WHAT MAKES IT UNIQUE</div>
+            <div class="db-item">
+              <b>Skill depth quiz</b> — measures actual knowledge, not keywords
+            </div>
+            <div class="db-item">
+              <b>Weighted company matching</b> — 25 real Indian companies
+            </div>
+            <div class="db-item">
+              <b>Dual AI scoring</b> — technical + communication separately
+            </div>
+            <div class="db-item">
+              <b>Resource-linked roadmap</b> — real links, not generic advice
+            </div>
+          </div>
+        </div>
+
+        <div class="loop-row" style="margin-top: 14px">
+          <div class="loop-step">
+            <div class="ls-num">MODULE 1</div>
+            <div class="ls-name">Resume Analyzer</div>
+            <div class="ls-desc">Upload PDF → detect skills → find gaps</div>
+          </div>
+          <div class="loop-step">
+            <div class="ls-num">MODULE 2</div>
+            <div class="ls-name">Skill Quiz</div>
+            <div class="ls-desc">10 MCQs per skill → depth score %</div>
+          </div>
+          <div class="loop-step">
+            <div class="ls-num">MODULE 3</div>
+            <div class="ls-name">Company Match</div>
+            <div class="ls-desc">Depth scores → 25 company match %</div>
+          </div>
+          <div class="loop-step">
+            <div class="ls-num">MODULE 4</div>
+            <div class="ls-name">AI Interview</div>
+            <div class="ls-desc">Answer questions → AI scores tech + comm</div>
+          </div>
+          <div class="loop-step">
+            <div class="ls-num">MODULE 5</div>
+            <div class="ls-name">Roadmap</div>
+            <div class="ls-desc">Gaps → weekly plan with real resources</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ TAB 1: USER JOURNEY ═══ -->
+      <div class="panel" id="tab1">
+        <div class="stepper-header">
+          <div class="step-label" id="uj-label">Step 1 of 9</div>
+          <div class="step-nav">
+            <button class="snav-btn" onclick="ujStep(-1)" id="uj-prev" disabled>
+              ← Back
+            </button>
+            <button class="snav-btn primary" onclick="ujStep(1)" id="uj-next">
+              Next →
+            </button>
+          </div>
+        </div>
+
+        <div class="pip-row" id="uj-pips"></div>
+        <div id="uj-content"></div>
+      </div>
+
+      <!-- ═══ TAB 2: HOW IT WORKS ═══ -->
+      <div class="panel" id="tab2">
+        <div class="stepper-header">
+          <div class="step-label" id="hw-label">Module 1 of 5</div>
+          <div class="step-nav">
+            <button class="snav-btn" onclick="hwStep(-1)" id="hw-prev" disabled>
+              ← Back
+            </button>
+            <button class="snav-btn primary" onclick="hwStep(1)" id="hw-next">
+              Next →
+            </button>
+          </div>
+        </div>
+        <div class="pip-row" id="hw-pips"></div>
+        <div id="hw-content"></div>
+      </div>
+
+      <!-- ═══ TAB 3: TECH STACK ═══ -->
+      <div class="panel" id="tab3">
+        <div class="step-card" style="margin-bottom: 10px">
+          <div class="step-num">TECH STACK — MERN</div>
+          <div class="step-title">4 layers, every tool is free</div>
+          <div class="step-body">
+            The entire project runs on free tiers. No paid tools required to
+            build, test, or deploy. Total cost to run: under ₹1,000 (OpenAI API
+            during testing).
+          </div>
+        </div>
+
+        <div class="arch-section">
+          <div class="arch-layer">
+            <div class="arch-label">Frontend</div>
+            <div class="arch-boxes">
+              <div class="abox accent">React.js</div>
+              <div class="abox">Tailwind CSS</div>
+              <div class="abox">Recharts</div>
+              <div class="abox">React Router</div>
+              <div class="abox">Axios</div>
+            </div>
+          </div>
+          <div class="arch-conn"></div>
+          <div class="arch-layer">
+            <div class="arch-label">Backend</div>
+            <div class="arch-boxes">
+              <div class="abox accent">Node.js</div>
+              <div class="abox">Express.js</div>
+              <div class="abox">JWT + bcrypt</div>
+              <div class="abox">Multer</div>
+              <div class="abox">pdf-parse</div>
+            </div>
+          </div>
+          <div class="arch-conn"></div>
+          <div class="arch-layer">
+            <div class="arch-label">Database</div>
+            <div class="arch-boxes">
+              <div class="abox accent">MongoDB Atlas</div>
+              <div class="abox">Mongoose ODM</div>
+            </div>
+          </div>
+          <div class="arch-conn"></div>
+          <div class="arch-layer">
+            <div class="arch-label">AI + Data</div>
+            <div class="arch-boxes">
+              <div class="abox">OpenAI API</div>
+              <div class="abox">companies.json</div>
+              <div class="abox">questions.json</div>
+              <div class="abox">resources.json</div>
+            </div>
+          </div>
+          <div class="arch-conn"></div>
+          <div class="arch-layer">
+            <div class="arch-label">Deploy</div>
+            <div class="arch-boxes">
+              <div class="abox">Vercel (frontend)</div>
+              <div class="abox">Render (backend)</div>
+              <div class="abox">GitHub (version control)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-grid" style="margin-top: 14px">
+          <div class="detail-box">
+            <div class="db-label">WHAT DEV1 BUILDS (BACKEND)</div>
+            <div class="db-item">Auth system — register, login, JWT</div>
+            <div class="db-item">Resume upload + pdf-parse extraction</div>
+            <div class="db-item">Quiz engine — questions, scoring, depth</div>
+            <div class="db-item">Company match scoring service</div>
+            <div class="db-item">Readiness Score calculation</div>
+            <div class="db-item">MongoDB schemas + all API routes</div>
+          </div>
+          <div class="detail-box">
+            <div class="db-label">WHAT DEV2 BUILDS (FRONTEND + DATA)</div>
+            <div class="db-item">All 13 React pages + components</div>
+            <div class="db-item">OpenAI interview evaluation service</div>
+            <div class="db-item">companies.json — 25 company profiles</div>
+            <div class="db-item">questions.json — 100 quiz questions</div>
+            <div class="db-item">resources.json — 80 curated links</div>
+            <div class="db-item">Roadmap generation + Vercel deployment</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ TAB 4: DATA FLOW ═══ -->
+      <div class="panel" id="tab4">
+        <div class="stepper-header">
+          <div class="step-label" id="df-label">Flow 1 of 5</div>
+          <div class="step-nav">
+            <button class="snav-btn" onclick="dfStep(-1)" id="df-prev" disabled>
+              ← Back
+            </button>
+            <button class="snav-btn primary" onclick="dfStep(1)" id="df-next">
+              Next →
+            </button>
+          </div>
+        </div>
+        <div class="pip-row" id="df-pips"></div>
+        <div id="df-content"></div>
+      </div>
+
+      <!-- ═══ TAB 5: BUILD PLAN ═══ -->
+      <div class="panel" id="tab5">
+        <div class="step-card" style="margin-bottom: 14px">
+          <div class="step-num">BUILD PLAN — 15 DAYS</div>
+          <div class="step-title">7 phases, backend first</div>
+          <div class="step-body">
+            Always build and test the backend API in Postman before touching the
+            frontend. This way, Dev1 and Dev2 can work in parallel from Phase 3
+            onwards — Dev1 building backend, Dev2 building frontend for the
+            already-completed modules.
+          </div>
+        </div>
+
+        <div
+          style="
+            border: 0.5px solid var(--color-border-tertiary);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            margin-bottom: 14px;
+          "
+        >
+          <div
+            style="
+              display: flex;
+              border-bottom: 0.5px solid var(--color-border-tertiary);
+              background: var(--color-background-secondary);
+            "
+          >
+            <div
+              style="
+                padding: 8px 12px;
+                font-size: 10px;
+                font-family: var(--font-mono);
+                color: var(--color-text-tertiary);
+                width: 80px;
+                flex-shrink: 0;
+              "
+            >
+              PHASE
+            </div>
+            <div
+              style="
+                padding: 8px 12px;
+                font-size: 10px;
+                font-family: var(--font-mono);
+                color: var(--color-text-tertiary);
+                flex: 1;
+              "
+            >
+              WHAT GETS BUILT
+            </div>
+            <div
+              style="
+                padding: 8px 12px;
+                font-size: 10px;
+                font-family: var(--font-mono);
+                color: var(--color-text-tertiary);
+                width: 70px;
+                text-align: center;
+                flex-shrink: 0;
+              "
+            >
+              DAYS
+            </div>
+            <div
+              style="
+                padding: 8px 12px;
+                font-size: 10px;
+                font-family: var(--font-mono);
+                color: var(--color-text-tertiary);
+                width: 80px;
+                text-align: center;
+                flex-shrink: 0;
+              "
+            >
+              OWNERS
+            </div>
+          </div>
+          ${[ ['1','Project setup — Git repo, folder structure, scaffolds, DB
+          connection','1–2','Both'], ['2','Authentication — register, login,
+          JWT, auth middleware','2–3','Dev1 + Dev2'], ['3','Resume Analyzer +
+          Skill Quiz Engine — upload, pdf-parse, 100 MCQs, depth
+          scoring','4–7','Dev1 + Dev2'], ['4','Company Match Engine —
+          companies.json (25 profiles), weighted scoring, gap
+          analysis','7–9','Dev1 + Dev2'], ['5','AI Mock Interview — OpenAI
+          service, dual scoring, keyword feedback loop','9–11','Dev1 + Dev2'],
+          ['6','Roadmap + Dashboard — resources.json, roadmap generation,
+          Readiness Score','11–13','Dev1 + Dev2'], ['7','Integration testing,
+          bug fixes, deployment to Vercel + Render','13–15','Both'],
+          ].map(([ph,task,days,own],i)=>`
+          <div
+            class="phase-row ${i<6?'has-border':''} ${i%2===0?'alt':''}"
+          >
+            <div
+              style="
+                padding: 10px 12px;
+                font-size: 11px;
+                font-family: var(--font-mono);
+                color: var(--color-text-tertiary);
+                width: 80px;
+                flex-shrink: 0;
+              "
+            >
+              Phase ${ph}
+            </div>
+            <div
+              style="
+                padding: 10px 12px;
+                font-size: 12px;
+                color: var(--color-text-secondary);
+                flex: 1;
+                line-height: 1.4;
+              "
+            >
+              ${task}
+            </div>
+            <div
+              style="
+                padding: 10px 12px;
+                font-size: 11px;
+                font-family: var(--font-mono);
+                color: var(--color-text-tertiary);
+                width: 70px;
+                text-align: center;
+                flex-shrink: 0;
+              "
+            >
+              ${days}
+            </div>
+            <div
+              style="
+                padding: 10px 12px;
+                font-size: 11px;
+                color: var(--color-text-secondary);
+                width: 80px;
+                text-align: center;
+                flex-shrink: 0;
+              "
+            >
+              ${own}
+            </div>
+          </div>
+          `).join('')}
+        </div>
+
+        <div class="detail-grid">
+          <div class="detail-box">
+            <div class="db-label">3 DATA FILES TO BUILD (DEV2)</div>
+            <div class="db-item">
+              <b>questions.json</b> — 10 skills × 10 MCQs = 100 questions with
+              correct answers. Days 4–6.
+            </div>
+            <div class="db-item">
+              <b>companies.json</b> — 25 company profiles with skill weights +
+              min depth. Research from Naukri. Days 7–9.
+            </div>
+            <div class="db-item">
+              <b>resources.json</b> — 10 skills × 2 levels × 4 links = 80
+              curated resources. Days 11–12.
+            </div>
+          </div>
+          <div class="detail-box">
+            <div class="db-label">MILESTONES — WHEN TO DEMO</div>
+            <div class="db-item">
+              <b>Day 3:</b> Login + register working in browser
+            </div>
+            <div class="db-item">
+              <b>Day 7:</b> Upload resume + take quiz → see depth score
+            </div>
+            <div class="db-item">
+              <b>Day 9:</b> See 25 company match percentages
+            </div>
+            <div class="db-item">
+              <b>Day 11:</b> Complete mock interview + see AI feedback
+            </div>
+            <div class="db-item">
+              <b>Day 13:</b> Full roadmap generated with real links
+            </div>
+            <div class="db-item">
+              <b>Day 15:</b> Live on Vercel + Render, demo ready
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function switchTab(i, el) {
+        document
+          .querySelectorAll(".panel")
+          .forEach((p, j) => p.classList.toggle("on", j === i));
+        document
+          .querySelectorAll(".ttab")
+          .forEach((t, j) => t.classList.toggle("on", j === i));
+      }
+
+      const UJ = [
+        {
+          num: "Step 1",
+          title: "Student registers and sets their target role",
+          body: "The student goes to SkillLens for the first time. They fill in their name, email, password — and most importantly, they pick their <b>target job role</b>: Frontend, Backend, Full Stack, Data, or Java. This role is used throughout the entire platform. Everything is personalised to it.",
+          flow: [
+            "Open SkillLens",
+            "Fill register form",
+            "Pick target role",
+            "Click Create account",
+            "JWT stored",
+            "Redirect to Dashboard",
+          ],
+          detail: {
+            left: {
+              label: "WHAT GETS STORED",
+              items: [
+                "Name, email, hashed password (bcrypt)",
+                'Target role — e.g. "Backend"',
+                "Account created timestamp",
+                "JWT token issued immediately",
+              ],
+            },
+            right: {
+              label: "WHY TARGET ROLE MATTERS",
+              items: [
+                "Company match % is calculated for this role",
+                "Resume gaps are shown for this role",
+                "Quiz difficulty is calibrated to this role",
+                "Roadmap prioritises skills for this role",
+              ],
+            },
+          },
+          note: "The student never has to set their role again — but they can update it from the Profile page if they change their mind.",
+        },
+
+        {
+          num: "Step 2",
+          title: "Student uploads their resume PDF",
+          body: "The student drags and drops their PDF resume. The backend uses <b>pdf-parse</b> to extract all text from it. Then a simple string-matching function checks that text against a master list of 30 skills. The result: a list of skills detected and a list of skills missing for their target role.",
+          flow: [
+            "Drag & drop PDF",
+            "Multer receives file (memory only)",
+            "pdf-parse extracts text",
+            "String matching runs",
+            "Detected skills returned",
+            "Missing skills shown",
+          ],
+          detail: {
+            left: {
+              label: "DETECTED (example)",
+              items: ["react ✓", "nodejs ✓", "git ✓", "restapi ✓", "mongodb ✓"],
+            },
+            right: {
+              label: "MISSING FOR BACKEND ROLE",
+              items: [
+                "dsa ✗ — take quiz",
+                "sql ✗ — take quiz",
+                "systemdesign ✗ — take quiz",
+              ],
+            },
+          },
+          note: "The PDF is never saved to disk. It is processed in memory and gone after the request. This is by design — we do not want to store student resumes.",
+        },
+
+        {
+          num: "Step 3",
+          title: "Student takes a skill depth quiz",
+          body: "This is the most original feature of SkillLens. When a student clicks a missing skill, they get a 10-question MCQ quiz for that skill. The questions are randomised from a bank of 100. After submitting all 10, the server scores them and produces a <b>depth score: 0–100%</b>. This tells us HOW WELL they know the skill, not just whether they wrote it on their resume.",
+          flow: [
+            "Click skill chip",
+            "10 random MCQs load",
+            "Student answers all 10",
+            "Answers submitted",
+            "Server scores them",
+            "Depth score stored",
+          ],
+          detail: {
+            left: {
+              label: "DEPTH LEVELS",
+              items: [
+                "0–40% = Beginner",
+                "41–70% = Intermediate",
+                "71–100% = Advanced",
+                "Not taken = 0% by default",
+              ],
+            },
+            right: {
+              label: "SIDE EFFECTS AFTER QUIZ",
+              items: [
+                "SkillProfile updated in MongoDB",
+                "Company match % recalculated for all 25",
+                "Readiness Score recalculated",
+                "Quiz results page shown",
+              ],
+            },
+          },
+          note: "Questions are stripped of correct answers before sending to the frontend. Answers are checked only server-side. Students can retake the quiz — the new score replaces the old one.",
+        },
+
+        {
+          num: "Step 4",
+          title: "Company Match Engine calculates eligibility",
+          body: "Now the interesting part. SkillLens has a JSON file with profiles for 25 real Indian companies — TCS, Infosys, Razorpay, Zomato, and others. Each company has a list of required skills with two numbers: the <b>weight</b> (how important is this skill for this company?) and the <b>minimum depth</b> (how well do you need to know it?). The system compares the student's depth scores against these profiles and produces a match percentage per company.",
+          flow: [
+            "Quiz scores stored",
+            "companies.json loaded",
+            "Weighted scoring runs",
+            "Match % per company",
+            "Sorted list displayed",
+            "Gap analysis available",
+          ],
+          detail: {
+            left: {
+              label: "MATCH FORMULA",
+              items: [
+                "For each required skill:",
+                "contribution = min(yourDepth / minDepth, 1) × weight",
+                "Sum all contributions / total weights",
+                "= your match % for that company",
+              ],
+            },
+            right: {
+              label: "EXAMPLE — RAZORPAY",
+              items: [
+                "DSA: you 38%, need 70% → weak",
+                "Node.js: you 50%, need 75% → partial",
+                "MongoDB: you 0%, need 60% → missing",
+                "REST API: you 70%, need 60% → ✓ meets",
+              ],
+            },
+          },
+          note: "The student clicks any company to see the gap analysis — which specific skills to fix first, how much each gap is costing their score, and what the score would be after fixing it.",
+        },
+
+        {
+          num: "Step 5",
+          title: "Student does an AI mock interview",
+          body: "The student picks their target role and gets 5 questions one at a time. They type their answer and click Submit. The answer is sent to <b>OpenAI's API</b> with a carefully crafted prompt that asks for two separate scores: technical accuracy and communication quality. It also asks for the missed concept, a model answer, and an array of keywords the student should have used.",
+          flow: [
+            "Pick role",
+            "5 questions load",
+            "Type answer",
+            "Submit to backend",
+            "Backend calls OpenAI",
+            "Structured feedback shown",
+          ],
+          detail: {
+            left: {
+              label: "AI SCORES PER ANSWER",
+              items: [
+                "Technical score: 1–10",
+                "Communication score: 1–10",
+                "What was correct/wrong (1 sentence)",
+                "How to structure better (1 sentence)",
+                "Missed concept (1 phrase)",
+                "2-sentence model answer",
+              ],
+            },
+            right: {
+              label: "MISSED KEYWORD LOOP",
+              items: [
+                "AI returns array of missed keywords",
+                'e.g. ["ACID", "CAP theorem", "sharding"]',
+                "These map to their parent skill (MongoDB)",
+                "MongoDB flagged as weak in SkillProfile",
+                "Roadmap automatically prioritises MongoDB",
+              ],
+            },
+          },
+          note: 'If OpenAI is unavailable, the answer is saved but not scored. The student gets a message saying "AI temporarily unavailable — your answer is saved." The platform does not crash.',
+        },
+
+        {
+          num: "Step 6",
+          title: "Roadmap generates a week-by-week plan",
+          body: "The student picks a target company and enters how many weeks they have. SkillLens sends the student's gap analysis to OpenAI and asks it to <b>order the skills by priority</b>. The AI does not generate resources — it only decides the order. Resources come from a separate curated JSON file of real YouTube videos, GFG articles, LeetCode sets, and build tasks.",
+          flow: [
+            "Pick company + weeks",
+            "Gap analysis sent to AI",
+            "AI returns skill order",
+            "resources.json loaded",
+            "Real links attached",
+            "Roadmap saved + shown",
+          ],
+          detail: {
+            left: {
+              label: "RESOURCES.JSON STRUCTURE",
+              items: [
+                "10 skills × 2 levels × 4 resources = 80 entries",
+                "Each entry has: YouTube link, article link, practice link, build task",
+                "Curated manually — one best resource per slot",
+                "Updated without code change or redeployment",
+              ],
+            },
+            right: {
+              label: "EXAMPLE — WEEK 1",
+              items: [
+                "Skill: DSA Beginner (highest Razorpay gap)",
+                "Watch: Striver DSA playlist (YouTube)",
+                "Read: GFG Data Structures tutorial",
+                "Practice: LeetCode Easy Array problems (10)",
+                "Build: Implement stack + queue from scratch",
+              ],
+            },
+          },
+          note: "This two-step approach (AI for ordering + JSON for resources) is the key design decision. It keeps API costs minimal and ensures resource quality — AI cannot hallucinate a real YouTube link.",
+        },
+
+        {
+          num: "Step 7",
+          title: "Student marks weeks complete — Readiness Score updates",
+          body: 'As the student works through the roadmap, they mark weeks as done. Every time any activity is completed — quiz, interview session, or roadmap week — the <b>Readiness Score is recalculated</b>. This is a composite number from 0–100 that lives on the dashboard. It is the single metric that answers "am I actually getting better?"',
+          flow: [
+            "Mark week complete",
+            "PUT /api/roadmap/:week",
+            "Completion % updates",
+            "Readiness Score recalculates",
+            "Dashboard reflects new score",
+            "Student sees progress",
+          ],
+          detail: {
+            left: {
+              label: "READINESS SCORE FORMULA",
+              items: [
+                "Skill depth average × 35%",
+                "Interview average × 30%",
+                "Roadmap completion % × 20%",
+                "Best company match × 15%",
+                "= Readiness Score (0–100)",
+              ],
+            },
+            right: {
+              label: "SCORE LABELS",
+              items: [
+                "0–39 = Just starting",
+                "40–59 = Building up",
+                "60–79 = Almost there",
+                "80–100 = Placement ready",
+              ],
+            },
+          },
+          note: "The score updates in real time every time any module is used. The line chart on the dashboard shows how the score has changed over time — this is the visual proof that the platform is working.",
+        },
+
+        {
+          num: "Step 8",
+          title: "The feedback loop — everything connects",
+          body: 'The real intelligence of SkillLens is not any single module — it is how they all connect. When the interview AI says a student missed the word "ACID", that updates MongoDB as a weak skill. That updates the company match for Razorpay. That changes what Week 1 of the roadmap targets. When the student retakes the MongoDB quiz and improves, everything updates again. The system gets smarter with every action.',
+          flow: [
+            "Interview → missed keywords",
+            "Keywords → skill flags",
+            "Skill flags → depth updated",
+            "Depth → match % updated",
+            "Match → roadmap order changes",
+            "Roadmap → student fixes gap → repeat",
+          ],
+          detail: {
+            left: {
+              label: "THE CORE LOOP",
+              items: [
+                "Quiz improves depth score",
+                "Depth score improves company match",
+                "Company match updates roadmap priority",
+                "Roadmap leads to better quiz score",
+                "↻ loop continues, score always rises",
+              ],
+            },
+            right: {
+              label: "WHAT STUDENTS SEE",
+              items: [
+                "Dashboard score goes up after each action",
+                "Company match % visibly improves",
+                "Roadmap reorders to reflect new priorities",
+                "Next Step card always shows the right action",
+              ],
+            },
+          },
+          note: 'This is what makes SkillLens a system rather than a collection of tools. Tell your examiner: "every module feeds data into every other module — the platform learns from your activity."',
+        },
+
+        {
+          num: "Step 9",
+          title: "Student is ready — platform has done its job",
+          body: 'When the Readiness Score hits 80+, the dashboard changes its label to "Placement ready." The company match for the target company is now high enough to apply with confidence. The student has a record of their quiz scores, interview performance, and completed roadmap tasks to refer to in actual interviews.',
+          flow: [
+            "Readiness hits 80+",
+            "Dashboard label updates",
+            "Target company match is high",
+            "Student applies with confidence",
+            "Platform has served its purpose",
+          ],
+          detail: {
+            left: {
+              label: "WHAT THE STUDENT HAS",
+              items: [
+                "Depth scores for 5–10 skills",
+                "Detailed interview feedback history",
+                "Completed placement roadmap",
+                "Gap analysis for any company",
+                "Progress over time (chart)",
+              ],
+            },
+            right: {
+              label: 'VIVA ANSWER IF ASKED "SO WHAT?"',
+              items: [
+                '"We measure not just what you know, but how well you know it."',
+                '"We tell you which company you are ready for right now."',
+                '"We give you a specific weekly plan — not generic advice."',
+                '"Everything is connected — every action improves the whole."',
+              ],
+            },
+          },
+          note: "The full student journey from first registration to placement-ready takes between 6–8 weeks of consistent daily use, based on the roadmap design.",
+        },
+      ];
+
+      let ujIdx = 0;
+      function buildUJPips() {
+        const c = document.getElementById("uj-pips");
+        c.innerHTML = UJ.map(
+          (_, i) =>
+            `<div class="pip ${i === 0 ? "on" : ""}" onclick="ujGoTo(${i})"></div>`,
+        ).join("");
+      }
+      function ujGoTo(i) {
+        ujIdx = i;
+        renderUJ();
+      }
+      function ujStep(d) {
+        ujIdx = Math.max(0, Math.min(UJ.length - 1, ujIdx + d));
+        renderUJ();
+      }
+      function renderUJ() {
+        const s = UJ[ujIdx];
+        document.getElementById("uj-label").textContent =
+          `${s.num} of ${UJ.length}`;
+        document.getElementById("uj-prev").disabled = ujIdx === 0;
+        document.getElementById("uj-next").disabled = ujIdx === UJ.length - 1;
+        document.getElementById("uj-next").textContent =
+          ujIdx === UJ.length - 1 ? "Done ✓" : "Next →";
+        document.querySelectorAll("#uj-pips .pip").forEach((p, i) => {
+          p.className =
+            "pip" + (i < ujIdx ? " done" : i === ujIdx ? " on" : "");
+        });
+        document.getElementById("uj-content").innerHTML = `
+    <div class="step-card">
+      <div class="step-num">${s.num.toUpperCase()} OF ${UJ.length}</div>
+      <div class="step-title">${s.title}</div>
+      <div class="step-body">${s.body}</div>
+    </div>
+    <div style="margin-bottom:12px">
+      <div style="font-size:10px;font-family:var(--font-mono);color:var(--color-text-tertiary);margin-bottom:8px">WHAT HAPPENS STEP BY STEP</div>
+      <div class="flow-strip">
+        ${s.flow.map((f, i) => `<div class="fs-box ${i === Math.floor(s.flow.length / 2) ? "hl" : ""}">${f}</div>${i < s.flow.length - 1 ? '<div class="fs-arr">→</div>' : ""}`).join("")}
+      </div>
+    </div>
+    <div class="detail-grid">
+      <div class="detail-box"><div class="db-label">${s.detail.left.label}</div>${s.detail.left.items.map((it) => `<div class="db-item">${it}</div>`).join("")}</div>
+      <div class="detail-box"><div class="db-label">${s.detail.right.label}</div>${s.detail.right.items.map((it) => `<div class="db-item">${it}</div>`).join("")}</div>
+    </div>
+    <div class="note-strip"><p>${s.note}</p></div>
+  `;
+      }
+
+      const HW = [
+        {
+          num: "Module 1",
+          title: "Resume Analyzer — how it actually works",
+          body: 'When a PDF is uploaded, <b>Multer</b> holds it in memory (never writes to disk). <b>pdf-parse</b> converts it to a raw string of text. Then a JavaScript function loops through a master list of 30 skills and checks if each skill word appears anywhere in that text — case-insensitive. If "React" or "react" or "REACT" appears → detected. The function also compares detected skills against the required skills for the student\'s target role (from companies.json) to produce the missing skills list.',
+          detail: {
+            left: {
+              label: "SKILL MASTER LIST (30 SKILLS)",
+              items: [
+                "react, nodejs, mongodb, sql, python, java",
+                "dsa, restapi, systemdesign, git, docker",
+                "mysql, postgresql, typescript, nextjs",
+                "express, spring, django, flask, aws",
+                "html, css, javascript, c++, c, linux",
+                "testing, agile, figma, firebase",
+              ],
+            },
+            right: {
+              label: "WHAT THE API RETURNS",
+              items: [
+                'detectedSkills: ["react","nodejs","git"]',
+                'missingSkills: ["dsa","sql","systemdesign"]',
+                "roleRequiredSkills: [7 skills for Backend]",
+                "coveragePercent: 57",
+                'message: "5 of 7 required skills detected"',
+              ],
+            },
+          },
+          note: 'Skill detection is deliberately simple — string matching, not NLP. This is fast, predictable, and sufficient for the use case. A student who writes "React.js" will have "react" detected because the text is lowercased before matching.',
+        },
+
+        {
+          num: "Module 2",
+          title: "Skill Quiz Engine — how scoring works",
+          body: "Questions are stored in <b>questions.json</b> — 100 total (10 per skill). When a student starts a quiz, the server loads the 10 questions for that skill, shuffles them using Fisher-Yates, then <b>strips the correctAnswer field</b> before sending to the client. When the student submits answers, the server reloads the questions (with correct answers this time), compares each submitted answer, counts correct ones, and computes: <b>depth score = (correct / 10) × 100</b>.",
+          detail: {
+            left: {
+              label: "QUIZ JSON STRUCTURE",
+              items: [
+                '{ id: 7, skill: "nodejs",',
+                '  question: "What does next() do?",',
+                '  options: ["A. Terminates...", "B. Passes control...", ...]',
+                '  correctAnswer: 1, difficulty: "medium" }',
+              ],
+            },
+            right: {
+              label: "DEPTH CLASSIFICATION",
+              items: [
+                "Score 0–40 = Beginner",
+                "Score 41–70 = Intermediate",
+                "Score 71–100 = Advanced",
+                "First attempt: no delta shown",
+                "Retake: shows +/- change",
+              ],
+            },
+          },
+          note: "Answers are never sent to the client. The correctAnswer field is stripped server-side before the response. This prevents cheating via browser dev tools.",
+        },
+
+        {
+          num: "Module 3",
+          title: "Company Match Engine — the weighted formula",
+          body: 'This is where SkillLens is most original. For each of 25 companies, companies.json has a list of required skills with two numbers per skill: <b>weight</b> (how much this skill matters for this company, out of 100 total) and <b>minimumDepth</b> (the minimum depth % you need to "meet" this requirement). The match formula gives you partial credit — if the skill needs 70% depth and you have 50%, you get 50/70 = 71% of that skill\'s weight.',
+          detail: {
+            left: {
+              label: "FORMULA IN PLAIN ENGLISH",
+              items: [
+                "For each required skill:",
+                "  if you have not taken quiz → 0 contribution",
+                "  if depth < minimum → partial credit",
+                "  contribution = (yourDepth / minDepth) × weight",
+                "  (capped at 1.0 — no bonus for exceeding)",
+                "Sum all contributions ÷ total weight = match%",
+              ],
+            },
+            right: {
+              label: "GAP ANALYSIS OUTPUT",
+              items: [
+                'Top 3 skills ranked by "score impact"',
+                'For each gap: "Fixing this adds N% to your score"',
+                "Verdict: which skill to fix first",
+                "Projected match if all 3 gaps fixed",
+              ],
+            },
+          },
+          note: "The partial credit system is important — it means students who have some depth always score higher than students with zero depth, even if neither meets the minimum. Progress is always rewarded.",
+        },
+
+        {
+          num: "Module 4",
+          title: "AI Interview — the prompt and how feedback works",
+          body: "When a student submits an answer, the backend builds a structured prompt and sends it to <b>OpenAI gpt-3.5-turbo</b>. The prompt instructs the AI to respond ONLY with valid JSON containing exactly 7 fields. If the AI returns anything other than valid JSON, the system catches the error and stores the answer without a score. The <b>keywordsMissed array</b> is the most important field — it drives the feedback loop to other modules.",
+          detail: {
+            left: {
+              label: "THE AI PROMPT (simplified)",
+              items: [
+                '"You are a senior technical interviewer."',
+                "Question: [question text]",
+                "Answer: [student answer]",
+                "Role: [target role]",
+                '"Return ONLY valid JSON with these 7 fields:"',
+                "technicalScore (1-10), communicationScore (1-10)",
+                "technicalFeedback, communicationFeedback",
+                "missedPoint, improvedAnswer, keywordsMissed[]",
+              ],
+            },
+            right: {
+              label: "EXAMPLE RESPONSE",
+              items: [
+                "{ technicalScore: 7,",
+                "  communicationScore: 5,",
+                '  technicalFeedback: "Correct but missed refresh tokens",',
+                '  communicationFeedback: "No opening statement",',
+                '  missedPoint: "JWT token expiry strategy",',
+                '  improvedAnswer: "Auth verifies identity...",',
+                '  keywordsMissed: ["RBAC","token refresh"] }',
+              ],
+            },
+          },
+          note: "gpt-3.5-turbo is used because it is the cheapest model that reliably returns structured JSON. The estimated cost for 500 test interview answers during development is about ₹120 total.",
+        },
+
+        {
+          num: "Module 5",
+          title: "Roadmap + Readiness Score — how the loop closes",
+          body: "The roadmap generation is a two-step process. Step 1: send gap analysis to OpenAI asking only for the <b>ORDER of skills to tackle</b> — not the resources. This is cheap (few tokens) and reliable. Step 2: use the ordered skill list to look up resources from resources.json and attach them. The Readiness Score recalculates after every action using a weighted formula. This is stored as a timestamped history entry, which powers the line chart on the dashboard.",
+          detail: {
+            left: {
+              label: "ROADMAP GENERATION STEPS",
+              items: [
+                "1. Get gap analysis (top skills to fix)",
+                '2. Send to OpenAI: "order these by priority for [company]"',
+                "3. AI returns: [{skill, level, reason}]",
+                "4. Look up each skill+level in resources.json",
+                "5. Attach video, article, practice, task links",
+                "6. Save to RoadmapProgress in MongoDB",
+              ],
+            },
+            right: {
+              label: "READINESS SCORE FORMULA",
+              items: [
+                "Avg depth score (all quizzes taken) × 0.35",
+                "Avg interview score (technical+comm/2/10×100) × 0.30",
+                "Roadmap completion % × 0.20",
+                "Best company match % × 0.15",
+                "= Readiness Score 0–100",
+              ],
+            },
+          },
+          note: "The Readiness Score is recalculated synchronously after every quiz submission, interview evaluation, and roadmap week completion. This means the student sees a live score update within seconds of completing any activity.",
+        },
+      ];
+
+      let hwIdx = 0;
+      function buildHWPips() {
+        const c = document.getElementById("hw-pips");
+        c.innerHTML = HW.map(
+          (_, i) =>
+            `<div class="pip ${i === 0 ? "on" : ""}" onclick="hwGoTo(${i})"></div>`,
+        ).join("");
+      }
+      function hwGoTo(i) {
+        hwIdx = i;
+        renderHW();
+      }
+      function hwStep(d) {
+        hwIdx = Math.max(0, Math.min(HW.length - 1, hwIdx + d));
+        renderHW();
+      }
+      function renderHW() {
+        const s = HW[hwIdx];
+        document.getElementById("hw-label").textContent =
+          `${s.num} of ${HW.length}`;
+        document.getElementById("hw-prev").disabled = hwIdx === 0;
+        document.getElementById("hw-next").disabled = hwIdx === HW.length - 1;
+        document.getElementById("hw-next").textContent =
+          hwIdx === HW.length - 1 ? "Done ✓" : "Next →";
+        document.querySelectorAll("#hw-pips .pip").forEach((p, i) => {
+          p.className =
+            "pip" + (i < hwIdx ? " done" : i === hwIdx ? " on" : "");
+        });
+        document.getElementById("hw-content").innerHTML = `
+    <div class="step-card">
+      <div class="step-num">${s.num.toUpperCase()} OF ${HW.length}</div>
+      <div class="step-title">${s.title}</div>
+      <div class="step-body">${s.body}</div>
+    </div>
+    <div class="detail-grid">
+      <div class="detail-box"><div class="db-label">${s.detail.left.label}</div>${s.detail.left.items.map((it) => `<div class="db-item" style="font-family:${it.startsWith("{") || it.startsWith("  ") || it.startsWith("Score") || it.startsWith("0") ? "var(--font-mono)" : "inherit"};font-size:${it.startsWith("{") || it.startsWith("  ") ? "11px" : "12px"}">${it}</div>`).join("")}</div>
+      <div class="detail-box"><div class="db-label">${s.detail.right.label}</div>${s.detail.right.items.map((it) => `<div class="db-item" style="font-family:${it.startsWith("{") || it.startsWith("  ") || it.startsWith("Score") || it.startsWith("0") || it.startsWith("1") || it.startsWith("2") || it.startsWith("3") || it.startsWith("Avg") ? "var(--font-mono)" : "inherit"};font-size:${it.startsWith("{") || it.startsWith("  ") || it.startsWith("Avg") ? "11px" : "12px"}">${it}</div>`).join("")}</div>
+    </div>
+    <div class="note-strip"><p>${s.note}</p></div>
+  `;
+      }
+
+      const DF = [
+        {
+          num: "Flow 1",
+          title: "Authentication flow",
+          body: "When a student registers or logs in, a JWT token is created and sent back. Every subsequent API request includes this token in the Authorization header. A middleware function on the backend validates the token before any route handler runs.",
+          flow: [
+            "Client sends email + password",
+            "POST /api/auth/login",
+            "bcrypt.compare() checks password",
+            "JWT signed with userId + role",
+            "Token returned to client",
+            "Client stores in React Context",
+            "Every future request: Authorization: Bearer <token>",
+            "Middleware validates token → req.user set",
+          ],
+        },
+        {
+          num: "Flow 2",
+          title: "Resume upload + skill detection flow",
+          body: "The resume upload is the only multipart/form-data request in the system. Multer holds the file in memory. pdf-parse extracts text. A service function does the skill matching. Nothing is written to disk.",
+          flow: [
+            "PDF dropped in browser",
+            "FormData sent to POST /api/resume/upload",
+            "Multer receives file buffer (memory)",
+            "pdf-parse converts buffer to text string",
+            "resumeService.detectSkills(text, targetRole)",
+            "Detected + missing arrays returned as JSON",
+            "File buffer garbage collected immediately",
+          ],
+        },
+        {
+          num: "Flow 3",
+          title: "Quiz submission + cascade flow",
+          body: "Submitting a quiz triggers three separate updates. This is the core of the feedback loop — one action ripples through the entire system.",
+          flow: [
+            "POST /api/quiz/:skill/submit (answers object)",
+            "Server reloads questions + correct answers",
+            "Score computed → depthScore stored in SkillProfile",
+            "scoringService.recalculateAllMatches(userId)",
+            "readinessService.recalculate(userId)",
+            "New history entry added to readinessHistory[]",
+            "Response returned with score + delta + company impact",
+          ],
+        },
+        {
+          num: "Flow 4",
+          title: "AI interview evaluation flow",
+          body: "The interview evaluation is the most complex request because it depends on an external service. The backend must handle OpenAI being slow, returning bad JSON, or being unavailable.",
+          flow: [
+            "POST /api/interview/evaluate",
+            "openaiService.evaluate(prompt) called",
+            "OpenAI returns JSON string",
+            "JSON.parse() attempted",
+            "If parse fails → store answer unscored, return 503",
+            "If success → InterviewResult saved to MongoDB",
+            "keywordsMissed mapped to parent skills → SkillProfile updated",
+            "readinessService.recalculate(userId)",
+          ],
+        },
+        {
+          num: "Flow 5",
+          title: "Roadmap generation flow",
+          body: "Roadmap generation is the most expensive API operation in the system because it involves two AI calls conceptually — but in practice only one small OpenAI call. The bulk of the work is done locally from the JSON files.",
+          flow: [
+            "POST /api/roadmap/generate (targetCompany, weeksLeft)",
+            "scoringService.getGapAnalysis(userId, company)",
+            "Build AI prompt with top gaps + weeks",
+            "OpenAI returns [{skill, level, reason}] array",
+            "For each week: look up resources.json[skill][level]",
+            "Build full roadmap array with real links",
+            "Delete old roadmap for this user",
+            "Insert new RoadmapProgress documents",
+            "Return full roadmap to client",
+          ],
+        },
+      ];
+
+      let dfIdx = 0;
+      function buildDFPips() {
+        const c = document.getElementById("df-pips");
+        c.innerHTML = DF.map(
+          (_, i) =>
+            `<div class="pip ${i === 0 ? "on" : ""}" onclick="dfGoTo(${i})"></div>`,
+        ).join("");
+      }
+      function dfGoTo(i) {
+        dfIdx = i;
+        renderDF();
+      }
+      function dfStep(d) {
+        dfIdx = Math.max(0, Math.min(DF.length - 1, dfIdx + d));
+        renderDF();
+      }
+      function renderDF() {
+        const s = DF[dfIdx];
+        document.getElementById("df-label").textContent =
+          `${s.num} of ${DF.length}`;
+        document.getElementById("df-prev").disabled = dfIdx === 0;
+        document.getElementById("df-next").disabled = dfIdx === DF.length - 1;
+        document.getElementById("df-next").textContent =
+          dfIdx === DF.length - 1 ? "Done ✓" : "Next →";
+        document.querySelectorAll("#df-pips .pip").forEach((p, i) => {
+          p.className =
+            "pip" + (i < dfIdx ? " done" : i === dfIdx ? " on" : "");
+        });
+        document.getElementById("df-content").innerHTML = `
+    <div class="step-card" style="margin-bottom:14px">
+      <div class="step-num">${s.num.toUpperCase()} OF ${DF.length}</div>
+      <div class="step-title">${s.title}</div>
+      <div class="step-body">${s.body}</div>
+    </div>
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:16px">
+      <div style="font-size:10px;font-family:var(--font-mono);color:var(--color-text-tertiary);margin-bottom:12px">STEP BY STEP — BACKEND EXECUTION ORDER</div>
+      <div class="col" style="display:flex;flex-direction:column;gap:0">
+        ${s.flow
+          .map(
+            (f, i) => `
+        <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;${i < s.flow.length - 1 ? "border-bottom:0.5px solid var(--color-border-tertiary)" : ""}">
+          <div style="width:20px;height:20px;border-radius:50%;background:var(--color-background-primary);border:0.5px solid var(--color-border-secondary);display:flex;align-items:center;justify-content:center;font-size:10px;font-family:var(--font-mono);color:var(--color-text-tertiary);flex-shrink:0;margin-top:1px">${i + 1}</div>
+          <div style="font-size:12px;font-family:var(--font-mono);color:var(--color-text-secondary);padding-top:2px;line-height:1.5">${f}</div>
+        </div>`,
+          )
+          .join("")}
+      </div>
+    </div>
+  `;
+      }
+
+      buildUJPips();
+      renderUJ();
+      buildHWPips();
+      renderHW();
+      buildDFPips();
+      renderDF();
+    </script>
+  </body>
+</html>
