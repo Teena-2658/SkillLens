@@ -1,0 +1,12 @@
+﻿
+G:\SkillLens\SkillLens\client\src\components\Navbar.jsx
+  4:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+G:\SkillLens\SkillLens\client\src\pages\Dashboard.jsx
+  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+G:\SkillLens\SkillLens\client\src\pages\Login.jsx
+  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+Ô£û 3 problems (3 errors, 0 warnings)
+
