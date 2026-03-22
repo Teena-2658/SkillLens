@@ -1,15 +1,25 @@
 import React from 'react';
-// eslint-disable-next-line no-unused-vars
 import { Link, useLocation } from 'react-router-dom';
-import { BookOpen, LogIn, UserPlus, LayoutDashboard, FileUp, Clock, CheckSquare, Target, Building2, TrendingUp, FileText, Map, Eye, Settings } from 'lucide-react';
-// eslint-disable-next-line no-unused-vars
-import { motion } from 'framer-motion';
+import {
+  BookOpen,
+  LogIn,
+  LayoutDashboard,
+  FileUp,
+  Clock,
+  CheckSquare,
+  Target,
+  Building2,
+  TrendingUp,
+  FileText,
+  Map,
+  Eye,
+  Settings,
+} from 'lucide-react';
 
 export default function Sidebar() {
   const location = useLocation();
 
   const sections = [
-
     {
       title: 'CORE',
       items: [
@@ -17,7 +27,7 @@ export default function Sidebar() {
         { name: 'Resume Upload', path: '/resume', icon: FileUp, badge: 'P4' },
         { name: 'Skill Quiz', path: '/quiz', icon: Clock, badge: 'P5' },
         { name: 'Quiz Results', path: '/results', icon: CheckSquare, badge: 'NEW', isNew: true },
-      ]
+      ],
     },
     {
       title: 'INTELLIGENCE',
@@ -29,63 +39,66 @@ export default function Sidebar() {
         { name: 'Roadmap', path: '/roadmap', icon: Map, badge: 'P8' },
         { name: 'Roadmap Modal', path: '/roadmap-modal', icon: Eye, badge: 'NEW', isNew: true },
         { name: 'Profile / Settings', path: '/profile', icon: Settings, badge: 'NEW', isNew: true },
-      ]
-    }
+      ],
+    },
   ];
 
   return (
-    <div className="fixed top-0 left-0 h-full w-[280px] bg-white/80 backdrop-blur-xl border-r border-white shadow-[10px_0_40px_-10px_rgba(0,0,0,0.05)] z-50 flex flex-col p-6 hidden lg:flex custom-scrollbar overflow-y-auto">
-
-      {/* Brand */}
-      <Link to="/" className="flex flex-col items-start gap-1 mb-10">
-        <div className="flex items-center gap-2 group cursor-pointer mb-1">
-          <div className="bg-[#11b589]/10 p-2 rounded-xl group-hover:bg-[#11b589]/20 transition-colors">
-            <BookOpen className="w-5 h-5 text-[#11b589]" />
-          </div>
-          <span className="text-2xl font-black text-[#0b261d] tracking-tight">SkillsLens</span>
+    <aside
+      className="fixed left-0 top-0 h-screen w-[240px] z-40 hidden lg:flex flex-col
+        bg-white/80 backdrop-blur-xl border-r border-[rgba(0,157,119,0.12)]
+        px-4 py-5 overflow-y-auto custom-scrollbar"
+    >
+      <Link to="/" className="flex items-center gap-2 mb-6 shrink-0">
+        <div className="w-8 h-8 rounded-lg bg-[#E8FAF5] flex items-center justify-center">
+          <BookOpen className="w-4 h-4 text-[#009D77]" />
         </div>
-        <div className="text-[10px] font-black text-[#3b4b45]/40 uppercase tracking-widest pl-1">
-          UI Design Doc • 13 Screens
-        </div>
+        <span className="text-base font-extrabold tracking-tight">
+          <span className="text-[#011813]">Skill</span>
+          <span className="text-[#009D77]">Lens</span>
+        </span>
       </Link>
 
-      {/* Nav Sections */}
-      <nav className="flex-1 space-y-8 pb-10">
-        {sections.map(section => (
+      <nav className="flex-1 flex flex-col min-h-0">
+        {sections.map((section) => (
           <div key={section.title}>
-            <h3 className="text-[11px] font-black text-[#3b4b45]/40 uppercase tracking-widest mb-3 pl-2">
+            <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#8D8E8F] px-2 mt-4 mb-1 first:mt-0">
               {section.title}
-            </h3>
-            <div className="space-y-1">
-              {section.items.map(item => {
-                const isActive = location.pathname === item.path || (location.pathname === '/' && item.path === '/login');
-
+            </p>
+            <div className="space-y-0.5">
+              {section.items.map((item) => {
+                const isActive =
+                  location.pathname === item.path ||
+                  (location.pathname === '/' && item.path === '/dashboard');
                 return (
                   <Link
                     key={item.name}
                     to={item.path}
-                    className="relative flex items-center justify-between px-3 py-2.5 rounded-xl transition-all group overflow-hidden"
+                    className={`flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-sm font-semibold transition-colors duration-150 cursor-pointer ${
+                      isActive
+                        ? 'bg-[#009D77] text-white'
+                        : 'text-[#313233] hover:bg-[#E8FAF5] hover:text-[#009D77]'
+                    }`}
                   >
-                    {isActive && (
-                      <motion.div
-                        layoutId="sidebar-active"
-                        className="absolute inset-0 bg-[#d2fbf0]/80 rounded-xl"
-                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                      />
-                    )}
-
-                    <div className="relative z-10 flex items-center gap-3">
-                      <item.icon className={`w-5 h-5 transition-colors ${isActive ? 'text-[#11b589]' : 'text-[#3b4b45]/50 group-hover:text-[#11b589]'}`} />
-                      <span className={`text-sm font-bold transition-colors ${isActive ? 'text-[#08241b]' : 'text-[#3b4b45]/60 group-hover:text-[#08241b]'}`}>
-                        {item.name}
-                      </span>
-                    </div>
-
-                    <div className="relative z-10 flex items-center">
-                      <span className={`text-[10px] font-black px-2 py-0.5 rounded-md ${item.isNew ? 'bg-[#11b589]/10 text-[#11b589] border border-[#11b589]/20' : 'bg-gray-100 text-gray-400 border border-transparent group-hover:border-gray-200'}`}>
-                        {item.badge}
-                      </span>
-                    </div>
+                    <item.icon
+                      className={`w-4 h-4 flex-shrink-0 ${
+                        isActive ? 'text-white' : 'text-[#8D8E8F]'
+                      }`}
+                    />
+                    <span className="flex-1 truncate">{item.name}</span>
+                    <span
+                      className={`text-[10px] font-bold shrink-0 ${
+                        item.isNew
+                          ? isActive
+                            ? 'px-2 py-0.5 rounded-full bg-white/20 text-white border border-white/30'
+                            : 'px-2 py-0.5 rounded-full bg-[#E8FAF5] text-[#009D77] border border-[rgba(0,157,119,0.2)]'
+                          : isActive
+                            ? 'px-1.5 py-0.5 rounded-md bg-white/20 text-white'
+                            : 'px-1.5 py-0.5 rounded-md bg-[#F0F0F0] text-[#8D8E8F]'
+                      }`}
+                    >
+                      {item.badge}
+                    </span>
                   </Link>
                 );
               })}
@@ -93,6 +106,20 @@ export default function Sidebar() {
           </div>
         ))}
       </nav>
-    </div>
+
+      <div className="my-3 h-px bg-[#F0F0F0] shrink-0" />
+
+      <Link
+        to="/login"
+        className={`flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-sm font-semibold transition-colors duration-150 ${
+          location.pathname === '/login'
+            ? 'bg-[#009D77] text-white'
+            : 'text-[#313233] hover:bg-[#E8FAF5] hover:text-[#009D77]'
+        }`}
+      >
+        <LogIn className={`w-4 h-4 flex-shrink-0 ${location.pathname === '/login' ? 'text-white' : 'text-[#8D8E8F]'}`} />
+        <span>Login</span>
+      </Link>
+    </aside>
   );
 }
