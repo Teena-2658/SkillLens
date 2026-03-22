@@ -9,7 +9,6 @@ import {
   Github,
   Linkedin,
 } from "lucide-react";
-import Navbar from "../components/Navbar";
 
 export default function Profile() {
   const [formData, setFormData] = useState({
@@ -38,8 +37,7 @@ export default function Profile() {
 
   return (
     <div className="min-h-screen relative">
-      <Navbar />
-      <div className="max-w-5xl mx-auto space-y-8 relative">
+            <div className="max-w-5xl mx-auto space-y-8 relative">
         <div className="mb-8 relative">
           <p className="text-xs text-[#8D8E8F] mb-2">
             Home / Profile / Settings

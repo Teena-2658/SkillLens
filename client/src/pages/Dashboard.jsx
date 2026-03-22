@@ -9,13 +9,11 @@ import {
   ChevronRight,
   AlertCircle,
 } from "lucide-react";
-import Navbar from "../components/Navbar";
 
 export default function Dashboard() {
   return (
     <div className="min-h-screen relative">
-      <Navbar />
-      <div className="max-w-5xl mx-auto space-y-8 relative">
+            <div className="max-w-5xl mx-auto space-y-8 relative">
         {/* Page title */}
         <div className="mb-8 relative">
           <p className="text-xs text-[#8D8E8F] mb-2">Home / Dashboard</p>

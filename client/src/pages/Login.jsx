@@ -8,7 +8,6 @@ import {
   CheckCircle2,
   Loader2,
 } from "lucide-react";
-import Navbar from "../components/Navbar";
 
 export default function Login() {
   const [name, setName] = useState("");
@@ -66,9 +65,8 @@ export default function Login() {
   const roles = ["Frontend", "Backend", "Fullstack", "Data", "Java"];
 
   return (
-    <div className="min-h-screen relative flex flex-col items-center justify-center py-12">
-      <Navbar />
-      <div className="w-full max-w-md px-1 relative z-10">
+    <div className="relative flex flex-col items-center justify-center py-6">
+            <div className="w-full max-w-md px-1 relative z-10">
         <div className="flex justify-center mb-6">
           <div className="px-3 py-1.5 rounded-full flex items-center gap-2 text-[10px] font-bold bg-[#E8FAF5] text-[#009D77] border border-[rgba(0,157,119,0.2)]">
             <BookOpen className="w-3.5 h-3.5" />

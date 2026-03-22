@@ -1,11 +1,9 @@
 import React from 'react';
-import Navbar from '../components/Navbar';
 
 export default function RoadmapModal() {
   return (
     <>
-      <Navbar />
-      <div className="min-h-screen font-sans bg-[#fbfbfa] lg:ml-[280px] relative overflow-hidden flex flex-col pt-32 pb-12 px-6">
+            <div className="min-h-screen font-sans bg-[#fbfbfa]  relative overflow-hidden flex flex-col pt-4 pb-12 px-6">
         <main className="flex-1 w-full max-w-6xl mx-auto relative z-10 space-y-6">
           <div className="flex items-center gap-4 mb-4">
             <h1 className="text-3xl font-black text-[#0b261d] tracking-tight">Roadmap Modal Detail</h1>

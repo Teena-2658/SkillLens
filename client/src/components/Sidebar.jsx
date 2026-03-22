@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   BookOpen,
   LogIn,
@@ -14,10 +14,19 @@ import {
   Map,
   Eye,
   Settings,
+  LogOut,
 } from 'lucide-react';
 
 export default function Sidebar() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const isAuthenticated = !!localStorage.getItem('token');
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    navigate('/login');
+  };
 
   const sections = [
     {
@@ -109,17 +118,27 @@ export default function Sidebar() {
 
       <div className="my-3 h-px bg-[#F0F0F0] shrink-0" />
 
-      <Link
-        to="/login"
-        className={`flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-sm font-semibold transition-colors duration-150 ${
-          location.pathname === '/login'
-            ? 'bg-[#009D77] text-white'
-            : 'text-[#313233] hover:bg-[#E8FAF5] hover:text-[#009D77]'
-        }`}
-      >
-        <LogIn className={`w-4 h-4 flex-shrink-0 ${location.pathname === '/login' ? 'text-white' : 'text-[#8D8E8F]'}`} />
-        <span>Login</span>
-      </Link>
+      {isAuthenticated ? (
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-sm font-semibold transition-colors duration-150 text-[#EA4C89] hover:bg-[#FCE4EE]"
+        >
+          <LogOut className="w-4 h-4 flex-shrink-0 text-[#EA4C89]" />
+          <span>Logout</span>
+        </button>
+      ) : (
+        <Link
+          to="/login"
+          className={`flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-sm font-semibold transition-colors duration-150 ${
+            location.pathname === '/login'
+              ? 'bg-[#009D77] text-white'
+              : 'text-[#313233] hover:bg-[#E8FAF5] hover:text-[#009D77]'
+          }`}
+        >
+          <LogIn className={`w-4 h-4 flex-shrink-0 ${location.pathname === '/login' ? 'text-white' : 'text-[#8D8E8F]'}`} />
+          <span>Login</span>
+        </Link>
+      )}
     </aside>
   );
 }
