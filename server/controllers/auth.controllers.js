@@ -41,6 +41,7 @@ export const googleAuth = asyncHandler(async (req, res) => {
           name: user.name,
           email: user.email,
           targetRole: user.targetRole,
+          detectedSkills: user.detectedSkills || [],
           createdAt: user.createdAt,
         },
       }
@@ -57,13 +58,14 @@ export const getProfile = asyncHandler(async (req, res) => {
 
   return res.status(200).json(
     new ApiResponse(200, "Profile fetched successfully", {
-      user: {
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        targetRole: user.targetRole,
-        createdAt: user.createdAt,
-      },
+        user: {
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          targetRole: user.targetRole,
+          detectedSkills: user.detectedSkills || [],
+          createdAt: user.createdAt,
+        },
     })
   );
 });

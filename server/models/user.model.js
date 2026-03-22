@@ -19,6 +19,11 @@ const userSchema = new mongoose.Schema(
       default: null,
       enum: ["frontend", "backend", "fullstack", "data", "java", null],
     },
+    /** Last known skills from resume analysis (lowercase ids). Used as default quiz scope. */
+    detectedSkills: {
+      type: [String],
+      default: [],
+    },
   },
   { timestamps: true }
 );

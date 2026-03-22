@@ -1,6 +1,7 @@
 import { asyncHandler } from "../utils/index.util.js";
 import { ApiError, ApiResponse } from "../class/index.class.js";
 import { extractText, detectSkills } from "../services/resume.service.js";
+import User from "../models/user.model.js";
 
 const ALLOWED_ROLES = ["frontend", "backend", "fullstack", "data", "java"];
 
@@ -36,6 +37,10 @@ export const uploadResume = asyncHandler(async (req, res) => {
   }
 
   const analysis = detectSkills(text, targetRole);
+
+  await User.findByIdAndUpdate(req.user.id, {
+    detectedSkills: analysis.detectedSkills,
+  });
 
   return res.status(200).json(
     new ApiResponse(200, "Resume analyzed successfully", {

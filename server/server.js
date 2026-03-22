@@ -7,6 +7,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import authRouters from "./routes/auth.routes.js";
 import resumeRoutes from "./routes/resume.routes.js";
+import quizRoutes from "./routes/quiz.routes.js";
 
 const PORT = process.env.PORT;
 const app = express();
@@ -32,6 +33,7 @@ if (fs.existsSync(publicDir)) {
 // ─── Routes ───────
 app.use("/api/auth", authRouters);
 app.use("/api/resume", resumeRoutes);
+app.use("/api/quiz", quizRoutes);
 
 app.get("/api/health", (req, res) => {
   res.status(200).json({ success: true, message: "Server is running" });
