@@ -1,0 +1,1369 @@
+[
+  {
+    "id": "tcs",
+    "name": "TCS",
+    "sector": "IT Services",
+    "type": "Indian MNC",
+    "tier": "service",
+    "aboutHiring": "TCS hires the largest number of freshers in India annually (~40,000+). They test aptitude, basic coding, and communication. Technical depth matters less than consistency and learning agility. NQT (National Qualifier Test) is the primary entry point.",
+    "roles": {
+      "backend": {
+        "ctc": "3.5–7 LPA",
+        "hiringProcess": ["TCS NQT (aptitude + coding)", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "java", "weight": 30, "minimumDepth": 50, "focus": ["oops", "collections", "basics"], "testedVia": "mcq" },
+          { "skill": "sql", "weight": 25, "minimumDepth": 45, "focus": ["joins", "queries", "basics"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 25, "minimumDepth": 45, "focus": ["arrays", "strings", "sorting"], "testedVia": "coding-round" },
+          { "skill": "git", "weight": 10, "minimumDepth": 40, "focus": ["basics", "branching"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": [
+          { "skill": "restapi", "weight": 10, "minimumDepth": 35, "focus": ["http-methods", "basics"], "testedVia": "interview-qa" }
+        ]
+      },
+      "frontend": {
+        "ctc": "3.5–7 LPA",
+        "hiringProcess": ["TCS NQT", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "react", "weight": 30, "minimumDepth": 45, "focus": ["components", "state", "props"], "testedVia": "interview-qa" },
+          { "skill": "sql", "weight": 20, "minimumDepth": 40, "focus": ["basics", "queries"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 25, "minimumDepth": 45, "focus": ["arrays", "strings"], "testedVia": "coding-round" },
+          { "skill": "git", "weight": 10, "minimumDepth": 40, "focus": ["basics"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": [
+          { "skill": "restapi", "weight": 15, "minimumDepth": 35, "focus": ["http-methods"], "testedVia": "interview-qa" }
+        ]
+      },
+      "fullstack": {
+        "ctc": "3.5–7 LPA",
+        "hiringProcess": ["TCS NQT", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "java", "weight": 25, "minimumDepth": 45, "focus": ["oops", "basics"], "testedVia": "mcq" },
+          { "skill": "react", "weight": 20, "minimumDepth": 40, "focus": ["components", "state"], "testedVia": "interview-qa" },
+          { "skill": "sql", "weight": 20, "minimumDepth": 40, "focus": ["basics", "joins"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 25, "minimumDepth": 45, "focus": ["arrays", "strings"], "testedVia": "coding-round" }
+        ],
+        "preferredSkills": [
+          { "skill": "git", "weight": 10, "minimumDepth": 35, "focus": ["basics"], "testedVia": "interview-qa" }
+        ]
+      },
+      "java": {
+        "ctc": "3.5–7 LPA",
+        "hiringProcess": ["TCS NQT", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "java", "weight": 40, "minimumDepth": 55, "focus": ["oops", "collections", "exception-handling"], "testedVia": "mcq" },
+          { "skill": "sql", "weight": 25, "minimumDepth": 45, "focus": ["joins", "queries"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 25, "minimumDepth": 45, "focus": ["arrays", "sorting"], "testedVia": "coding-round" }
+        ],
+        "preferredSkills": [
+          { "skill": "git", "weight": 10, "minimumDepth": 35, "focus": ["basics"], "testedVia": "interview-qa" }
+        ]
+      },
+      "data": {
+        "ctc": "3.5–7 LPA",
+        "hiringProcess": ["TCS NQT", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "python", "weight": 35, "minimumDepth": 50, "focus": ["basics", "pandas", "numpy"], "testedVia": "coding-round" },
+          { "skill": "sql", "weight": 35, "minimumDepth": 50, "focus": ["joins", "aggregation", "subqueries"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 20, "minimumDepth": 40, "focus": ["arrays", "basics"], "testedVia": "coding-round" }
+        ],
+        "preferredSkills": [
+          { "skill": "git", "weight": 10, "minimumDepth": 35, "focus": ["basics"], "testedVia": "interview-qa" }
+        ]
+      }
+    }
+  },
+  {
+    "id": "infosys",
+    "name": "Infosys",
+    "sector": "IT Services",
+    "type": "Indian MNC",
+    "tier": "service",
+    "aboutHiring": "Infosys hires freshers through InfyTQ and campus drives. They focus on logical reasoning, basic programming, and communication. Strong training program at Mysuru campus. Digital specialist track pays higher.",
+    "roles": {
+      "backend": {
+        "ctc": "3.6–9 LPA",
+        "hiringProcess": ["InfyTQ / HackWithInfy", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "java", "weight": 30, "minimumDepth": 50, "focus": ["oops", "basics"], "testedVia": "mcq" },
+          { "skill": "sql", "weight": 25, "minimumDepth": 45, "focus": ["queries", "joins"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 30, "minimumDepth": 50, "focus": ["arrays", "linked-list", "sorting"], "testedVia": "coding-round" }
+        ],
+        "preferredSkills": [
+          { "skill": "restapi", "weight": 15, "minimumDepth": 40, "focus": ["http-methods", "basics"], "testedVia": "interview-qa" }
+        ]
+      },
+      "frontend": {
+        "ctc": "3.6–9 LPA",
+        "hiringProcess": ["InfyTQ / campus", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "react", "weight": 35, "minimumDepth": 50, "focus": ["components", "hooks", "state"], "testedVia": "interview-qa" },
+          { "skill": "dsa", "weight": 30, "minimumDepth": 45, "focus": ["arrays", "strings"], "testedVia": "coding-round" },
+          { "skill": "sql", "weight": 20, "minimumDepth": 40, "focus": ["basics"], "testedVia": "mcq" }
+        ],
+        "preferredSkills": [
+          { "skill": "git", "weight": 15, "minimumDepth": 35, "focus": ["basics"], "testedVia": "interview-qa" }
+        ]
+      },
+      "fullstack": {
+        "ctc": "3.6–9 LPA",
+        "hiringProcess": ["InfyTQ", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "react", "weight": 25, "minimumDepth": 45, "focus": ["components", "state"], "testedVia": "interview-qa" },
+          { "skill": "java", "weight": 25, "minimumDepth": 45, "focus": ["oops", "basics"], "testedVia": "mcq" },
+          { "skill": "sql", "weight": 20, "minimumDepth": 40, "focus": ["basics", "joins"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 30, "minimumDepth": 50, "focus": ["arrays", "sorting"], "testedVia": "coding-round" }
+        ],
+        "preferredSkills": []
+      },
+      "java": {
+        "ctc": "3.6–9 LPA",
+        "hiringProcess": ["InfyTQ", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "java", "weight": 45, "minimumDepth": 55, "focus": ["oops", "collections", "multithreading"], "testedVia": "mcq" },
+          { "skill": "sql", "weight": 25, "minimumDepth": 45, "focus": ["queries", "joins"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 30, "minimumDepth": 50, "focus": ["arrays", "trees", "sorting"], "testedVia": "coding-round" }
+        ],
+        "preferredSkills": []
+      },
+      "data": {
+        "ctc": "3.6–9 LPA",
+        "hiringProcess": ["InfyTQ", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "python", "weight": 35, "minimumDepth": 50, "focus": ["pandas", "numpy", "basics"], "testedVia": "coding-round" },
+          { "skill": "sql", "weight": 35, "minimumDepth": 50, "focus": ["aggregation", "joins", "subqueries"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 30, "minimumDepth": 45, "focus": ["arrays", "basics"], "testedVia": "coding-round" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "wipro",
+    "name": "Wipro",
+    "sector": "IT Services",
+    "type": "Indian MNC",
+    "tier": "service",
+    "aboutHiring": "Wipro recruits freshers through WILP (Wipro Integrated Placement) and campus drives. They value problem-solving and communication. Elite NTH track offers significantly higher pay for strong DSA performers.",
+    "roles": {
+      "backend": {
+        "ctc": "3.5–6.5 LPA",
+        "hiringProcess": ["WILP online test", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "java", "weight": 30, "minimumDepth": 50, "focus": ["oops", "basics"], "testedVia": "mcq" },
+          { "skill": "sql", "weight": 25, "minimumDepth": 45, "focus": ["queries", "joins"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 30, "minimumDepth": 45, "focus": ["arrays", "sorting", "searching"], "testedVia": "coding-round" }
+        ],
+        "preferredSkills": [
+          { "skill": "restapi", "weight": 15, "minimumDepth": 35, "focus": ["basics"], "testedVia": "interview-qa" }
+        ]
+      },
+      "frontend": {
+        "ctc": "3.5–6.5 LPA",
+        "hiringProcess": ["WILP online test", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "react", "weight": 35, "minimumDepth": 45, "focus": ["components", "state"], "testedVia": "interview-qa" },
+          { "skill": "sql", "weight": 20, "minimumDepth": 40, "focus": ["basics"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 30, "minimumDepth": 45, "focus": ["arrays", "strings"], "testedVia": "coding-round" }
+        ],
+        "preferredSkills": [
+          { "skill": "git", "weight": 15, "minimumDepth": 35, "focus": ["basics"], "testedVia": "interview-qa" }
+        ]
+      },
+      "fullstack": {
+        "ctc": "3.5–6.5 LPA",
+        "hiringProcess": ["WILP online test", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "react", "weight": 25, "minimumDepth": 40, "focus": ["components", "state"], "testedVia": "interview-qa" },
+          { "skill": "java", "weight": 25, "minimumDepth": 45, "focus": ["oops", "basics"], "testedVia": "mcq" },
+          { "skill": "sql", "weight": 20, "minimumDepth": 40, "focus": ["basics"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 30, "minimumDepth": 45, "focus": ["arrays", "sorting"], "testedVia": "coding-round" }
+        ],
+        "preferredSkills": []
+      },
+      "java": {
+        "ctc": "3.5–6.5 LPA",
+        "hiringProcess": ["WILP online test", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "java", "weight": 45, "minimumDepth": 55, "focus": ["oops", "collections", "basics"], "testedVia": "mcq" },
+          { "skill": "sql", "weight": 25, "minimumDepth": 45, "focus": ["queries", "joins"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 30, "minimumDepth": 45, "focus": ["arrays", "sorting"], "testedVia": "coding-round" }
+        ],
+        "preferredSkills": []
+      },
+      "data": {
+        "ctc": "3.5–6.5 LPA",
+        "hiringProcess": ["WILP online test", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "python", "weight": 35, "minimumDepth": 50, "focus": ["pandas", "numpy"], "testedVia": "coding-round" },
+          { "skill": "sql", "weight": 35, "minimumDepth": 50, "focus": ["aggregation", "joins"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 30, "minimumDepth": 40, "focus": ["arrays", "basics"], "testedVia": "coding-round" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "hcl",
+    "name": "HCLTech",
+    "sector": "IT Services",
+    "type": "Indian MNC",
+    "tier": "service",
+    "aboutHiring": "HCLTech hires through TechBee (after 12th), direct campus, and off-campus drives. Fresher roles span engineering services, digital, cloud. Good volume hiring. Interview difficulty is moderate.",
+    "roles": {
+      "backend": {
+        "ctc": "3.5–5.5 LPA",
+        "hiringProcess": ["Online aptitude + coding test", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "java", "weight": 35, "minimumDepth": 50, "focus": ["oops", "basics"], "testedVia": "mcq" },
+          { "skill": "sql", "weight": 25, "minimumDepth": 45, "focus": ["queries", "joins"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 25, "minimumDepth": 45, "focus": ["arrays", "sorting"], "testedVia": "coding-round" }
+        ],
+        "preferredSkills": [
+          { "skill": "git", "weight": 15, "minimumDepth": 35, "focus": ["basics"], "testedVia": "interview-qa" }
+        ]
+      },
+      "java": {
+        "ctc": "3.5–5.5 LPA",
+        "hiringProcess": ["Online test", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "java", "weight": 45, "minimumDepth": 55, "focus": ["oops", "collections"], "testedVia": "mcq" },
+          { "skill": "sql", "weight": 30, "minimumDepth": 45, "focus": ["queries", "joins"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 25, "minimumDepth": 45, "focus": ["arrays", "sorting"], "testedVia": "coding-round" }
+        ],
+        "preferredSkills": []
+      },
+      "data": {
+        "ctc": "3.5–5.5 LPA",
+        "hiringProcess": ["Online test", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "python", "weight": 35, "minimumDepth": 50, "focus": ["basics", "pandas"], "testedVia": "coding-round" },
+          { "skill": "sql", "weight": 35, "minimumDepth": 50, "focus": ["aggregation", "joins"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 30, "minimumDepth": 40, "focus": ["arrays"], "testedVia": "coding-round" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "cognizant",
+    "name": "Cognizant",
+    "sector": "IT Services",
+    "type": "Indian MNC",
+    "tier": "service",
+    "aboutHiring": "Cognizant (CTS) recruits through GenC (fresher program) and campus drives. They test aptitude, communication, and basic tech. Digital/cloud tracks available. Strong focus on client-facing communication skills.",
+    "roles": {
+      "backend": {
+        "ctc": "4–7 LPA",
+        "hiringProcess": ["GenC aptitude + coding", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "java", "weight": 30, "minimumDepth": 50, "focus": ["oops", "basics"], "testedVia": "mcq" },
+          { "skill": "sql", "weight": 25, "minimumDepth": 45, "focus": ["queries", "joins"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 30, "minimumDepth": 45, "focus": ["arrays", "strings", "sorting"], "testedVia": "coding-round" }
+        ],
+        "preferredSkills": [
+          { "skill": "restapi", "weight": 15, "minimumDepth": 35, "focus": ["basics"], "testedVia": "interview-qa" }
+        ]
+      },
+      "fullstack": {
+        "ctc": "4–7 LPA",
+        "hiringProcess": ["GenC test", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "react", "weight": 25, "minimumDepth": 45, "focus": ["components", "state"], "testedVia": "interview-qa" },
+          { "skill": "java", "weight": 25, "minimumDepth": 45, "focus": ["oops"], "testedVia": "mcq" },
+          { "skill": "sql", "weight": 20, "minimumDepth": 40, "focus": ["basics"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 30, "minimumDepth": 45, "focus": ["arrays", "strings"], "testedVia": "coding-round" }
+        ],
+        "preferredSkills": []
+      },
+      "data": {
+        "ctc": "4–7 LPA",
+        "hiringProcess": ["GenC test", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "python", "weight": 35, "minimumDepth": 50, "focus": ["pandas", "basics"], "testedVia": "coding-round" },
+          { "skill": "sql", "weight": 35, "minimumDepth": 50, "focus": ["aggregation", "joins"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 30, "minimumDepth": 40, "focus": ["arrays"], "testedVia": "coding-round" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "techmahindra",
+    "name": "Tech Mahindra",
+    "sector": "IT Services",
+    "type": "Indian MNC",
+    "tier": "service",
+    "aboutHiring": "Tech Mahindra hires freshers through campus placements and TechMahindra SMART Academy. Telecom and digital transformation are key focus areas. Interview process is moderate in difficulty.",
+    "roles": {
+      "backend": {
+        "ctc": "3.5–5 LPA",
+        "hiringProcess": ["Online aptitude test", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "java", "weight": 35, "minimumDepth": 45, "focus": ["oops", "basics"], "testedVia": "mcq" },
+          { "skill": "sql", "weight": 25, "minimumDepth": 40, "focus": ["queries", "basics"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 25, "minimumDepth": 40, "focus": ["arrays", "sorting"], "testedVia": "coding-round" }
+        ],
+        "preferredSkills": [
+          { "skill": "restapi", "weight": 15, "minimumDepth": 35, "focus": ["basics"], "testedVia": "interview-qa" }
+        ]
+      },
+      "java": {
+        "ctc": "3.5–5 LPA",
+        "hiringProcess": ["Online test", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "java", "weight": 50, "minimumDepth": 50, "focus": ["oops", "collections", "basics"], "testedVia": "mcq" },
+          { "skill": "sql", "weight": 25, "minimumDepth": 40, "focus": ["queries"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 25, "minimumDepth": 40, "focus": ["arrays", "sorting"], "testedVia": "coding-round" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "capgemini",
+    "name": "Capgemini",
+    "sector": "IT Services",
+    "type": "Global MNC",
+    "tier": "service",
+    "aboutHiring": "Capgemini hires freshers through campus and off-campus drives. They run a 'Game-Based Assessment' for aptitude. Strong focus on adaptability, cloud readiness, and communication. Offers good learning programs for freshers.",
+    "roles": {
+      "backend": {
+        "ctc": "4–7 LPA",
+        "hiringProcess": ["Game-based assessment", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "java", "weight": 30, "minimumDepth": 50, "focus": ["oops", "basics"], "testedVia": "mcq" },
+          { "skill": "sql", "weight": 25, "minimumDepth": 45, "focus": ["queries", "joins"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 30, "minimumDepth": 45, "focus": ["arrays", "strings"], "testedVia": "coding-round" }
+        ],
+        "preferredSkills": [
+          { "skill": "restapi", "weight": 15, "minimumDepth": 35, "focus": ["basics"], "testedVia": "interview-qa" }
+        ]
+      },
+      "fullstack": {
+        "ctc": "4–7 LPA",
+        "hiringProcess": ["Game-based assessment", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "react", "weight": 25, "minimumDepth": 45, "focus": ["components", "state"], "testedVia": "interview-qa" },
+          { "skill": "nodejs", "weight": 25, "minimumDepth": 45, "focus": ["basics", "express"], "testedVia": "interview-qa" },
+          { "skill": "sql", "weight": 20, "minimumDepth": 40, "focus": ["basics"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 30, "minimumDepth": 45, "focus": ["arrays", "strings"], "testedVia": "coding-round" }
+        ],
+        "preferredSkills": []
+      },
+      "data": {
+        "ctc": "4–7 LPA",
+        "hiringProcess": ["Game-based assessment", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "python", "weight": 35, "minimumDepth": 50, "focus": ["basics", "pandas"], "testedVia": "coding-round" },
+          { "skill": "sql", "weight": 35, "minimumDepth": 50, "focus": ["aggregation", "joins"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 30, "minimumDepth": 40, "focus": ["arrays"], "testedVia": "coding-round" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "accenture",
+    "name": "Accenture",
+    "sector": "IT Services",
+    "type": "Global MNC",
+    "tier": "service",
+    "aboutHiring": "Accenture India is a top recruiter offering ASE (Associate Software Engineer) and specialist roles. They test cognitive ability, coding, and communication. Higher-paying 'specialist' track requires stronger DSA performance.",
+    "roles": {
+      "backend": {
+        "ctc": "4.5–8 LPA",
+        "hiringProcess": ["Cognitive + coding test", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "java", "weight": 30, "minimumDepth": 50, "focus": ["oops", "basics"], "testedVia": "mcq" },
+          { "skill": "sql", "weight": 25, "minimumDepth": 45, "focus": ["queries", "joins"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 30, "minimumDepth": 50, "focus": ["arrays", "trees", "sorting"], "testedVia": "coding-round" }
+        ],
+        "preferredSkills": [
+          { "skill": "restapi", "weight": 15, "minimumDepth": 40, "focus": ["basics"], "testedVia": "interview-qa" }
+        ]
+      },
+      "fullstack": {
+        "ctc": "4.5–8 LPA",
+        "hiringProcess": ["Cognitive + coding test", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "react", "weight": 25, "minimumDepth": 50, "focus": ["components", "hooks"], "testedVia": "interview-qa" },
+          { "skill": "nodejs", "weight": 25, "minimumDepth": 45, "focus": ["basics", "async"], "testedVia": "interview-qa" },
+          { "skill": "sql", "weight": 20, "minimumDepth": 40, "focus": ["basics", "joins"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 30, "minimumDepth": 50, "focus": ["arrays", "strings"], "testedVia": "coding-round" }
+        ],
+        "preferredSkills": []
+      },
+      "data": {
+        "ctc": "4.5–8 LPA",
+        "hiringProcess": ["Cognitive + coding test", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "python", "weight": 35, "minimumDepth": 55, "focus": ["pandas", "numpy", "basics"], "testedVia": "coding-round" },
+          { "skill": "sql", "weight": 35, "minimumDepth": 55, "focus": ["aggregation", "joins", "subqueries"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 30, "minimumDepth": 45, "focus": ["arrays", "basics"], "testedVia": "coding-round" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "ltimindtree",
+    "name": "LTIMindtree",
+    "sector": "IT Services",
+    "type": "Indian MNC",
+    "tier": "service",
+    "aboutHiring": "LTIMindtree (merger of L&T Infotech and Mindtree) hires freshers for digital, cloud, and engineering roles. Interview difficulty is moderate. Good reputation for engineering-heavy projects.",
+    "roles": {
+      "backend": {
+        "ctc": "4–7 LPA",
+        "hiringProcess": ["Online aptitude + coding", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "java", "weight": 35, "minimumDepth": 50, "focus": ["oops", "collections", "basics"], "testedVia": "mcq" },
+          { "skill": "sql", "weight": 25, "minimumDepth": 45, "focus": ["queries", "joins"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 25, "minimumDepth": 50, "focus": ["arrays", "trees", "sorting"], "testedVia": "coding-round" }
+        ],
+        "preferredSkills": [
+          { "skill": "restapi", "weight": 15, "minimumDepth": 40, "focus": ["basics"], "testedVia": "interview-qa" }
+        ]
+      },
+      "java": {
+        "ctc": "4–7 LPA",
+        "hiringProcess": ["Online test", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "java", "weight": 45, "minimumDepth": 55, "focus": ["oops", "collections", "exception-handling"], "testedVia": "mcq" },
+          { "skill": "sql", "weight": 25, "minimumDepth": 45, "focus": ["queries", "joins"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 30, "minimumDepth": 50, "focus": ["arrays", "sorting", "trees"], "testedVia": "coding-round" }
+        ],
+        "preferredSkills": []
+      },
+      "data": {
+        "ctc": "4–7 LPA",
+        "hiringProcess": ["Online test", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "python", "weight": 35, "minimumDepth": 50, "focus": ["pandas", "numpy"], "testedVia": "coding-round" },
+          { "skill": "sql", "weight": 35, "minimumDepth": 50, "focus": ["aggregation", "joins"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 30, "minimumDepth": 45, "focus": ["arrays", "basics"], "testedVia": "coding-round" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "mphasis",
+    "name": "Mphasis",
+    "sector": "IT Services",
+    "type": "Indian MNC",
+    "tier": "service",
+    "aboutHiring": "Mphasis focuses on BFSI (banking, financial services, insurance) technology. Freshers join through campus or off-campus. Good for students targeting fintech-adjacent backend and data roles.",
+    "roles": {
+      "backend": {
+        "ctc": "3.5–6 LPA",
+        "hiringProcess": ["Online test", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "java", "weight": 35, "minimumDepth": 50, "focus": ["oops", "basics"], "testedVia": "mcq" },
+          { "skill": "sql", "weight": 30, "minimumDepth": 45, "focus": ["queries", "joins", "aggregation"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 25, "minimumDepth": 45, "focus": ["arrays", "sorting"], "testedVia": "coding-round" }
+        ],
+        "preferredSkills": [
+          { "skill": "restapi", "weight": 10, "minimumDepth": 35, "focus": ["basics"], "testedVia": "interview-qa" }
+        ]
+      },
+      "data": {
+        "ctc": "3.5–6 LPA",
+        "hiringProcess": ["Online test", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "python", "weight": 30, "minimumDepth": 50, "focus": ["pandas", "basics"], "testedVia": "coding-round" },
+          { "skill": "sql", "weight": 40, "minimumDepth": 55, "focus": ["aggregation", "joins", "subqueries"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 30, "minimumDepth": 40, "focus": ["arrays"], "testedVia": "coding-round" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "hexaware",
+    "name": "Hexaware",
+    "sector": "IT Services",
+    "type": "Indian MNC",
+    "tier": "service",
+    "aboutHiring": "Hexaware focuses on automation, AI, and cloud. Good entry point for freshers targeting digital transformation projects. Campus hiring in Tier 2 cities is active.",
+    "roles": {
+      "backend": {
+        "ctc": "3.5–5.5 LPA",
+        "hiringProcess": ["Online aptitude test", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "java", "weight": 35, "minimumDepth": 45, "focus": ["oops", "basics"], "testedVia": "mcq" },
+          { "skill": "sql", "weight": 25, "minimumDepth": 40, "focus": ["queries", "basics"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 25, "minimumDepth": 40, "focus": ["arrays", "sorting"], "testedVia": "coding-round" }
+        ],
+        "preferredSkills": [
+          { "skill": "git", "weight": 15, "minimumDepth": 35, "focus": ["basics"], "testedVia": "interview-qa" }
+        ]
+      }
+    }
+  },
+  {
+    "id": "persistent",
+    "name": "Persistent Systems",
+    "sector": "IT Services",
+    "type": "Indian MNC",
+    "tier": "service",
+    "aboutHiring": "Persistent Systems is engineering-focused with good product-adjacent projects. Fresher hiring is campus-driven with a higher bar than typical IT services. Strong for students with solid Java or Python + DSA.",
+    "roles": {
+      "backend": {
+        "ctc": "5–9 LPA",
+        "hiringProcess": ["Coding test (DSA-heavy)", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "java", "weight": 30, "minimumDepth": 55, "focus": ["oops", "collections", "multithreading"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 35, "minimumDepth": 60, "focus": ["arrays", "trees", "dp", "graphs"], "testedVia": "coding-round" },
+          { "skill": "sql", "weight": 20, "minimumDepth": 45, "focus": ["queries", "joins"], "testedVia": "mcq" }
+        ],
+        "preferredSkills": [
+          { "skill": "systemdesign", "weight": 15, "minimumDepth": 40, "focus": ["basics", "scalability"], "testedVia": "interview-qa" }
+        ]
+      },
+      "java": {
+        "ctc": "5–9 LPA",
+        "hiringProcess": ["Coding test", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "java", "weight": 45, "minimumDepth": 60, "focus": ["oops", "collections", "multithreading", "spring-basics"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 35, "minimumDepth": 60, "focus": ["arrays", "trees", "dp"], "testedVia": "coding-round" },
+          { "skill": "sql", "weight": 20, "minimumDepth": 45, "focus": ["queries", "joins"], "testedVia": "mcq" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "zoho",
+    "name": "Zoho",
+    "sector": "SaaS / Product",
+    "type": "Indian Product",
+    "tier": "tier1",
+    "aboutHiring": "Zoho is fully bootstrapped and one of India's most respected product companies. They have a unique hiring process — they don't consider CGPA and hire based purely on problem-solving ability. Very long and challenging coding rounds.",
+    "roles": {
+      "backend": {
+        "ctc": "5–10 LPA",
+        "hiringProcess": ["Written aptitude test", "Programming test (multi-round)", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "dsa", "weight": 40, "minimumDepth": 70, "focus": ["arrays", "trees", "graphs", "dp", "sorting"], "testedVia": "coding-round" },
+          { "skill": "java", "weight": 30, "minimumDepth": 60, "focus": ["oops", "collections", "design-patterns"], "testedVia": "interview-qa" },
+          { "skill": "sql", "weight": 20, "minimumDepth": 55, "focus": ["queries", "joins", "optimization"], "testedVia": "mcq" }
+        ],
+        "preferredSkills": [
+          { "skill": "systemdesign", "weight": 10, "minimumDepth": 40, "focus": ["basics"], "testedVia": "interview-qa" }
+        ]
+      },
+      "fullstack": {
+        "ctc": "5–10 LPA",
+        "hiringProcess": ["Written test", "Multi-round programming test", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "dsa", "weight": 35, "minimumDepth": 70, "focus": ["arrays", "trees", "dp", "graphs"], "testedVia": "coding-round" },
+          { "skill": "react", "weight": 25, "minimumDepth": 60, "focus": ["hooks", "state-management", "performance"], "testedVia": "interview-qa" },
+          { "skill": "nodejs", "weight": 25, "minimumDepth": 60, "focus": ["async", "middleware", "event-loop"], "testedVia": "interview-qa" },
+          { "skill": "sql", "weight": 15, "minimumDepth": 50, "focus": ["queries", "joins"], "testedVia": "mcq" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "freshworks",
+    "name": "Freshworks",
+    "sector": "SaaS / Product",
+    "type": "Indian Product",
+    "tier": "tier1",
+    "aboutHiring": "Freshworks is a NASDAQ-listed SaaS company (CRM, helpdesk tools). Good product engineering culture. Freshers join through campus. Strong DSA required for engineering roles.",
+    "roles": {
+      "backend": {
+        "ctc": "10–18 LPA",
+        "hiringProcess": ["Online coding test (DSA)", "Technical interview x2", "HR round"],
+        "requiredSkills": [
+          { "skill": "dsa", "weight": 35, "minimumDepth": 70, "focus": ["trees", "graphs", "dp", "arrays"], "testedVia": "coding-round" },
+          { "skill": "nodejs", "weight": 30, "minimumDepth": 65, "focus": ["async", "middleware", "error-handling"], "testedVia": "interview-qa" },
+          { "skill": "sql", "weight": 20, "minimumDepth": 55, "focus": ["joins", "aggregation", "indexing"], "testedVia": "mcq" }
+        ],
+        "preferredSkills": [
+          { "skill": "systemdesign", "weight": 15, "minimumDepth": 45, "focus": ["basics", "caching", "load-balancing"], "testedVia": "interview-qa" }
+        ]
+      },
+      "fullstack": {
+        "ctc": "10–18 LPA",
+        "hiringProcess": ["Online coding test", "Technical interview x2", "HR round"],
+        "requiredSkills": [
+          { "skill": "dsa", "weight": 30, "minimumDepth": 70, "focus": ["trees", "dp", "arrays"], "testedVia": "coding-round" },
+          { "skill": "react", "weight": 25, "minimumDepth": 65, "focus": ["hooks", "state-management", "performance"], "testedVia": "interview-qa" },
+          { "skill": "nodejs", "weight": 25, "minimumDepth": 65, "focus": ["async", "middleware"], "testedVia": "interview-qa" },
+          { "skill": "mongodb", "weight": 20, "minimumDepth": 55, "focus": ["aggregation", "indexing", "schema-design"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "browserstack",
+    "name": "BrowserStack",
+    "sector": "SaaS / Product",
+    "type": "Indian Product",
+    "tier": "tier1",
+    "aboutHiring": "BrowserStack is a testing infrastructure product used globally. Small but high-quality hiring. Very strong DSA and system design bar. Excellent engineering culture. Not mass campus hiring.",
+    "roles": {
+      "backend": {
+        "ctc": "12–22 LPA",
+        "hiringProcess": ["DSA online round", "Technical interview x2 (system design + coding)", "HR round"],
+        "requiredSkills": [
+          { "skill": "dsa", "weight": 40, "minimumDepth": 75, "focus": ["graphs", "dp", "trees", "arrays", "heaps"], "testedVia": "coding-round" },
+          { "skill": "nodejs", "weight": 25, "minimumDepth": 70, "focus": ["async", "event-loop", "streams"], "testedVia": "interview-qa" },
+          { "skill": "systemdesign", "weight": 20, "minimumDepth": 55, "focus": ["scalability", "load-balancing", "caching"], "testedVia": "interview-qa" },
+          { "skill": "sql", "weight": 15, "minimumDepth": 55, "focus": ["indexing", "optimization", "joins"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      },
+      "fullstack": {
+        "ctc": "12–22 LPA",
+        "hiringProcess": ["DSA online round", "Technical interview x2", "HR round"],
+        "requiredSkills": [
+          { "skill": "dsa", "weight": 35, "minimumDepth": 75, "focus": ["graphs", "dp", "trees"], "testedVia": "coding-round" },
+          { "skill": "react", "weight": 25, "minimumDepth": 70, "focus": ["performance", "hooks", "rendering"], "testedVia": "interview-qa" },
+          { "skill": "nodejs", "weight": 25, "minimumDepth": 70, "focus": ["async", "event-loop"], "testedVia": "interview-qa" },
+          { "skill": "systemdesign", "weight": 15, "minimumDepth": 50, "focus": ["basics", "scalability"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "postman",
+    "name": "Postman",
+    "sector": "SaaS / Product",
+    "type": "Indian Product",
+    "tier": "tier1",
+    "aboutHiring": "Postman is used by millions of developers globally. Strong engineering culture, high bar for freshers. Focus on REST API knowledge (relevant to their product), DSA, and backend fundamentals.",
+    "roles": {
+      "backend": {
+        "ctc": "15–25 LPA",
+        "hiringProcess": ["DSA round", "Technical interview x2", "System design discussion", "HR round"],
+        "requiredSkills": [
+          { "skill": "dsa", "weight": 35, "minimumDepth": 75, "focus": ["graphs", "dp", "trees", "heaps"], "testedVia": "coding-round" },
+          { "skill": "restapi", "weight": 30, "minimumDepth": 75, "focus": ["auth", "http-methods", "status-codes", "rate-limiting"], "testedVia": "interview-qa" },
+          { "skill": "nodejs", "weight": 20, "minimumDepth": 65, "focus": ["async", "middleware", "streams"], "testedVia": "interview-qa" },
+          { "skill": "systemdesign", "weight": 15, "minimumDepth": 55, "focus": ["API-design", "caching", "scalability"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "razorpay",
+    "name": "Razorpay",
+    "sector": "Fintech",
+    "type": "Indian Product",
+    "tier": "tier1",
+    "aboutHiring": "Razorpay is India's leading payment gateway. Strong engineering culture with high bar for freshers. DSA and backend depth are heavily tested. Fintech domain knowledge is a plus.",
+    "roles": {
+      "backend": {
+        "ctc": "12–20 LPA",
+        "hiringProcess": ["Online coding test (DSA)", "Technical interview x2", "HR round"],
+        "requiredSkills": [
+          { "skill": "dsa", "weight": 30, "minimumDepth": 70, "focus": ["arrays", "trees", "dp", "graphs"], "testedVia": "coding-round" },
+          { "skill": "nodejs", "weight": 25, "minimumDepth": 75, "focus": ["async", "middleware", "error-handling"], "testedVia": "interview-qa" },
+          { "skill": "mongodb", "weight": 20, "minimumDepth": 60, "focus": ["aggregation", "indexing", "schema-design"], "testedVia": "interview-qa" },
+          { "skill": "restapi", "weight": 15, "minimumDepth": 60, "focus": ["auth", "http-methods", "rate-limiting"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": [
+          { "skill": "systemdesign", "weight": 10, "minimumDepth": 50, "focus": ["load-balancing", "caching"], "testedVia": "interview-qa" }
+        ]
+      },
+      "fullstack": {
+        "ctc": "12–20 LPA",
+        "hiringProcess": ["Online coding test", "Technical interview x2", "HR round"],
+        "requiredSkills": [
+          { "skill": "dsa", "weight": 25, "minimumDepth": 65, "focus": ["arrays", "trees", "dp"], "testedVia": "coding-round" },
+          { "skill": "react", "weight": 25, "minimumDepth": 65, "focus": ["hooks", "state-management", "performance"], "testedVia": "interview-qa" },
+          { "skill": "nodejs", "weight": 25, "minimumDepth": 65, "focus": ["async", "middleware"], "testedVia": "interview-qa" },
+          { "skill": "mongodb", "weight": 15, "minimumDepth": 55, "focus": ["aggregation", "indexing"], "testedVia": "interview-qa" },
+          { "skill": "restapi", "weight": 10, "minimumDepth": 55, "focus": ["auth", "http-methods"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "phonepe",
+    "name": "PhonePe",
+    "sector": "Fintech",
+    "type": "Indian Product",
+    "tier": "tier1",
+    "aboutHiring": "PhonePe (Flipkart spin-off, Walmart-backed) is India's largest digital payments platform. High engineering bar. Strong DSA and backend skills required. Scale-focused system design is tested even for freshers.",
+    "roles": {
+      "backend": {
+        "ctc": "15–25 LPA",
+        "hiringProcess": ["DSA online round", "Technical interview x2", "System design", "HR round"],
+        "requiredSkills": [
+          { "skill": "dsa", "weight": 35, "minimumDepth": 75, "focus": ["graphs", "dp", "trees", "heaps"], "testedVia": "coding-round" },
+          { "skill": "java", "weight": 25, "minimumDepth": 70, "focus": ["oops", "collections", "multithreading", "concurrency"], "testedVia": "interview-qa" },
+          { "skill": "sql", "weight": 20, "minimumDepth": 60, "focus": ["indexing", "joins", "optimization"], "testedVia": "interview-qa" },
+          { "skill": "systemdesign", "weight": 20, "minimumDepth": 55, "focus": ["caching", "distributed-systems", "scalability"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "cred",
+    "name": "CRED",
+    "sector": "Fintech",
+    "type": "Indian Product",
+    "tier": "tier1",
+    "aboutHiring": "CRED is known for premium brand and strong engineering culture. Very selective hiring. Strong DSA, system design, and backend depth required. Not a mass recruiter — quality over quantity.",
+    "roles": {
+      "backend": {
+        "ctc": "15–28 LPA",
+        "hiringProcess": ["DSA round", "Technical interview x2", "System design interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "dsa", "weight": 35, "minimumDepth": 80, "focus": ["graphs", "dp", "trees", "heaps", "segment-trees"], "testedVia": "coding-round" },
+          { "skill": "nodejs", "weight": 25, "minimumDepth": 70, "focus": ["async", "event-loop", "clustering"], "testedVia": "interview-qa" },
+          { "skill": "systemdesign", "weight": 25, "minimumDepth": 60, "focus": ["distributed-systems", "caching", "microservices"], "testedVia": "interview-qa" },
+          { "skill": "mongodb", "weight": 15, "minimumDepth": 60, "focus": ["aggregation", "indexing", "transactions"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "groww",
+    "name": "Groww",
+    "sector": "Fintech",
+    "type": "Indian Product",
+    "tier": "tier1",
+    "aboutHiring": "Groww is India's largest retail investment platform. High engineering culture, strong DSA bar. Backend and data roles are most common for freshers. Fintech and scale-awareness is valued.",
+    "roles": {
+      "backend": {
+        "ctc": "12–22 LPA",
+        "hiringProcess": ["Online DSA test", "Technical interview x2", "HR round"],
+        "requiredSkills": [
+          { "skill": "dsa", "weight": 35, "minimumDepth": 75, "focus": ["dp", "graphs", "trees", "arrays"], "testedVia": "coding-round" },
+          { "skill": "java", "weight": 25, "minimumDepth": 65, "focus": ["oops", "collections", "concurrency"], "testedVia": "interview-qa" },
+          { "skill": "sql", "weight": 20, "minimumDepth": 60, "focus": ["joins", "aggregation", "indexing"], "testedVia": "mcq" },
+          { "skill": "systemdesign", "weight": 20, "minimumDepth": 50, "focus": ["caching", "scalability", "load-balancing"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      },
+      "data": {
+        "ctc": "10–18 LPA",
+        "hiringProcess": ["Online test", "Technical interview x2", "HR round"],
+        "requiredSkills": [
+          { "skill": "python", "weight": 30, "minimumDepth": 65, "focus": ["pandas", "numpy", "data-wrangling"], "testedVia": "coding-round" },
+          { "skill": "sql", "weight": 35, "minimumDepth": 65, "focus": ["aggregation", "window-functions", "optimization"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 20, "minimumDepth": 55, "focus": ["arrays", "sorting"], "testedVia": "coding-round" },
+          { "skill": "mongodb", "weight": 15, "minimumDepth": 45, "focus": ["basics", "aggregation"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "zerodha",
+    "name": "Zerodha",
+    "sector": "Fintech",
+    "type": "Indian Product",
+    "tier": "tier1",
+    "aboutHiring": "Zerodha is India's largest stockbroker and bootstrapped fintech success. Very selective, small team. Strong Python and backend skills valued. No formal campus hiring — mostly project-based and skills-first.",
+    "roles": {
+      "backend": {
+        "ctc": "10–20 LPA",
+        "hiringProcess": ["Take-home project", "Technical interview x2", "HR round"],
+        "requiredSkills": [
+          { "skill": "python", "weight": 35, "minimumDepth": 70, "focus": ["async", "performance", "concurrency"], "testedVia": "interview-qa" },
+          { "skill": "dsa", "weight": 30, "minimumDepth": 70, "focus": ["graphs", "dp", "trees"], "testedVia": "coding-round" },
+          { "skill": "sql", "weight": 20, "minimumDepth": 60, "focus": ["optimization", "joins", "indexing"], "testedVia": "interview-qa" },
+          { "skill": "systemdesign", "weight": 15, "minimumDepth": 50, "focus": ["real-time-systems", "caching"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      },
+      "data": {
+        "ctc": "10–18 LPA",
+        "hiringProcess": ["Take-home project", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "python", "weight": 40, "minimumDepth": 70, "focus": ["pandas", "numpy", "data-analysis"], "testedVia": "coding-round" },
+          { "skill": "sql", "weight": 35, "minimumDepth": 65, "focus": ["window-functions", "optimization", "aggregation"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 25, "minimumDepth": 55, "focus": ["arrays", "sorting"], "testedVia": "coding-round" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "flipkart",
+    "name": "Flipkart",
+    "sector": "E-commerce",
+    "type": "Indian Product",
+    "tier": "tier1",
+    "aboutHiring": "Flipkart (Walmart-owned) is India's largest e-commerce company. Very high engineering bar — on par with top US product companies. Strong DSA, system design, and backend depth. One of the most competitive fresher programs in India.",
+    "roles": {
+      "backend": {
+        "ctc": "20–35 LPA",
+        "hiringProcess": ["DSA online round", "Technical interview x3", "System design", "HR round"],
+        "requiredSkills": [
+          { "skill": "dsa", "weight": 40, "minimumDepth": 80, "focus": ["graphs", "dp", "trees", "heaps", "segment-trees"], "testedVia": "coding-round" },
+          { "skill": "java", "weight": 25, "minimumDepth": 70, "focus": ["oops", "concurrency", "collections", "jvm-internals"], "testedVia": "interview-qa" },
+          { "skill": "systemdesign", "weight": 25, "minimumDepth": 65, "focus": ["distributed-systems", "caching", "load-balancing", "microservices"], "testedVia": "interview-qa" },
+          { "skill": "sql", "weight": 10, "minimumDepth": 60, "focus": ["optimization", "indexing"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      },
+      "data": {
+        "ctc": "18–30 LPA",
+        "hiringProcess": ["DSA + data round", "Technical interview x2", "System design", "HR round"],
+        "requiredSkills": [
+          { "skill": "python", "weight": 30, "minimumDepth": 70, "focus": ["pandas", "numpy", "ml-basics"], "testedVia": "coding-round" },
+          { "skill": "sql", "weight": 30, "minimumDepth": 70, "focus": ["window-functions", "optimization", "complex-joins"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 25, "minimumDepth": 70, "focus": ["arrays", "trees", "graphs"], "testedVia": "coding-round" },
+          { "skill": "systemdesign", "weight": 15, "minimumDepth": 55, "focus": ["data-pipelines", "batch-processing"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "zomato",
+    "name": "Zomato",
+    "sector": "Foodtech",
+    "type": "Indian Product",
+    "tier": "tier1",
+    "aboutHiring": "Zomato is a listed company with strong engineering culture. High bar for freshers, especially in backend and data. Known for fast-paced environment and scale challenges (millions of orders/day).",
+    "roles": {
+      "backend": {
+        "ctc": "15–25 LPA",
+        "hiringProcess": ["DSA coding round", "Technical interview x2", "HR round"],
+        "requiredSkills": [
+          { "skill": "dsa", "weight": 35, "minimumDepth": 75, "focus": ["graphs", "dp", "trees", "heaps"], "testedVia": "coding-round" },
+          { "skill": "nodejs", "weight": 25, "minimumDepth": 65, "focus": ["async", "middleware", "clustering"], "testedVia": "interview-qa" },
+          { "skill": "sql", "weight": 20, "minimumDepth": 60, "focus": ["joins", "optimization", "indexing"], "testedVia": "mcq" },
+          { "skill": "systemdesign", "weight": 20, "minimumDepth": 55, "focus": ["geo-systems", "caching", "load-balancing"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      },
+      "data": {
+        "ctc": "12–20 LPA",
+        "hiringProcess": ["Online test", "Technical interview x2", "HR round"],
+        "requiredSkills": [
+          { "skill": "python", "weight": 30, "minimumDepth": 65, "focus": ["pandas", "data-analysis", "numpy"], "testedVia": "coding-round" },
+          { "skill": "sql", "weight": 35, "minimumDepth": 65, "focus": ["aggregation", "window-functions", "optimization"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 20, "minimumDepth": 60, "focus": ["arrays", "sorting"], "testedVia": "coding-round" },
+          { "skill": "mongodb", "weight": 15, "minimumDepth": 45, "focus": ["basics", "aggregation"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "swiggy",
+    "name": "Swiggy",
+    "sector": "Foodtech",
+    "type": "Indian Product",
+    "tier": "tier1",
+    "aboutHiring": "Swiggy (now listed) hires freshers for backend, data, and fullstack roles. Engineering bar is high. Real-time systems and geo-spatial challenges make backend interviews interesting. Strong DSA expected.",
+    "roles": {
+      "backend": {
+        "ctc": "15–25 LPA",
+        "hiringProcess": ["DSA online round", "Technical interview x2", "HR round"],
+        "requiredSkills": [
+          { "skill": "dsa", "weight": 35, "minimumDepth": 75, "focus": ["graphs", "dp", "trees", "heaps"], "testedVia": "coding-round" },
+          { "skill": "nodejs", "weight": 25, "minimumDepth": 65, "focus": ["async", "middleware", "streams"], "testedVia": "interview-qa" },
+          { "skill": "mongodb", "weight": 20, "minimumDepth": 55, "focus": ["aggregation", "geo-queries", "indexing"], "testedVia": "interview-qa" },
+          { "skill": "systemdesign", "weight": 20, "minimumDepth": 50, "focus": ["real-time", "caching", "geo-systems"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      },
+      "data": {
+        "ctc": "12–20 LPA",
+        "hiringProcess": ["Online test", "Technical interview x2", "HR round"],
+        "requiredSkills": [
+          { "skill": "python", "weight": 30, "minimumDepth": 65, "focus": ["pandas", "numpy", "data-analysis"], "testedVia": "coding-round" },
+          { "skill": "sql", "weight": 35, "minimumDepth": 65, "focus": ["window-functions", "optimization", "aggregation"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 20, "minimumDepth": 55, "focus": ["arrays", "sorting"], "testedVia": "coding-round" },
+          { "skill": "mongodb", "weight": 15, "minimumDepth": 45, "focus": ["basics", "aggregation"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "meesho",
+    "name": "Meesho",
+    "sector": "E-commerce",
+    "type": "Indian Product",
+    "tier": "tier1",
+    "aboutHiring": "Meesho is India's largest social commerce platform targeting Tier 2/3 markets. Good engineering culture. Strong DSA and backend bar for freshers. Interesting scale problems in logistics and catalog.",
+    "roles": {
+      "backend": {
+        "ctc": "12–22 LPA",
+        "hiringProcess": ["DSA coding round", "Technical interview x2", "HR round"],
+        "requiredSkills": [
+          { "skill": "dsa", "weight": 35, "minimumDepth": 75, "focus": ["dp", "trees", "graphs", "arrays"], "testedVia": "coding-round" },
+          { "skill": "java", "weight": 25, "minimumDepth": 65, "focus": ["oops", "collections", "concurrency"], "testedVia": "interview-qa" },
+          { "skill": "sql", "weight": 20, "minimumDepth": 55, "focus": ["joins", "optimization", "indexing"], "testedVia": "mcq" },
+          { "skill": "systemdesign", "weight": 20, "minimumDepth": 50, "focus": ["caching", "microservices", "scalability"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      },
+      "data": {
+        "ctc": "10–18 LPA",
+        "hiringProcess": ["Online test", "Technical interview x2", "HR round"],
+        "requiredSkills": [
+          { "skill": "python", "weight": 30, "minimumDepth": 60, "focus": ["pandas", "numpy"], "testedVia": "coding-round" },
+          { "skill": "sql", "weight": 35, "minimumDepth": 65, "focus": ["aggregation", "window-functions", "joins"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 20, "minimumDepth": 55, "focus": ["arrays", "sorting"], "testedVia": "coding-round" },
+          { "skill": "mongodb", "weight": 15, "minimumDepth": 45, "focus": ["basics"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "paytm",
+    "name": "Paytm",
+    "sector": "Fintech",
+    "type": "Indian Product",
+    "tier": "tier2",
+    "aboutHiring": "Paytm is India's leading payments and financial services company (listed). Moderate engineering bar. Good entry point for students targeting fintech. Backend and data roles are most common for freshers.",
+    "roles": {
+      "backend": {
+        "ctc": "8–15 LPA",
+        "hiringProcess": ["Online coding test", "Technical interview x2", "HR round"],
+        "requiredSkills": [
+          { "skill": "dsa", "weight": 30, "minimumDepth": 65, "focus": ["trees", "graphs", "dp", "arrays"], "testedVia": "coding-round" },
+          { "skill": "java", "weight": 25, "minimumDepth": 60, "focus": ["oops", "collections", "basics"], "testedVia": "interview-qa" },
+          { "skill": "sql", "weight": 25, "minimumDepth": 55, "focus": ["joins", "aggregation", "indexing"], "testedVia": "mcq" },
+          { "skill": "restapi", "weight": 20, "minimumDepth": 55, "focus": ["auth", "http-methods", "rate-limiting"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      },
+      "data": {
+        "ctc": "8–14 LPA",
+        "hiringProcess": ["Online test", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "python", "weight": 30, "minimumDepth": 60, "focus": ["pandas", "numpy"], "testedVia": "coding-round" },
+          { "skill": "sql", "weight": 35, "minimumDepth": 60, "focus": ["aggregation", "window-functions"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 20, "minimumDepth": 55, "focus": ["arrays", "sorting"], "testedVia": "coding-round" },
+          { "skill": "mongodb", "weight": 15, "minimumDepth": 45, "focus": ["basics", "aggregation"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "juspay",
+    "name": "Juspay",
+    "sector": "Fintech",
+    "type": "Indian Product",
+    "tier": "tier1",
+    "aboutHiring": "Juspay powers payments for Amazon, Flipkart, and other giants. Strong functional programming culture (Haskell, PureScript internally). However freshers are evaluated on DSA and backend fundamentals. Very high bar.",
+    "roles": {
+      "backend": {
+        "ctc": "12–20 LPA",
+        "hiringProcess": ["Functional programming aptitude test", "DSA round", "Technical interview x2", "HR round"],
+        "requiredSkills": [
+          { "skill": "dsa", "weight": 40, "minimumDepth": 75, "focus": ["graphs", "dp", "trees", "functional-concepts"], "testedVia": "coding-round" },
+          { "skill": "nodejs", "weight": 25, "minimumDepth": 65, "focus": ["async", "functional-patterns", "error-handling"], "testedVia": "interview-qa" },
+          { "skill": "sql", "weight": 20, "minimumDepth": 55, "focus": ["joins", "aggregation"], "testedVia": "mcq" },
+          { "skill": "systemdesign", "weight": 15, "minimumDepth": 50, "focus": ["payment-systems", "fault-tolerance"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "zepto",
+    "name": "Zepto",
+    "sector": "Quick Commerce",
+    "type": "Indian Product",
+    "tier": "tier1",
+    "aboutHiring": "Zepto is India's fastest-growing quick commerce startup. Very young, fast-moving company. Strong DSA and backend bar. Real-time logistics and inventory systems make for interesting engineering problems.",
+    "roles": {
+      "backend": {
+        "ctc": "12–22 LPA",
+        "hiringProcess": ["DSA coding round", "Technical interview x2", "HR round"],
+        "requiredSkills": [
+          { "skill": "dsa", "weight": 35, "minimumDepth": 75, "focus": ["graphs", "dp", "trees", "heaps"], "testedVia": "coding-round" },
+          { "skill": "nodejs", "weight": 25, "minimumDepth": 65, "focus": ["async", "middleware", "real-time"], "testedVia": "interview-qa" },
+          { "skill": "mongodb", "weight": 20, "minimumDepth": 55, "focus": ["geo-queries", "aggregation", "indexing"], "testedVia": "interview-qa" },
+          { "skill": "systemdesign", "weight": 20, "minimumDepth": 50, "focus": ["real-time-systems", "inventory", "geo-routing"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      },
+      "fullstack": {
+        "ctc": "10–18 LPA",
+        "hiringProcess": ["DSA round", "Technical interview x2", "HR round"],
+        "requiredSkills": [
+          { "skill": "dsa", "weight": 30, "minimumDepth": 70, "focus": ["dp", "trees", "arrays"], "testedVia": "coding-round" },
+          { "skill": "react", "weight": 25, "minimumDepth": 65, "focus": ["performance", "hooks", "state-management"], "testedVia": "interview-qa" },
+          { "skill": "nodejs", "weight": 25, "minimumDepth": 60, "focus": ["async", "middleware"], "testedVia": "interview-qa" },
+          { "skill": "mongodb", "weight": 20, "minimumDepth": 50, "focus": ["basics", "aggregation"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "amazon",
+    "name": "Amazon India",
+    "sector": "E-commerce / Cloud",
+    "type": "Global MNC",
+    "tier": "tier1",
+    "aboutHiring": "Amazon India hires for both e-commerce and AWS. One of the hardest fresher processes in India — emphasis on Leadership Principles + very strong DSA + system design. Bar is similar to Flipkart.",
+    "roles": {
+      "backend": {
+        "ctc": "20–40 LPA",
+        "hiringProcess": ["OA (DSA + work simulation)", "Technical interview x3", "Bar raiser round", "HR round"],
+        "requiredSkills": [
+          { "skill": "dsa", "weight": 40, "minimumDepth": 85, "focus": ["graphs", "dp", "trees", "heaps", "segment-trees", "backtracking"], "testedVia": "coding-round" },
+          { "skill": "java", "weight": 25, "minimumDepth": 75, "focus": ["oops", "concurrency", "jvm", "design-patterns"], "testedVia": "interview-qa" },
+          { "skill": "systemdesign", "weight": 25, "minimumDepth": 70, "focus": ["distributed-systems", "microservices", "caching", "CAP-theorem"], "testedVia": "interview-qa" },
+          { "skill": "sql", "weight": 10, "minimumDepth": 60, "focus": ["optimization", "indexing"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      },
+      "data": {
+        "ctc": "18–32 LPA",
+        "hiringProcess": ["OA", "Technical interview x2", "HR round"],
+        "requiredSkills": [
+          { "skill": "python", "weight": 30, "minimumDepth": 70, "focus": ["pandas", "numpy", "ml-basics", "data-wrangling"], "testedVia": "coding-round" },
+          { "skill": "sql", "weight": 30, "minimumDepth": 70, "focus": ["window-functions", "optimization", "complex-joins"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 25, "minimumDepth": 70, "focus": ["arrays", "graphs", "dp"], "testedVia": "coding-round" },
+          { "skill": "systemdesign", "weight": 15, "minimumDepth": 60, "focus": ["data-pipelines", "batch-processing", "real-time"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "microsoft",
+    "name": "Microsoft India",
+    "sector": "Cloud / Software",
+    "type": "Global MNC",
+    "tier": "tier1",
+    "aboutHiring": "Microsoft hires from top engineering colleges for SDE and data roles. Very strong DSA + system design + OOP concepts. Culture-fit and problem articulation are also evaluated. Among the top 3 most coveted campus companies.",
+    "roles": {
+      "backend": {
+        "ctc": "25–45 LPA",
+        "hiringProcess": ["Online coding round", "Technical interview x3 (DSA + design + OOP)", "HR round"],
+        "requiredSkills": [
+          { "skill": "dsa", "weight": 40, "minimumDepth": 85, "focus": ["graphs", "dp", "trees", "backtracking", "heaps"], "testedVia": "coding-round" },
+          { "skill": "java", "weight": 25, "minimumDepth": 75, "focus": ["oops", "design-patterns", "concurrency"], "testedVia": "interview-qa" },
+          { "skill": "systemdesign", "weight": 25, "minimumDepth": 65, "focus": ["distributed-systems", "caching", "microservices"], "testedVia": "interview-qa" },
+          { "skill": "sql", "weight": 10, "minimumDepth": 55, "focus": ["optimization", "indexing"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "google",
+    "name": "Google India",
+    "sector": "Cloud / Software",
+    "type": "Global MNC",
+    "tier": "tier1",
+    "aboutHiring": "Google India hires from the very top colleges. Extremely competitive. DSA excellence is non-negotiable. Multiple rounds of tough algorithm and system design questions. CTC is among the highest in India.",
+    "roles": {
+      "backend": {
+        "ctc": "30–60 LPA",
+        "hiringProcess": ["OA", "4-5 technical interviews (DSA + system design)", "Hiring committee review"],
+        "requiredSkills": [
+          { "skill": "dsa", "weight": 50, "minimumDepth": 90, "focus": ["graphs", "dp", "advanced-trees", "segment-trees", "string-algorithms", "number-theory"], "testedVia": "coding-round" },
+          { "skill": "systemdesign", "weight": 30, "minimumDepth": 70, "focus": ["distributed-systems", "consistency", "CAP-theorem", "large-scale"], "testedVia": "interview-qa" },
+          { "skill": "java", "weight": 20, "minimumDepth": 70, "focus": ["oops", "concurrency", "jvm", "design-patterns"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "adobe",
+    "name": "Adobe India",
+    "sector": "Software / Creative Tech",
+    "type": "Global MNC",
+    "tier": "tier1",
+    "aboutHiring": "Adobe India hires for both product engineering and R&D. Strong DSA and OOP is required. Creative engineering mindset is valued. Unique focus on rendering, media, and document processing systems.",
+    "roles": {
+      "backend": {
+        "ctc": "18–35 LPA",
+        "hiringProcess": ["Online coding test", "Technical interview x2-3", "HR round"],
+        "requiredSkills": [
+          { "skill": "dsa", "weight": 40, "minimumDepth": 80, "focus": ["graphs", "dp", "trees", "heaps"], "testedVia": "coding-round" },
+          { "skill": "java", "weight": 30, "minimumDepth": 70, "focus": ["oops", "design-patterns", "multithreading"], "testedVia": "interview-qa" },
+          { "skill": "systemdesign", "weight": 20, "minimumDepth": 55, "focus": ["scalability", "caching", "microservices"], "testedVia": "interview-qa" },
+          { "skill": "sql", "weight": 10, "minimumDepth": 55, "focus": ["optimization", "joins"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      },
+      "fullstack": {
+        "ctc": "18–30 LPA",
+        "hiringProcess": ["Online coding test", "Technical interview x2", "HR round"],
+        "requiredSkills": [
+          { "skill": "dsa", "weight": 35, "minimumDepth": 75, "focus": ["dp", "trees", "graphs"], "testedVia": "coding-round" },
+          { "skill": "react", "weight": 25, "minimumDepth": 70, "focus": ["performance", "rendering", "hooks"], "testedVia": "interview-qa" },
+          { "skill": "nodejs", "weight": 25, "minimumDepth": 65, "focus": ["async", "middleware"], "testedVia": "interview-qa" },
+          { "skill": "systemdesign", "weight": 15, "minimumDepth": 50, "focus": ["scalability", "caching"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "walmart",
+    "name": "Walmart Global Tech",
+    "sector": "E-commerce / Retail Tech",
+    "type": "Global MNC",
+    "tier": "tier1",
+    "aboutHiring": "Walmart Global Tech India (formerly Walmart Labs) is the technology arm of Walmart. Strong engineering bar similar to top product companies. Backend and data roles are most common. Good for students interested in retail tech and scale.",
+    "roles": {
+      "backend": {
+        "ctc": "18–30 LPA",
+        "hiringProcess": ["Online DSA test", "Technical interview x2-3", "HR round"],
+        "requiredSkills": [
+          { "skill": "dsa", "weight": 35, "minimumDepth": 75, "focus": ["graphs", "dp", "trees", "heaps"], "testedVia": "coding-round" },
+          { "skill": "java", "weight": 30, "minimumDepth": 70, "focus": ["oops", "concurrency", "collections"], "testedVia": "interview-qa" },
+          { "skill": "systemdesign", "weight": 25, "minimumDepth": 60, "focus": ["distributed-systems", "caching", "microservices"], "testedVia": "interview-qa" },
+          { "skill": "sql", "weight": 10, "minimumDepth": 55, "focus": ["optimization", "joins"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      },
+      "data": {
+        "ctc": "15–25 LPA",
+        "hiringProcess": ["Online test", "Technical interview x2", "HR round"],
+        "requiredSkills": [
+          { "skill": "python", "weight": 30, "minimumDepth": 65, "focus": ["pandas", "numpy", "ml-basics"], "testedVia": "coding-round" },
+          { "skill": "sql", "weight": 35, "minimumDepth": 65, "focus": ["aggregation", "window-functions", "optimization"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 25, "minimumDepth": 65, "focus": ["arrays", "sorting", "trees"], "testedVia": "coding-round" },
+          { "skill": "systemdesign", "weight": 10, "minimumDepth": 50, "focus": ["data-pipelines"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "atlassian",
+    "name": "Atlassian India",
+    "sector": "SaaS / Product",
+    "type": "Global MNC",
+    "tier": "tier1",
+    "aboutHiring": "Atlassian (Jira, Confluence) has a large India engineering presence. Strong engineering culture, good work-life balance reputation. High DSA and system design bar. Good for fullstack and backend engineers.",
+    "roles": {
+      "backend": {
+        "ctc": "20–35 LPA",
+        "hiringProcess": ["Online coding test", "Technical interview x3", "HR round"],
+        "requiredSkills": [
+          { "skill": "dsa", "weight": 35, "minimumDepth": 80, "focus": ["graphs", "dp", "trees", "heaps"], "testedVia": "coding-round" },
+          { "skill": "java", "weight": 30, "minimumDepth": 70, "focus": ["oops", "concurrency", "design-patterns"], "testedVia": "interview-qa" },
+          { "skill": "systemdesign", "weight": 25, "minimumDepth": 60, "focus": ["microservices", "caching", "distributed"], "testedVia": "interview-qa" },
+          { "skill": "sql", "weight": 10, "minimumDepth": 55, "focus": ["optimization", "joins"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      },
+      "fullstack": {
+        "ctc": "18–30 LPA",
+        "hiringProcess": ["Online coding test", "Technical interview x2-3", "HR round"],
+        "requiredSkills": [
+          { "skill": "dsa", "weight": 30, "minimumDepth": 75, "focus": ["dp", "trees", "graphs"], "testedVia": "coding-round" },
+          { "skill": "react", "weight": 25, "minimumDepth": 70, "focus": ["performance", "hooks", "state-management"], "testedVia": "interview-qa" },
+          { "skill": "nodejs", "weight": 25, "minimumDepth": 65, "focus": ["async", "middleware"], "testedVia": "interview-qa" },
+          { "skill": "systemdesign", "weight": 20, "minimumDepth": 55, "focus": ["scalability", "caching"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "sharechat",
+    "name": "ShareChat / Moj",
+    "sector": "Social Media",
+    "type": "Indian Product",
+    "tier": "tier2",
+    "aboutHiring": "ShareChat is India's leading Indian-language social media platform. Good engineering culture with interesting ML and content-serving problems. Moderate to high bar. Good for students targeting social/content tech.",
+    "roles": {
+      "backend": {
+        "ctc": "10–18 LPA",
+        "hiringProcess": ["Online DSA round", "Technical interview x2", "HR round"],
+        "requiredSkills": [
+          { "skill": "dsa", "weight": 35, "minimumDepth": 70, "focus": ["graphs", "dp", "trees"], "testedVia": "coding-round" },
+          { "skill": "nodejs", "weight": 25, "minimumDepth": 60, "focus": ["async", "middleware", "clustering"], "testedVia": "interview-qa" },
+          { "skill": "mongodb", "weight": 20, "minimumDepth": 55, "focus": ["aggregation", "indexing"], "testedVia": "interview-qa" },
+          { "skill": "systemdesign", "weight": 20, "minimumDepth": 50, "focus": ["content-delivery", "caching", "feed-systems"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      },
+      "data": {
+        "ctc": "10–16 LPA",
+        "hiringProcess": ["Online test", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "python", "weight": 35, "minimumDepth": 60, "focus": ["pandas", "numpy", "ml-basics"], "testedVia": "coding-round" },
+          { "skill": "sql", "weight": 30, "minimumDepth": 60, "focus": ["aggregation", "window-functions"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 20, "minimumDepth": 55, "focus": ["arrays", "sorting"], "testedVia": "coding-round" },
+          { "skill": "mongodb", "weight": 15, "minimumDepth": 45, "focus": ["basics"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "urbancompany",
+    "name": "Urban Company",
+    "sector": "Home Services",
+    "type": "Indian Product",
+    "tier": "tier2",
+    "aboutHiring": "Urban Company is India's leading home services marketplace. Moderate to good engineering culture. Interesting logistics and scheduling problems. Good for fullstack and backend engineers targeting growth-stage startups.",
+    "roles": {
+      "backend": {
+        "ctc": "10–18 LPA",
+        "hiringProcess": ["Online coding test", "Technical interview x2", "HR round"],
+        "requiredSkills": [
+          { "skill": "dsa", "weight": 30, "minimumDepth": 65, "focus": ["graphs", "dp", "trees"], "testedVia": "coding-round" },
+          { "skill": "nodejs", "weight": 30, "minimumDepth": 60, "focus": ["async", "middleware", "queues"], "testedVia": "interview-qa" },
+          { "skill": "mongodb", "weight": 20, "minimumDepth": 55, "focus": ["aggregation", "indexing"], "testedVia": "interview-qa" },
+          { "skill": "restapi", "weight": 20, "minimumDepth": 55, "focus": ["auth", "http-methods", "design"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      },
+      "fullstack": {
+        "ctc": "8–14 LPA",
+        "hiringProcess": ["Online test", "Technical interview x2", "HR round"],
+        "requiredSkills": [
+          { "skill": "react", "weight": 30, "minimumDepth": 60, "focus": ["hooks", "state-management"], "testedVia": "interview-qa" },
+          { "skill": "nodejs", "weight": 25, "minimumDepth": 55, "focus": ["async", "basics"], "testedVia": "interview-qa" },
+          { "skill": "dsa", "weight": 25, "minimumDepth": 60, "focus": ["arrays", "trees"], "testedVia": "coding-round" },
+          { "skill": "mongodb", "weight": 20, "minimumDepth": 50, "focus": ["basics", "aggregation"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "nykaa",
+    "name": "Nykaa",
+    "sector": "E-commerce / Beauty",
+    "type": "Indian Product",
+    "tier": "tier2",
+    "aboutHiring": "Nykaa (listed) is India's leading beauty and fashion e-commerce platform. Moderate engineering bar. Good for fullstack, frontend, and data engineers. Strong product sense valued alongside technical skills.",
+    "roles": {
+      "frontend": {
+        "ctc": "8–15 LPA",
+        "hiringProcess": ["Online test", "Technical interview x2", "HR round"],
+        "requiredSkills": [
+          { "skill": "react", "weight": 40, "minimumDepth": 65, "focus": ["hooks", "performance", "state-management", "SSR"], "testedVia": "interview-qa" },
+          { "skill": "dsa", "weight": 25, "minimumDepth": 55, "focus": ["arrays", "strings", "trees"], "testedVia": "coding-round" },
+          { "skill": "restapi", "weight": 20, "minimumDepth": 50, "focus": ["http-methods", "auth"], "testedVia": "interview-qa" },
+          { "skill": "git", "weight": 15, "minimumDepth": 50, "focus": ["branching", "PR-workflow"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      },
+      "data": {
+        "ctc": "8–14 LPA",
+        "hiringProcess": ["Online test", "Technical interview", "HR round"],
+        "requiredSkills": [
+          { "skill": "python", "weight": 30, "minimumDepth": 60, "focus": ["pandas", "numpy"], "testedVia": "coding-round" },
+          { "skill": "sql", "weight": 40, "minimumDepth": 60, "focus": ["aggregation", "joins", "window-functions"], "testedVia": "mcq" },
+          { "skill": "dsa", "weight": 15, "minimumDepth": 50, "focus": ["arrays", "basics"], "testedVia": "coding-round" },
+          { "skill": "mongodb", "weight": 15, "minimumDepth": 40, "focus": ["basics"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "chargebee",
+    "name": "Chargebee",
+    "sector": "SaaS / Fintech",
+    "type": "Indian Product",
+    "tier": "tier1",
+    "aboutHiring": "Chargebee is a global subscription management SaaS. Strong engineering culture, good product thinking. High bar for freshers. Backend and fullstack roles are most relevant. Good for students targeting B2B SaaS.",
+    "roles": {
+      "backend": {
+        "ctc": "10–18 LPA",
+        "hiringProcess": ["Online coding test", "Technical interview x2", "HR round"],
+        "requiredSkills": [
+          { "skill": "dsa", "weight": 35, "minimumDepth": 70, "focus": ["graphs", "dp", "trees"], "testedVia": "coding-round" },
+          { "skill": "java", "weight": 30, "minimumDepth": 65, "focus": ["oops", "collections", "concurrency"], "testedVia": "interview-qa" },
+          { "skill": "sql", "weight": 20, "minimumDepth": 60, "focus": ["joins", "aggregation", "optimization"], "testedVia": "mcq" },
+          { "skill": "restapi", "weight": 15, "minimumDepth": 60, "focus": ["design", "auth", "versioning"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      },
+      "fullstack": {
+        "ctc": "10–16 LPA",
+        "hiringProcess": ["Online coding test", "Technical interview x2", "HR round"],
+        "requiredSkills": [
+          { "skill": "dsa", "weight": 30, "minimumDepth": 65, "focus": ["dp", "trees", "arrays"], "testedVia": "coding-round" },
+          { "skill": "react", "weight": 25, "minimumDepth": 65, "focus": ["hooks", "state-management"], "testedVia": "interview-qa" },
+          { "skill": "nodejs", "weight": 25, "minimumDepth": 60, "focus": ["async", "middleware"], "testedVia": "interview-qa" },
+          { "skill": "sql", "weight": 20, "minimumDepth": 55, "focus": ["joins", "aggregation"], "testedVia": "mcq" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "darwinbox",
+    "name": "Darwinbox",
+    "sector": "HR Tech / SaaS",
+    "type": "Indian Product",
+    "tier": "tier2",
+    "aboutHiring": "Darwinbox is Asia's fastest-growing HR tech platform. Good engineering culture. Moderate bar for freshers. Backend and fullstack roles available. Good entry point for students targeting enterprise SaaS.",
+    "roles": {
+      "backend": {
+        "ctc": "8–14 LPA",
+        "hiringProcess": ["Online test", "Technical interview x2", "HR round"],
+        "requiredSkills": [
+          { "skill": "dsa", "weight": 30, "minimumDepth": 60, "focus": ["trees", "graphs", "dp", "arrays"], "testedVia": "coding-round" },
+          { "skill": "java", "weight": 25, "minimumDepth": 55, "focus": ["oops", "collections", "basics"], "testedVia": "interview-qa" },
+          { "skill": "sql", "weight": 25, "minimumDepth": 55, "focus": ["joins", "aggregation", "optimization"], "testedVia": "mcq" },
+          { "skill": "restapi", "weight": 20, "minimumDepth": 55, "focus": ["design", "auth", "http-methods"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      },
+      "fullstack": {
+        "ctc": "7–12 LPA",
+        "hiringProcess": ["Online test", "Technical interview x2", "HR round"],
+        "requiredSkills": [
+          { "skill": "react", "weight": 30, "minimumDepth": 60, "focus": ["hooks", "state-management"], "testedVia": "interview-qa" },
+          { "skill": "nodejs", "weight": 25, "minimumDepth": 55, "focus": ["async", "middleware", "basics"], "testedVia": "interview-qa" },
+          { "skill": "dsa", "weight": 25, "minimumDepth": 55, "focus": ["arrays", "trees"], "testedVia": "coding-round" },
+          { "skill": "sql", "weight": 20, "minimumDepth": 50, "focus": ["joins", "basics"], "testedVia": "mcq" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  },
+  {
+    "id": "clevertap",
+    "name": "CleverTap",
+    "sector": "MarTech / SaaS",
+    "type": "Indian Product",
+    "tier": "tier2",
+    "aboutHiring": "CleverTap is a global customer engagement and retention platform. Good engineering culture with interesting data and analytics challenges. Moderate-to-high bar. Good for backend and data engineers.",
+    "roles": {
+      "backend": {
+        "ctc": "8–16 LPA",
+        "hiringProcess": ["Online coding test", "Technical interview x2", "HR round"],
+        "requiredSkills": [
+          { "skill": "dsa", "weight": 35, "minimumDepth": 65, "focus": ["trees", "graphs", "dp"], "testedVia": "coding-round" },
+          { "skill": "java", "weight": 30, "minimumDepth": 60, "focus": ["oops", "collections", "concurrency"], "testedVia": "interview-qa" },
+          { "skill": "mongodb", "weight": 20, "minimumDepth": 55, "focus": ["aggregation", "indexing", "analytics-queries"], "testedVia": "interview-qa" },
+          { "skill": "restapi", "weight": 15, "minimumDepth": 55, "focus": ["design", "auth"], "testedVia": "interview-qa" }
+        ],
+        "preferredSkills": []
+      },
+      "data": {
+        "ctc": "8–14 LPA",
+        "hiringProcess": ["Online test", "Technical interview x2", "HR round"],
+        "requiredSkills": [
+          { "skill": "python", "weight": 30, "minimumDepth": 60, "focus": ["pandas", "numpy"], "testedVia": "coding-round" },
+          { "skill": "sql", "weight": 35, "minimumDepth": 60, "focus": ["aggregation", "window-functions", "joins"], "testedVia": "mcq" },
+          { "skill": "mongodb", "weight": 20, "minimumDepth": 55, "focus": ["aggregation", "analytics-queries"], "testedVia": "interview-qa" },
+          { "skill": "dsa", "weight": 15, "minimumDepth": 50, "focus": ["arrays", "basics"], "testedVia": "coding-round" }
+        ],
+        "preferredSkills": []
+      }
+    }
+  }
+]
