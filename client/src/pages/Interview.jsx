@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Mic, ShieldAlert, Cpu, Settings2, Loader2, MessageSquare } from 'lucide-react';
+import { Mic, ShieldAlert, Cpu, Settings2, Loader2, MessageSquare, Volume2 } from 'lucide-react';
 
 export default function Interview() {
   const [isRecording, setIsRecording] = useState(false);
@@ -65,6 +65,14 @@ export default function Interview() {
     }
   };
 
+  const repeatQuestion = () => {
+    if (questions.length > 0 && questions[currentIdx]) {
+      // Cancel any ongoing speech before repeating
+      window.speechSynthesis.cancel();
+      speak(questions[currentIdx].question);
+    }
+  };
+
   const handleNext = () => {
     if (mode === "audio" && !isRecording) {
       startRecording();
@@ -115,181 +123,216 @@ export default function Interview() {
   );
 
   return (
-    <div className="min-h-screen bg-[#fbfbfa] relative overflow-hidden flex flex-col pt-4 pb-12 px-6">
-      <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-50">
-          <div className="absolute top-[5%] right-[20%] w-[30%] h-[50%] bg-[#d2fbf0] rounded-full blur-[140px]" />
-          <div className="absolute bottom-[10%] left-[10%] w-[40%] h-[30%] bg-[#fae8fb] rounded-full blur-[150px]" />
-      </div>
-
-      <main className="flex-1 w-full max-w-6xl mx-auto relative z-10 space-y-8">
-        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex justify-between items-end mb-8">
-            <div>
-              <div className="flex items-center gap-3 mb-3">
-                <h1 className="text-4xl font-black text-[#0b261d] tracking-tight">AI Voice Interview</h1>
-                <div className="flex bg-gray-100 p-1.5 rounded-2xl gap-1">
-                   <button 
-                     onClick={() => setMode('audio')}
-                     className={`px-4 py-1.5 rounded-xl text-xs font-black transition-all ${mode === 'audio' ? 'bg-[#11b589] text-white shadow-xl' : 'text-gray-400'}`}
-                   >
-                     Audio Mode
-                   </button>
-                   <button 
-                     onClick={() => setMode('text')}
-                     className={`px-4 py-1.5 rounded-xl text-xs font-black transition-all ${mode === 'text' ? 'bg-[#11b589] text-white shadow-xl' : 'text-gray-400'}`}
-                   >
-                     Text Mode
-                   </button>
-                </div>
-              </div>
-              <p className="text-[#3b4b45]/70 font-medium text-lg max-w-2xl">
-                Choose your interaction style. The AI remains just as thorough in either case.
-              </p>
-            </div>
-            <div className="flex gap-3">
-              <button className="flex items-center gap-2 bg-white px-5 py-3 rounded-2xl font-bold text-[#08241b] shadow-sm border border-gray-100 hover:border-[#11b589] transition-all">
-                {mode === 'audio' ? <Mic className="w-5 h-5 text-[#11b589]" /> : <MessageSquare className="w-5 h-5 text-[#11b589]" />} {mode === 'audio' ? 'Audio ON' : 'Text ON'}
+    <div className="h-screen bg-[#F8F9FA] relative flex flex-col justify-center px-4 sm:px-6 overflow-hidden">
+      <main className="w-full max-w-6xl mx-auto flex flex-col h-[88vh] max-h-[800px] gap-4 relative z-10">
+        
+        {/* Header Compact */}
+        <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="flex justify-between items-center bg-white border border-[#E7E7E8] rounded-2xl p-4 shadow-sm shrink-0">
+          <div className="flex items-center gap-4">
+            <h1 className="text-xl font-extrabold text-[#011813] flex items-center gap-2">
+              <Cpu className="w-5 h-5 text-[#009D77]" /> AI Technical Interview
+            </h1>
+            <div className="h-4 w-px bg-[#E7E7E8]" />
+            <div className="flex bg-[#F8F9FA] p-1 rounded-lg border border-[#E7E7E8]">
+              <button 
+                onClick={() => setMode('audio')}
+                className={`px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider transition-all ${mode === 'audio' ? 'bg-[#009D77] text-white shadow-sm' : 'text-[#475467] hover:text-[#011813]'}`}
+              >
+                Audio
               </button>
-              <button className="hidden md:flex items-center gap-2 bg-white px-5 py-3 rounded-2xl font-bold text-[#08241b] shadow-sm border border-gray-100 hover:border-[#11b589] transition-all">
-                <Settings2 className="w-5 h-5 text-gray-400" /> Options
+              <button 
+                onClick={() => setMode('text')}
+                className={`px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider transition-all ${mode === 'text' ? 'bg-[#009D77] text-white shadow-sm' : 'text-[#475467] hover:text-[#011813]'}`}
+              >
+                Text
               </button>
             </div>
+          </div>
+          <p className="text-xs font-semibold text-[#475467] hidden md:block">
+            {hasStarted ? `Question ${currentIdx + 1} of ${questions.length}` : 'Ready to begin evaluation'}
+          </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Robot AI Avatar View */}
+        {/* Main Content Split */}
+        <div className="flex flex-col lg:flex-row gap-4 flex-1 min-h-0">
+          
+          {/* Left: Robot & Question View */}
           <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="lg:col-span-8 bg-[#010c09] rounded-[3rem] overflow-hidden shadow-[0_32px_128px_-16px_rgba(0,157,119,0.3)] relative min-h-[500px] flex flex-col items-center justify-center border border-[#11b589]/20"
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="lg:w-[45%] bg-white border border-[#E7E7E8] rounded-2xl overflow-hidden shadow-sm flex flex-col relative"
           >
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_#010c09_70%)] opacity-60" />
-              <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#11b589 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
-
-              {/* ROBOT AVATAR */}
-              <div className="relative w-80 h-80 flex items-center justify-center group">
-                <motion.div 
-                  animate={{ rotate: 360, scale: isSpeaking ? [1, 1.1, 1] : 1 }}
-                  transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-                  className={`absolute inset-0 border-2 border-dashed rounded-full border-[#11b589]/20 ${isSpeaking ? 'border-[#11b589]/40 border-solid' : ''}`}
+            {/* Robot Image Container */}
+            <div className="relative flex-1 bg-gray-100 flex items-center justify-center p-6 border-b border-[#E7E7E8] overflow-hidden group">
+              {/* Subtle pulsing background for realism */}
+              <div className={`absolute inset-0 bg-[#009D77]/5 transition-opacity duration-700 ${isSpeaking ? 'opacity-100' : 'opacity-0'}`} />
+              
+              <div className="relative w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-white shadow-lg z-10">
+                <motion.img 
+                  animate={isSpeaking ? { y: [0, -4, 0, -2, 0], scale: 1.1 } : { y: 0, scale: 1 }}
+                  transition={isSpeaking ? { duration: 0.6, repeat: Infinity, ease: "easeInOut" } : { duration: 0.5 }}
+                  src="/friendly_robot.png" 
+                  alt="AI Interviewer" 
+                  className="w-full h-full object-cover origin-bottom transform-gpu bg-white" 
                 />
                 
-                <div className="w-52 h-52 bg-[#021812] rounded-[3.5rem] border-2 border-[#11b589]/30 shadow-[0_0_80px_rgba(17,181,137,0.15)] relative overflow-hidden flex flex-col items-center justify-center gap-6 z-10">
-                  <div className="flex gap-4">
-                      <div className={`w-8 h-8 rounded-full bg-[#11b589] shadow-[0_0_20px_rgba(17,181,137,1)] ${isSpeaking ? 'animate-bounce' : 'opacity-40 animate-pulse'}`} />
-                      <div className={`w-8 h-8 rounded-full bg-[#11b589] shadow-[0_0_20px_rgba(17,181,137,1)] ${isSpeaking ? 'animate-bounce delay-150' : 'opacity-40 animate-pulse'}`} />
-                  </div>
-                  <div className="flex items-center gap-2 h-16">
-                      {[...Array(12)].map((_, i) => (
-                        <motion.div 
-                          key={i}
-                          animate={{ height: isSpeaking ? [10, 50, 15, 40, 10] : 10 }}
-                          transition={{ duration: 0.6, repeat: Infinity, delay: i * 0.05 }}
-                          className="w-1.5 bg-[#11b589] rounded-full shadow-[0_0_15px_rgba(17,181,137,0.4)]"
-                        />
-                      ))}
-                  </div>
-                </div>
+                {/* Speaking indicator ring */}
+                {isSpeaking && (
+                   <div className="absolute inset-0 border-4 border-[#009D77] rounded-full animate-ping opacity-20 pointer-events-none" />
+                )}
 
-                <div className="absolute -top-10 -right-10 bg-white/5 backdrop-blur-xl border border-white/10 p-4 rounded-2xl shadow-xl z-20">
-                  <p className="text-[10px] font-black text-[#11b589] uppercase tracking-widest mb-1">AUDIT LINK</p>
-                  <p className="text-white text-xs font-bold">{isSpeaking ? 'INTERVIEWING...' : mode === 'audio' ? 'LISTENING...' : 'WAITING FOR TEXT...'}</p>
+                {/* Animated Cybernetic Mouth Equalizer */}
+                <div className={`absolute bottom-[20%] left-1/2 -translate-x-1/2 flex items-center gap-1 transition-opacity duration-300 pointer-events-none ${isSpeaking ? 'opacity-90' : 'opacity-0'}`}>
+                  {[...Array(6)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      animate={isSpeaking ? { height: ['4px', `${Math.random() * 16 + 8}px`, '4px'] } : { height: '4px' }}
+                      transition={{ 
+                        duration: 0.2 + (i * 0.05), 
+                        repeat: Infinity, 
+                        repeatType: 'mirror',
+                        ease: "linear"
+                      }}
+                      className="w-1.5 bg-[#009D77] rounded-full shadow-[0_0_8px_#009D77]"
+                    />
+                  ))}
                 </div>
               </div>
 
-              <div className="absolute bottom-10 left-12 right-12 z-20">
-                <div className="bg-black/40 backdrop-blur-3xl p-8 rounded-[2rem] border border-white/10 shadow-2xl">
-                  <div className="flex items-center gap-2 mb-3">
-                      <Cpu className="w-5 h-5 text-[#11b589]" />
-                      <span className="text-[11px] font-black text-[#11b589] uppercase tracking-widest">{hasStarted ? `Question ${currentIdx + 1} OF ${questions.length}` : 'System Standby'}</span>
-                  </div>
-                  <p className="text-white font-black text-2xl tracking-normal leading-relaxed text-center">
-                    {hasStarted ? `"${questions[currentIdx]?.question || 'Preparing...'}"` : 'Your technical evaluation is ready. Initialize when prepared.'}
-                  </p>
-                </div>
+              {/* Status Badge */}
+              <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm border border-[#E7E7E8] px-3 py-1.5 rounded-lg shadow-sm z-20 flex items-center gap-2">
+                <div className={`w-2 h-2 rounded-full ${isSpeaking ? 'bg-[#EC4899] animate-pulse' : 'bg-[#009D77]'}`} />
+                <span className="text-[10px] font-bold text-[#011813] uppercase">
+                  {isSpeaking ? 'Asking...' : hasStarted ? 'Listening Focus' : 'Standby'}
+                </span>
               </div>
+            </div>
+
+            {/* Current Question Block */}
+            <div className="h-1/3 min-h-[140px] bg-[#F8F9FA] p-6 flex flex-col justify-center">
+               <h3 className="text-[10px] font-bold text-[#009D77] uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                  <MessageSquare className="w-3.5 h-3.5" /> Interviewer Asks:
+               </h3>
+               <p className="text-[#011813] font-bold text-lg md:text-xl leading-snug">
+                 {hasStarted ? `"${questions[currentIdx]?.question}"` : 'Your technical evaluation is ready. Initialize when prepared.'}
+               </p>
+            </div>
           </motion.div>
 
-          {/* Transcription & Controls View */}
+          {/* Right: Input & Controls View */}
           <motion.div 
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="lg:col-span-4 flex flex-col gap-6"
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="lg:w-[55%] flex flex-col gap-4"
           >
-              <div className="bg-white border-2 border-[#11b589]/5 rounded-[2.5rem] p-8 shadow-xl flex-1 flex flex-col relative overflow-hidden group">
-                <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-[#d2fbf0] rounded-full blur-[80px] opacity-30 group-hover:opacity-50 transition-opacity" />
-                
-                <div className="flex-1">
-                  <div className="flex items-center justify-between mb-8">
-                      <h3 className="text-xs font-black text-gray-400 uppercase tracking-widest">{mode === 'audio' ? 'Live Transcript' : 'Type Your Answer'}</h3>
-                      <div className={`px-2 py-1 rounded-full text-[10px] font-black uppercase tracking-tight ${isRecording ? 'bg-red-50 text-red-500' : 'bg-gray-50 text-gray-400'}`}>
-                        {mode === 'audio' ? (isRecording ? 'Voice Active' : 'Waiting') : 'Keyboard Input'}
+            {/* Transcript/Input Box */}
+            <div className="bg-white border border-[#E7E7E8] rounded-2xl flex-1 shadow-sm flex flex-col relative overflow-hidden">
+               <div className="p-4 border-b border-[#E7E7E8] bg-[#F8F9FA] flex justify-between items-center shrink-0">
+                  <h3 className="text-[11px] font-bold text-[#475467] uppercase tracking-wider">
+                    {mode === 'audio' ? 'Live Speech Transcript' : 'Type Your Answer'}
+                  </h3>
+                  <div className="flex items-center gap-2">
+                    {hasStarted && (
+                      <button 
+                        onClick={repeatQuestion} 
+                        className="flex items-center gap-1.5 px-2 py-1.5 rounded-md text-[9px] font-bold uppercase tracking-wider text-[#009D77] border border-[#009D77] hover:bg-[#E8FAF5] transition-colors shadow-sm"
+                        title="Repeat Question"
+                      >
+                        <Volume2 className="w-3 h-3" /> Re-Listen
+                      </button>
+                    )}
+                    <div className={`px-2 py-1.5 rounded-md text-[9px] font-bold uppercase tracking-wider ${isRecording ? 'bg-red-50 text-red-500 border border-red-100' : 'bg-white border border-[#E7E7E8] text-[#98A2B3]'}`}>
+                      {mode === 'audio' ? (isRecording ? '● Voice Active' : 'Mic Off') : 'Keyboard'}
+                    </div>
+                  </div>
+               </div>
+
+               <div className="flex-1 p-5 relative overflow-y-auto">
+                 {mode === "audio" ? (
+                    transcript ? (
+                      <div className="bg-[#E8FAF5] border border-[rgba(0,157,119,0.12)] p-4 rounded-xl inline-block max-w-[90%]">
+                        <p className="text-[#011813] text-sm font-semibold leading-relaxed">
+                          "{transcript}"
+                        </p>
                       </div>
-                  </div>
+                    ) : (
+                      <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center">
+                        <div className="w-14 h-14 bg-[#F8F9FA] border border-[#E7E7E8] rounded-full flex items-center justify-center mb-3">
+                          <Mic className="w-6 h-6 text-[#98A2B3]" />
+                        </div>
+                        <p className="text-[#475467] font-semibold text-sm">Waiting for voice input...</p>
+                        <p className="text-[#98A2B3] text-xs mt-1">Press the action button below and speak clearly.</p>
+                      </div>
+                    )
+                 ) : (
+                    <textarea 
+                       value={transcript}
+                       onChange={(e) => setTranscript(e.target.value)}
+                       placeholder="Describe your approach, technical choices, and specific examples here..."
+                       className="w-full h-full bg-transparent border-none focus:ring-0 outline-none font-medium text-[#011813] text-sm resize-none placeholder:text-[#98A2B3]"
+                    />
+                 )}
+               </div>
+            </div>
 
-                  <div className="min-h-[250px] mb-8 relative">
-                      {mode === "audio" ? (
-                        transcript ? (
-                          <p className="text-[#08241b] text-base font-medium leading-relaxed bg-[#fbfbfa] p-6 rounded-2xl border border-gray-100 italic">
-                            "{transcript}"
-                          </p>
-                        ) : (
-                          <div className="flex flex-col items-center justify-center p-10 text-center space-y-4">
-                            <Mic className="w-10 h-10 text-gray-200" />
-                            <p className="text-gray-400 font-bold text-sm italic">Hit 'Start Listening' and speak clearly...</p>
-                          </div>
-                        )
-                      ) : (
-                        <textarea 
-                           value={transcript}
-                           onChange={(e) => setTranscript(e.target.value)}
-                           placeholder="Describe your approach and technical choices here..."
-                           className="w-full h-48 bg-[#fbfbfa] p-6 rounded-[2rem] border border-gray-100 focus:border-[#11b589]/30 focus:ring-4 focus:ring-[#11b589]/5 outline-none font-medium text-[#08241b] transition-all resize-none"
-                        />
-                      )}
-                  </div>
-                </div>
-
-                <div className="space-y-4 relative z-10">
-                  {!hasStarted ? (
-                    <button 
-                      onClick={startInterview}
-                      className="w-full py-6 rounded-[2rem] font-black text-lg transition-all flex items-center justify-center gap-3 shadow-2xl bg-[#11b589] hover:bg-[#0e9671] text-white shadow-[#11b589]/30 uppercase tracking-widest"
-                    >
-                      Begin Interview
-                    </button>
-                  ) : (
+            {/* Action Area */}
+            <div className="bg-white border border-[#E7E7E8] rounded-2xl p-5 shadow-sm shrink-0 flex flex-col gap-4">
+               {!hasStarted ? (
+                  <button 
+                    onClick={startInterview}
+                    className="w-full py-3.5 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 bg-[#009D77] hover:bg-[#008A68] text-white shadow-sm"
+                  >
+                    Begin Interview Validation
+                  </button>
+               ) : (
+                  <div className="flex gap-3">
+                    {mode === 'audio' && (
+                      <button 
+                        onClick={isRecording ? stopRecording : startRecording}
+                        className={`flex-1 py-3.5 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-sm ${isRecording ? 'bg-[#EC4899] hover:bg-[#D93A86] text-white' : 'bg-[#009D77] hover:bg-[#008A68] text-white'}`}
+                      >
+                        <Mic className="w-4 h-4" />
+                        {isRecording ? 'Stop Recording' : 'Start Recording'}
+                      </button>
+                    )}
                     <button 
                       onClick={handleNext}
-                      className={`w-full py-6 rounded-[2rem] font-black text-lg transition-all flex items-center justify-center gap-3 shadow-2xl ${isRecording ? 'bg-rose-500 hover:bg-rose-600 text-white shadow-rose-500/30' : 'bg-[#11b589] hover:bg-[#0e9671] text-white shadow-[#11b589]/30'}`}
+                      disabled={!transcript && hasStarted}
+                      className={`flex-1 py-3.5 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-sm ${!transcript ? 'bg-[#F8F9FA] text-[#98A2B3] border border-[#E7E7E8] cursor-not-allowed' : 'bg-[#011813] text-white hover:bg-[#08241b]'}`}
                     >
-                      {mode === 'audio' ? (isRecording ? 'Submit Voice' : 'Start Listening') : 'Next Question'}
+                      Submit & Next Question
                     </button>
-                  )}
-                  
-                  <div className="flex items-center gap-3 px-4">
-                      <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                        <motion.div 
-                          initial={{ width: 0 }}
-                          animate={{ width: hasStarted ? `${((currentIdx + 1) / questions.length) * 100}%` : '0%' }}
-                          className="h-full bg-[#11b589]"
-                        />
-                      </div>
-                      <span className="text-[10px] font-black text-gray-400">{hasStarted ? Math.round(((currentIdx + 1) / questions.length) * 100) : 0}%</span>
                   </div>
-                </div>
-              </div>
+               )}
 
-              <div className="bg-[#08241b] text-white p-6 rounded-3xl flex items-start gap-4 shadow-lg border border-white/5">
-                <div className="w-10 h-10 bg-[#11b589]/20 rounded-2xl flex items-center justify-center text-[#11b589] shrink-0">
-                    <ShieldAlert className="w-5 h-5" />
-                </div>
-                <div>
-                  <h4 className="text-xs font-black uppercase tracking-widest text-[#11b589] mb-1">Technical Guidance</h4>
-                  <p className="text-[11px] text-white/50 font-medium leading-relaxed">
-                    Mention relevant experience. The AI analyzes **industry keywords** and **problem-solving syntax**.
-                  </p>
-                </div>
-              </div>
+               {/* Progress Bar under buttons */}
+               {hasStarted && (
+                  <div className="flex items-center gap-3">
+                    <div className="flex-1 h-1.5 bg-[#F8F9FA] rounded-full overflow-hidden border border-[#E7E7E8]">
+                      <motion.div 
+                        initial={{ width: 0 }}
+                        animate={{ width: `${((currentIdx + 1) / questions.length) * 100}%` }}
+                        className="h-full bg-gradient-to-r from-[#009D77] to-[#EC4899]"
+                      />
+                    </div>
+                    <span className="text-[10px] font-bold text-[#475467] w-8 text-right">
+                      {Math.round(((currentIdx + 1) / questions.length) * 100)}%
+                    </span>
+                  </div>
+               )}
+            </div>
+            
+            {/* Quick Tip Box */}
+            <div className="bg-[#F8F9FA] border border-[#E7E7E8] p-4 rounded-xl flex items-start gap-3 shrink-0">
+               <ShieldAlert className="w-4 h-4 text-[#EC4899] shrink-0 mt-0.5" />
+               <div>
+                 <h4 className="text-[10px] font-bold uppercase tracking-wider text-[#EC4899] mb-0.5">Evaluation Metric</h4>
+                 <p className="text-[11px] text-[#475467] font-medium leading-relaxed">
+                   Be clear and concise. The system evaluates both **technical vocabularies** and **impact metrics** in your transcript.
+                 </p>
+               </div>
+            </div>
+
           </motion.div>
         </div>
       </main>
