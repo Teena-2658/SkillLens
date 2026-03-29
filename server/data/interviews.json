@@ -1,0 +1,104 @@
+{
+  "frontend": [
+    {
+      "question": "Explain the difference between Virtual DOM and Shadow DOM.",
+      "ideal": "Virtual DOM is a lightweight React-specific memory representation of the UI to optimize rendering. Shadow DOM is a browser-native technology for scoping CSS and HTML, used in Web Components."
+    },
+    {
+      "question": "How does hoisting work in JavaScript?",
+      "ideal": "Hoisting is JS's behavior of moving declarations to the top of their scope. Variables with 'var' are hoisted with 'undefined', while 'let'/'const' are in a Temporal Dead Zone."
+    },
+    {
+      "question": "What are React Hooks and why were they introduced?",
+      "ideal": "Hooks allow function components to use state and lifecycle features without writing classes. They were introduced to reuse stateful logic and solve 'this' binding complexities."
+    },
+    {
+      "question": "Explain CSS specificity and how it works.",
+      "ideal": "Specificity is the algorithm used to decide which CSS rule applies. Inline styles > IDs > Classes/Attributes > Elements/Pseudo-elements."
+    },
+    {
+      "question": "What is the difference between client-side rendering (CSR) and server-side rendering (SSR)?",
+      "ideal": "CSR renders pages in the browser using JS, while SSR generates the full HTML on the server. SSR is better for SEO and initial load speed."
+    },
+    {
+      "question": "Explain the Box Model in CSS.",
+      "ideal": "The box model consists of content, padding, border, and margin. Total width = width + padding + border + margin."
+    },
+    {
+      "question": "What is Closures in JavaScript?",
+      "ideal": "A closure is a function that remembers its outer lexical environment even after that outer scope has closed."
+    }
+  ],
+  "backend": [
+    {
+      "question": "What is Middleware in Express?",
+      "ideal": "Middleware are functions that have access to the req and res objects. They can execute code, modify req/res, or end the request-response cycle."
+    },
+    {
+      "question": "Explain the difference between SQL and NoSQL databases.",
+      "ideal": "SQL is relational, schema-based, and better for ACID compliance (e.g., PostgreSQL). NoSQL is non-relational, document-based, and better for horizontal scaling (e.g., MongoDB)."
+    },
+    {
+      "question": "How does JWT authentication work?",
+      "ideal": "JWT (JSON Web Token) is a stateless authentication mechanism. The server issues a signed token, and the client sends it in the Authorization header for every request."
+    },
+    {
+      "question": "What is the Event Loop in Node.js?",
+      "ideal": "The Event Loop is what allows Node.js to perform non-blocking I/O operations by offloading tasks to the system kernel whenever possible."
+    },
+    {
+      "question": "Explain RESTful API principles.",
+      "ideal": "REST principles include Statelessness, Client-Server separation, Cacheability, Uniform Interface, and Layered System."
+    },
+    {
+      "question": "What are the common HTTP status codes and their meanings?",
+      "ideal": "200 (OK), 201 (Created), 400 (Bad Request), 401 (Unauthorized), 404 (Not Found), 500 (Server Error)."
+    },
+    {
+      "question": "Explain indexing in MongoDB.",
+      "ideal": "Indexes support efficient execution of queries in MongoDB. Without them, MongoDB must scan every document in a collection to select those that match the query."
+    }
+  ],
+  "fullstack": [
+    {
+      "question": "How do you secure a MERN stack application?",
+      "ideal": "Security includes HTTPS, JWT with HTTP-only cookies, password hashing (bcrypt), input sanitization, and setting proper CORS policies."
+    },
+    {
+      "question": "Explain the process of deploying a fullstack app.",
+      "ideal": "Deployment involves environment configuration, build processes (Webpack/Vite), CI/CD pipelines, and hosting on platforms like Vercel, AWS, or DigitalOcean."
+    },
+    {
+      "question": "What is state management and when should you use Redux?",
+      "ideal": "State management handles the data flow. Use Redux for large-scale applications where many components share complex, deeply nested state."
+    },
+    {
+      "question": "How do you handle large scale data in MongoDB?",
+      "ideal": "Large scale data is handled through sharding (distributing data across machines) and replica sets (high availability)."
+    },
+    {
+      "question": "Explain the difference between monolithic and microservices architecture.",
+      "ideal": "Monolithic is a single unified unit. Microservices are independent services communicating via APIs, allowing better scalability but adding complexity."
+    }
+  ],
+  "data": [
+    {
+      "question": "What is Normalization in SQL?",
+      "ideal": "Normalization is the process of organizing data to reduce redundancy and improve data integrity through various Normal Forms (1NF, 2NF, 3NF)."
+    },
+    {
+      "question": "Explain Exploratory Data Analysis (EDA).",
+      "ideal": "EDA is the process of visualizing and summarizing a dataset to discover patterns, spot anomalies, and test hypotheses using statistical graphs."
+    }
+  ],
+  "java": [
+    {
+      "question": "What is JVM and how does it work?",
+      "ideal": "JVM (Java Virtual Machine) is an abstract machine that provides a runtime environment for Java bytecode. It manages memory and executes the code on any OS."
+    },
+    {
+      "question": "Explain OOP principles in Java.",
+      "ideal": "OOP principles include Encapsulation, Inheritance, Polymorphism, and Abstraction."
+    }
+  ]
+}

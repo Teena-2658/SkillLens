@@ -32,7 +32,7 @@ const SKILL_MASTER_LIST = [
   "django",
   "flask",
 ];
-const ROLE_REQUIRED_SKILLS = {
+export const ROLE_REQUIRED_SKILLS = {
   frontend: [
     "react",
     "javascript",
@@ -111,23 +111,20 @@ const skillMatchesText = (normalized, skill) => {
   return new RegExp(`\\b${escaped}\\b`, "i").test(normalized);
 };
 
+
 export const extractText = async (buffer) => {
   const parser = new PDFParse({ data: buffer });
   try {
     const result = await parser.getText();
-
-    if (!result.text || result.text.trim().length === 0) {
-      throw new Error("PDF_EXTRACTION_FAILED");
-    }
-
-    return result.text;
-  } catch {
-    throw new Error("PDF_EXTRACTION_FAILED");
+    return result.text || "";
+  } catch (error) {
+    console.error("PDF extraction error:", error);
+    throw new Error(`PDF_EXTRACTION_FAILED: ${error.message}`);
   } finally {
     try {
-      await parser.destroy();
+       await parser.destroy();
     } catch {
-      /* ignore cleanup errors */
+       /* ignore cleanup error */
     }
   }
 };

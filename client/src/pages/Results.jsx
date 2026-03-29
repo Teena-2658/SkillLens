@@ -1,25 +1,83 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Trophy, CheckCircle, XCircle, Clock, ChevronRight, BarChart, ArrowRight } from 'lucide-react';
+import { Trophy, CheckCircle, XCircle, Clock, ChevronRight, Loader2, ArrowRight, BookOpen } from 'lucide-react';
 
 export default function Results() {
+  const [result, setResult] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchResult = async () => {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get("id");
+      
+      const url = id 
+        ? `http://localhost:5800/api/quiz/attempts/${id}`
+        : `http://localhost:5800/api/quiz/attempts/latest`;
+
+      try {
+        const token = localStorage.getItem("token");
+        const res = await fetch(url, {
+          headers: { "Authorization": `Bearer ${token}` }
+        });
+        const data = await res.json();
+        if (data.success) {
+          setResult(data.data);
+        } else {
+          setResult(null);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchResult();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#f8faf9] flex flex-col items-center justify-center p-6">
+        <Loader2 className="w-12 h-12 animate-spin text-[#11b589] mb-4" />
+        <p className="text-[#3b4b45] font-bold">Fetching results...</p>
+      </div>
+    );
+  }
+
+  if (!result) {
+    return (
+      <div className="min-h-screen bg-[#f8faf9] flex flex-col items-center justify-center p-6 text-center">
+        <div className="w-24 h-24 bg-gray-50 rounded-[2rem] flex items-center justify-center mb-8 text-gray-300">
+           <BookOpen className="w-12 h-12" />
+        </div>
+        <h2 className="text-3xl font-black text-[#0b261d] mb-4">No Quiz History</h2>
+        <p className="text-[#3b4b45]/60 font-medium max-w-sm mb-10 leading-relaxed">
+           You haven't completed any skill quizzes yet. Take your first test to benchmark your industry readiness.
+        </p>
+        <button 
+           onClick={() => window.location.href = '/quiz'}
+           className="px-10 py-5 bg-[#08241b] text-white rounded-[2rem] font-black shadow-xl shadow-[#08241b]/20 hover:bg-[#11b589] transition-all"
+        >
+           Start My First Quiz
+        </button>
+      </div>
+    );
+  }
+
   const resultData = {
-    score: 85,
-    total: 100,
-    time: "14:32",
-    percentile: "Top 12%",
-    questions: [
-      { q: "What is the Virtual DOM?", correct: true },
-      { q: "Explain useState vs useReducer", correct: true },
-      { q: "How does React.memo work?", correct: false },
-      { q: "Describe Context API performance issues", correct: true },
-      { q: "What is hydration in Next.js?", correct: false }
-    ]
+    score: result.overallPercent,
+    title: result.title,
+    time: `${Math.floor(result.timeSpentSeconds / 60)}:${(result.timeSpentSeconds % 60).toString().padStart(2, '0')}`,
+    percentile: result.overallPercent > 80 ? "Top 5%" : result.overallPercent > 60 ? "Top 20%" : "Average",
+    questions: result.questionReviews.map(r => ({
+      q: r.question,
+      correct: r.isCorrect
+    }))
   };
 
   return (
     <>
-            <div className="min-h-screen font-sans bg-[#f8faf9]  relative overflow-hidden flex flex-col pt-4 pb-12 px-6">
+            <div className="min-h-screen bg-[#f8faf9]  relative overflow-hidden flex flex-col pt-4 pb-12 px-6">
         
         <div className="absolute top-[10%] left-[10%] w-[30%] h-[40%] bg-[#d2fbf0] rounded-full blur-[140px] pointer-events-none opacity-50" />
         <div className="absolute bottom-[0%] right-[10%] w-[40%] h-[30%] bg-[#fae8fb] rounded-full blur-[150px] pointer-events-none opacity-60" />
@@ -32,7 +90,7 @@ export default function Results() {
              </div>
              <h1 className="text-5xl font-black text-[#0b261d] tracking-tight mb-4">Quiz Completed!</h1>
              <p className="text-[#3b4b45]/70 font-medium text-lg">
-               You successfully completed the "React Advanced Patterns" test. Here's a detailed breakdown of your performance.
+               You successfully completed the "{resultData.title}" test. Here's a detailed breakdown of your performance.
              </p>
           </motion.div>
 
@@ -50,15 +108,48 @@ export default function Results() {
                 <p className="text-gray-400 font-bold uppercase tracking-widest text-xs mb-2 flex justify-center items-center gap-1"><Clock className="w-3 h-3" /> Time</p>
                 <p className="text-3xl font-black text-[#08241b] mt-1">{resultData.time}</p>
              </motion.div>
-             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 text-center flex flex-col justify-center">
-                <button className="bg-[#08241b] hover:bg-[#11b589] text-white py-3 px-4 rounded-xl font-black text-sm transition-all shadow-xl flex items-center justify-center gap-2 group">
-                   Update Roadmap <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex flex-col justify-center gap-2">
+                <button 
+                  onClick={() => window.location.href = '/quiz'}
+                  className="bg-[#08241b] hover:bg-[#11b589] text-white py-3 px-4 rounded-xl font-black text-xs transition-all flex items-center justify-center gap-2 group"
+                >
+                   Retake Quiz <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                </button>
+                <button 
+                  onClick={() => window.location.href = '/dashboard'}
+                  className="bg-white border border-gray-100 text-[#3b4b45] py-2 px-4 rounded-xl font-bold text-[10px] uppercase tracking-widest hover:bg-gray-50 transition-all flex items-center justify-center gap-2"
+                >
+                   Dashboard <ChevronRight className="w-3 h-3" />
                 </button>
              </motion.div>
           </div>
 
+          {/* Roadmap Integration Section */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }} 
+            animate={{ opacity: 1, scale: 1 }} 
+            transition={{ delay: 0.6 }}
+            className="bg-[#08241b] text-white p-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden group"
+          >
+             <div className="absolute top-0 right-0 w-64 h-64 bg-[#11b589]/20 rounded-full blur-[100px] -mr-32 -mt-32" />
+             <div className="relative z-10 flex flex-col md:flex-row justify-between items-center gap-8">
+                <div className="flex-1 text-center md:text-left">
+                   <h3 className="text-3xl font-black mb-3">Your Roadmap is Updated!</h3>
+                   <p className="text-white/60 font-medium text-lg max-w-lg leading-relaxed">
+                      We've analyzed your results and adjusted your learning path. New goals have been unlocked based on your proficiency.
+                   </p>
+                </div>
+                <button 
+                  onClick={() => window.location.href = '/roadmap'}
+                  className="px-10 py-5 bg-[#11b589] hover:bg-white hover:text-[#08241b] text-white rounded-2xl font-black transition-all flex items-center gap-3 shadow-xl whitespace-nowrap"
+                >
+                   View My Path <ArrowRight className="w-5 h-5" />
+                </button>
+             </div>
+          </motion.div>
+
           {/* Detailed Question Answers */}
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="bg-white/80 backdrop-blur-xl border border-white rounded-[2rem] p-8 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)]">
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }} className="bg-white/80 backdrop-blur-xl border border-white rounded-[2rem] p-8 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)]">
              <h3 className="text-[#08241b] font-black text-2xl mb-6">Detailed Analysis</h3>
              <div className="space-y-4">
                 {resultData.questions.map((item, idx) => (

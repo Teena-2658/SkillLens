@@ -46,7 +46,6 @@ export default function Sidebar() {
         { name: 'Interview', path: '/interview', icon: TrendingUp, badge: 'P7' },
         { name: 'Interview Summary', path: '/summary', icon: FileText, badge: 'NEW', isNew: true },
         { name: 'Roadmap', path: '/roadmap', icon: Map, badge: 'P8' },
-        { name: 'Roadmap Modal', path: '/roadmap-modal', icon: Eye, badge: 'NEW', isNew: true },
         { name: 'Profile / Settings', path: '/profile', icon: Settings, badge: 'NEW', isNew: true },
       ],
     },

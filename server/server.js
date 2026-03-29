@@ -10,6 +10,7 @@ import resumeRoutes from "./routes/resume.routes.js";
 import quizRoutes from "./routes/quiz.routes.js";
 import companyRoutes from "./routes/companyRoutes.js";
 import roadmapRoutes from "./routes/roadmap.routes.js";
+import interviewRoutes from "./routes/interview.routes.js";
 
 const PORT = process.env.PORT;
 const app = express();
@@ -38,6 +39,7 @@ app.use("/api/resume", resumeRoutes);
 app.use("/api/quiz", quizRoutes);
 app.use("/api/companies", companyRoutes);
 app.use("/api/roadmap", roadmapRoutes);
+app.use("/api/interview", interviewRoutes);
 
 app.get("/api/health", (req, res) => {
   res.status(200).json({ success: true, message: "Server is running" });

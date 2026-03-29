@@ -126,7 +126,7 @@ export const submitQuiz = asyncHandler(async (req, res) => {
         },
         $inc: { quizAttempts: 1 },
       },
-      { upsert: true, new: true }
+      { upsert: true, returnDocument: 'after' }
     );
 
     skillResultsWithPrev.push({
@@ -210,6 +210,57 @@ export const getQuizAttemptById = asyncHandler(async (req, res) => {
   return res
     .status(200)
     .json(new ApiResponse(200, "Quiz attempt", serializeAttempt(doc)));
+});
+
+export const getGlobalStats = asyncHandler(async (req, res) => {
+  const userId = req.user.id;
+  
+  const attempts = await QuizAttempt.find({ userId });
+  
+  if (attempts.length === 0) {
+    return res.status(200).json(
+      new ApiResponse(200, "Global stats", {
+        totalAttempts: 0,
+        avgScore: 0,
+        uniqueSkills: 0,
+        learningStreak: 0
+      })
+    );
+  }
+
+  const totalAttempts = attempts.length;
+  const avgScore = Math.round(attempts.reduce((acc, curr) => acc + curr.overallPercent, 0) / totalAttempts);
+  
+  const uniqueSkillsSet = new Set();
+  attempts.forEach(a => a.skills.forEach(s => uniqueSkillsSet.add(s)));
+  const uniqueSkills = uniqueSkillsSet.size;
+
+  // Simple Streak calc: consecutive days with at least one attempt
+  const dates = attempts.map(a => new Date(a.createdAt).toDateString());
+  const uniqueDates = [...new Set(dates)].sort((a,b) => new Date(b) - new Date(a));
+  
+  let streak = 0;
+  let today = new Date().toDateString();
+  let current = new Date(uniqueDates[0]);
+
+  if (uniqueDates[0] === today || uniqueDates[0] === new Date(Date.now() - 86400000).toDateString()) {
+    streak = 1;
+    for (let i = 1; i < uniqueDates.length; i++) {
+      const nextDate = new Date(uniqueDates[i]);
+      const diff = (new Date(uniqueDates[i-1]) - nextDate) / (1000 * 60 * 60 * 24);
+      if (diff === 1) streak++;
+      else break;
+    }
+  }
+
+  return res.status(200).json(
+    new ApiResponse(200, "Global stats", {
+      totalAttempts,
+      avgScore,
+      uniqueSkills,
+      learningStreak: streak
+    })
+  );
 });
 
 export const getSkillProfiles = asyncHandler(async (req, res) => {

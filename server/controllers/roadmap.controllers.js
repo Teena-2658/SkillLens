@@ -1,5 +1,7 @@
 import Roadmap from "../models/roadmap.model.js";
 import SkillProfile from "../models/skillProfile.model.js";
+import User from "../models/user.model.js";
+import { ROLE_REQUIRED_SKILLS } from "../services/resume.service.js";
 import { ApiError, ApiResponse } from "../class/index.class.js";
 import { asyncHandler } from "../utils/index.util.js";
 import {
@@ -30,15 +32,18 @@ export const generateRoadmap = asyncHandler(async (req, res) => {
     throw new ApiError(401, "Unauthorized");
   }
 
-  const targetRole = req.user?.targetRole;
-  if (!targetRole) {
-    throw new ApiError(400, "Target role is required before generating roadmap");
+  const user = await User.findById(userId).select("detectedSkills targetRole resumeText");
+  if (!user || !user.targetRole) {
+    throw new ApiError(400, "Target role is required in profile before generating roadmap");
   }
 
+  const targetRole = user.targetRole;
   const totalWeeks = Math.max(2, Math.min(Number(req.body?.totalWeeks) || 8, 16));
   const targetCompanyId = req.body?.targetCompanyId
     ? String(req.body.targetCompanyId).toLowerCase().trim()
     : null;
+
+  const roleRequiredSkills = ROLE_REQUIRED_SKILLS[targetRole] || [];
 
   const skillProfiles = await SkillProfile.find({ userId })
     .select("skill depthScore depthLevel")
@@ -49,6 +54,9 @@ export const generateRoadmap = asyncHandler(async (req, res) => {
     targetRole,
     targetCompanyId,
     skillProfiles,
+    roleRequiredSkills,
+    detectedSkills: user.detectedSkills,
+    resumeText: user.resumeText,
   });
 
   const completionPercent = computeRoadmapCompletion(generated.weeks);
@@ -69,7 +77,7 @@ export const generateRoadmap = asyncHandler(async (req, res) => {
         source: generated.source,
       },
     },
-    { upsert: true, new: true, setDefaultsOnInsert: true }
+    { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }
   );
 
   return res
@@ -85,7 +93,13 @@ export const getRoadmap = asyncHandler(async (req, res) => {
 
   const roadmap = await Roadmap.findOne({ userId });
   if (!roadmap) {
-    throw new ApiError(404, "Roadmap not found");
+    return res.status(200).json(new ApiResponse(200, "Roadmap not found", null));
+  }
+
+  const user = await User.findById(userId);
+  if (user && roadmap.targetRole !== user.targetRole) {
+    await Roadmap.findByIdAndDelete(roadmap._id);
+    return res.status(200).json(new ApiResponse(200, "Target role changed, generating a new roadmap is required.", null));
   }
 
   return res

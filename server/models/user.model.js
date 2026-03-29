@@ -24,6 +24,30 @@ const userSchema = new mongoose.Schema(
       type: [String],
       default: [],
     },
+    resumeText: {
+      type: String,
+      default: "",
+    },
+    lastResumeScore: {
+      type: Number,
+      default: 0,
+    },
+    readinessHistory: {
+      type: [{ score: Number, date: { type: Date, default: Date.now } }],
+      default: [],
+    },
+    profileImage: {
+      type: String,
+      default: null,
+    },
+    bio: {
+      type: String,
+      default: "",
+    },
+    socials: {
+      github: { type: String, default: "" },
+      linkedin: { type: String, default: "" },
+    },
   },
   { timestamps: true }
 );

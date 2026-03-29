@@ -16,8 +16,6 @@ const SKILL_LABELS = {
   git: "Git",
 };
 
-const OPENAI_API_URL = "https://api.openai.com/v1/chat/completions";
-
 const toLabel = (skill) => SKILL_LABELS[skill] || skill;
 
 const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
@@ -167,11 +165,13 @@ const buildFallbackRoadmap = ({
   };
 };
 
-const buildPromptPayload = ({
+export const buildPromptPayload = ({
   totalWeeks,
   targetRole,
   targetCompany,
   skillProfiles,
+  detectedSkills,
+  resumeText,
   prioritizedSkills,
 }) => ({
   totalWeeks,
@@ -194,10 +194,17 @@ const buildPromptPayload = ({
     depthScore: s.depthScore ?? 0,
     depthLevel: s.depthLevel ?? "Beginner",
   })),
+  resumeText: resumeText || "",
+  resumeSkills: detectedSkills || [],
   prioritizedSkills,
 });
 
-export const derivePrioritizedSkills = (skillProfiles, targetCompanyRoleData) => {
+export const derivePrioritizedSkills = (
+  skillProfiles,
+  targetRoleData,
+  roleRequiredSkills = [],
+  detectedSkills = []
+) => {
   const depthMap = {};
   for (const s of skillProfiles) {
     depthMap[s.skill] = s.depthScore ?? 0;
@@ -206,13 +213,25 @@ export const derivePrioritizedSkills = (skillProfiles, targetCompanyRoleData) =>
   const ranked = [];
   const seen = new Set();
 
-  for (const req of targetCompanyRoleData?.requiredSkills ?? []) {
+  // 1. Gaps relative to a specific company target
+  for (const req of targetRoleData?.requiredSkills ?? []) {
     const depth = depthMap[req.skill] ?? 0;
     const gap = Math.max(req.minimumDepth - depth, 0);
-    ranked.push({ skill: req.skill, score: gap * (req.weight || 1) + 1000 });
+    ranked.push({ skill: req.skill, score: gap * (req.weight || 1) + 2000 });
     seen.add(req.skill);
   }
 
+  // 2. Gaps relative to the resume (Missing Skills for the target role)
+  for (const skill of roleRequiredSkills) {
+    if (seen.has(skill)) continue;
+    if (!detectedSkills.includes(skill)) {
+      // High priority for skills missing from resume
+      ranked.push({ skill, score: 1500 });
+      seen.add(skill);
+    }
+  }
+
+  // 3. General skill profile improvements
   for (const s of skillProfiles) {
     if (seen.has(s.skill)) continue;
     ranked.push({ skill: s.skill, score: 100 - (s.depthScore ?? 0) });
@@ -237,10 +256,18 @@ export const generateRoadmapWithAI = async ({
   targetRole,
   targetCompanyId,
   skillProfiles,
+  roleRequiredSkills = [],
+  detectedSkills = [],
+  resumeText = "",
 }) => {
   const targetCompany = targetCompanyId ? getCompanyById(targetCompanyId) : null;
   const targetRoleData = targetCompany?.roles?.[targetRole] ?? null;
-  const prioritizedSkills = derivePrioritizedSkills(skillProfiles, targetRoleData);
+  const prioritizedSkills = derivePrioritizedSkills(
+    skillProfiles,
+    targetRoleData,
+    roleRequiredSkills,
+    detectedSkills
+  );
 
   const fallback = buildFallbackRoadmap({
     totalWeeks,
@@ -249,17 +276,18 @@ export const generateRoadmapWithAI = async ({
     prioritizedSkills,
   });
 
-  const apiKey = process.env.OPENAI_API_KEY;
+  const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
     return { ...fallback, source: "fallback" };
   }
 
-  const model = process.env.OPENAI_ROADMAP_MODEL || "gpt-4o-mini";
   const payload = buildPromptPayload({
     totalWeeks,
     targetRole,
     targetCompany,
     skillProfiles,
+    detectedSkills,
+    resumeText,
     prioritizedSkills,
   });
 
@@ -301,28 +329,32 @@ export const generateRoadmapWithAI = async ({
   ].join("\n");
 
   try {
-    const response = await fetch(OPENAI_API_URL, {
+    const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    const response = await fetch(GEMINI_API_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model,
-        temperature: 0.4,
-        messages: [
-          { role: "system", content: system },
-          { role: "user", content: user },
+        contents: [
+          {
+            parts: [{ text: `${system}\n\n${user}` }]
+          }
         ],
+        generationConfig: {
+          temperature: 0.4,
+          responseMimeType: "application/json"
+        }
       }),
     });
 
     if (!response.ok) {
+      console.error("Gemini API Error:", await response.text());
       return { ...fallback, source: "fallback" };
     }
 
     const data = await response.json();
-    const content = data?.choices?.[0]?.message?.content;
+    const content = data?.candidates?.[0]?.content?.parts?.[0]?.text;
     if (!content) {
       return { ...fallback, source: "fallback" };
     }
@@ -330,7 +362,8 @@ export const generateRoadmapWithAI = async ({
     const parsed = safeJsonParse(content);
     const normalized = normalizeRoadmapOutput(parsed, totalWeeks);
     return { ...normalized, source: "ai" };
-  } catch {
+  } catch (error) {
+    console.error("Gemini Catch Error:", error);
     return { ...fallback, source: "fallback" };
   }
 };

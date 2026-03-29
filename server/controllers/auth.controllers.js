@@ -26,6 +26,9 @@ export const googleAuth = asyncHandler(async (req, res) => {
   if (!user) {
     user = await User.create({ name, email, targetRole });
     isNewUser = true;
+  } else if (user.targetRole !== targetRole) {
+    user.targetRole = targetRole;
+    await user.save();
   }
 
   const token = generateToken(user._id);
@@ -42,6 +45,11 @@ export const googleAuth = asyncHandler(async (req, res) => {
           email: user.email,
           targetRole: user.targetRole,
           detectedSkills: user.detectedSkills || [],
+          lastResumeScore: user.lastResumeScore || 0,
+          readinessHistory: user.readinessHistory || [],
+          profileImage: user.profileImage,
+          bio: user.bio,
+          socials: user.socials,
           createdAt: user.createdAt,
         },
       }
@@ -64,6 +72,11 @@ export const getProfile = asyncHandler(async (req, res) => {
           email: user.email,
           targetRole: user.targetRole,
           detectedSkills: user.detectedSkills || [],
+          lastResumeScore: user.lastResumeScore || 0,
+          readinessHistory: user.readinessHistory || [],
+          profileImage: user.profileImage,
+          bio: user.bio,
+          socials: user.socials,
           createdAt: user.createdAt,
         },
     })
@@ -71,18 +84,20 @@ export const getProfile = asyncHandler(async (req, res) => {
 });
 
 export const updateProfile = asyncHandler(async (req, res) => {
-  const { targetRole } = req.body;
+  const { targetRole, profileImage, bio, socials } = req.body;
 
   const allowedRoles = ["frontend", "backend", "fullstack", "data", "java"];
 
-  if (!targetRole || !allowedRoles.includes(targetRole)) {
-    throw new ApiError(400, "Invalid target role");
-  }
+  const updateData = {};
+  if (targetRole && allowedRoles.includes(targetRole)) updateData.targetRole = targetRole;
+  if (profileImage !== undefined) updateData.profileImage = profileImage;
+  if (bio !== undefined) updateData.bio = bio;
+  if (socials !== undefined) updateData.socials = socials;
 
   const user = await User.findByIdAndUpdate(
     req.user.id,
-    { targetRole },
-    { new: true }
+    { $set: updateData },
+    { returnDocument: 'after' }
   );
 
   if (!user) {
@@ -96,6 +111,9 @@ export const updateProfile = asyncHandler(async (req, res) => {
         name: user.name,
         email: user.email,
         targetRole: user.targetRole,
+        profileImage: user.profileImage,
+        bio: user.bio,
+        socials: user.socials,
       },
     })
   );

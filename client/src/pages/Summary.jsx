@@ -1,18 +1,49 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Target, Zap, TrendingUp, CheckCircle, Flame, Star, Award, ShieldAlert } from 'lucide-react';
+import { Target, Zap, TrendingUp, CheckCircle, Flame, Star, Award, ShieldAlert, MessageSquare, Cpu, Loader2 } from 'lucide-react';
 
 export default function Summary() {
+  const [stats, setStats] = React.useState(null);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const res = await fetch("http://localhost:5800/api/quiz/stats", {
+          headers: { "Authorization": `Bearer ${token}` }
+        });
+        const data = await res.json();
+        if (data.success) {
+          setStats(data.data);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchStats();
+  }, []);
+
+  if (loading) {
+     return (
+       <div className="min-h-screen bg-[#f8faf9] flex items-center justify-center">
+          <Loader2 className="w-12 h-12 animate-spin text-[#11b589]" />
+       </div>
+     );
+  }
+
   const cards = [
-    { title: 'Learning Streak', value: '14 Days', icon: Flame, color: 'text-orange-500', bg: 'bg-orange-50' },
-    { title: 'Quizzes Passed', value: '28', icon: CheckCircle, color: 'text-emerald-500', bg: 'bg-emerald-50' },
-    { title: 'Global Rank', value: 'Top 5%', icon: TrophyIcon, color: 'text-yellow-600', bg: 'bg-yellow-50' },
-    { title: 'Skill Matches', value: '6 Roles', icon: Target, color: 'text-blue-500', bg: 'bg-blue-50' }
+    { title: 'Learning Streak', value: `${stats?.learningStreak || 0} Days`, icon: Flame, color: 'text-orange-500', bg: 'bg-orange-50' },
+    { title: 'Quizzes Passed', value: stats?.totalAttempts || 0, icon: CheckCircle, color: 'text-emerald-500', bg: 'bg-emerald-50' },
+    { title: 'Global Score', value: `${stats?.avgScore || 0}%`, icon: TrophyIcon, color: 'text-yellow-600', bg: 'bg-yellow-50' },
+    { title: 'Skill Footprint', value: `${stats?.uniqueSkills || 0} Skills`, icon: Target, color: 'text-blue-500', bg: 'bg-blue-50' }
   ];
 
   return (
     <>
-            <div className="min-h-screen font-sans bg-[#f8faf9]  relative overflow-hidden flex flex-col pt-4 pb-12 px-6">
+            <div className="min-h-screen bg-[#f8faf9]  relative overflow-hidden flex flex-col pt-4 pb-12 px-6">
         
         {/* Abstract Background Matching Theme */}
         <div className="absolute top-0 right-0 w-full h-full pointer-events-none opacity-40">
@@ -52,64 +83,102 @@ export default function Summary() {
              ))}
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
-             {/* Progress Chart Placeholder */}
-             <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="lg:col-span-2 bg-gradient-to-br from-[#08241b] to-black rounded-[2rem] p-10 shadow-2xl relative overflow-hidden flex flex-col justify-between min-h-[400px]"
-             >
-                <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-[80px] pointer-events-none" />
-                <div>
-                   <h3 className="text-white/80 font-bold uppercase tracking-widest text-sm mb-2 flex items-center gap-2">
-                     <TrendingUp className="w-5 h-5 text-[#11b589]" /> Skill Growth Trajectory
-                   </h3>
-                   <div className="flex items-end gap-3 mt-4">
-                     <span className="text-5xl font-black text-white">+42%</span>
-                     <span className="text-white/60 font-medium mb-1">this month</span>
-                   </div>
-                </div>
+           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+              {/* Interview Performance Section */}
+              <motion.div 
+                 initial={{ opacity: 0, y: 20 }}
+                 animate={{ opacity: 1, y: 0 }}
+                 transition={{ delay: 0.4 }}
+                 className="lg:col-span-2 bg-white/90 backdrop-blur-xl border border-white rounded-[2rem] p-8 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] flex flex-col min-h-[500px]"
+              >
+                  <div className="flex items-center justify-between mb-8">
+                     <h3 className="text-[#08241b] font-black text-2xl flex items-center gap-3">
+                       <MessageSquare className="w-6 h-6 text-[#11b589]" /> Interview Evaluation
+                     </h3>
+                     <span className="px-3 py-1 bg-[#d2fbf0] text-[#11b589] rounded-lg text-[10px] font-black uppercase tracking-widest">AI Audit v1.0</span>
+                  </div>
 
-                <div className="w-full h-40 mt-8 border-b-2 border-l-2 border-white/20 relative flex items-end gap-4 p-4">
-                  {/* Decorative chart bars */}
-                  {[40, 60, 50, 80, 70, 95].map((h, index) => (
-                     <div key={index} className="flex-1 bg-gradient-to-t from-[#11b589]/50 to-[#11b589] rounded-t-lg group relative" style={{ height: `${h}%` }}>
-                        <div className="opacity-0 group-hover:opacity-100 absolute -top-10 left-1/2 transform -translate-x-1/2 bg-white text-black px-3 py-1 rounded-lg font-bold text-xs shadow-xl transition-opacity">
-                           {h}%
-                        </div>
-                     </div>
-                  ))}
-                </div>
-             </motion.div>
+                  <div className="space-y-6 overflow-y-auto max-h-[500px] pr-4 custom-scrollbar">
+                     {JSON.parse(localStorage.getItem('interview_feedback') || '[]').length > 0 ? (
+                       JSON.parse(localStorage.getItem('interview_feedback') || '[]').map((item, idx) => (
+                          <div key={idx} className="p-6 rounded-3xl bg-[#fbfbfa] border border-gray-100 hover:border-[#11b589]/20 transition-all">
+                             <div className="flex justify-between items-start mb-4">
+                                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Question {idx + 1}</p>
+                                <div className="flex gap-1">
+                                   {[...Array(5)].map((_, i) => (
+                                      <Star key={i} className={`w-3 h-3 ${i < item.rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-200'}`} />
+                                   ))}
+                                </div>
+                             </div>
+                             <h4 className="text-[#0b261d] font-bold text-lg mb-3">"{item.question}"</h4>
+                             <div className="bg-white p-4 rounded-2xl border border-gray-50 mb-4 shadow-sm italic text-[#3b4b45]/80 text-sm">
+                                <span className="block text-[10px] font-black text-gray-400 uppercase mb-2">Your Answer:</span>
+                                "{item.answer || "No response recorded."}"
+                             </div>
+                             
+                             <div className="bg-[#11b589]/5 p-4 rounded-2xl border border-[#11b589]/10 mb-4 text-[#08241b] text-sm font-medium">
+                                <span className="block text-[10px] font-black text-[#11b589] uppercase mb-2">Proper Technical Answer:</span>
+                                {item.ideal}
+                             </div>
 
-             {/* Recent Badges */}
-             <motion.div 
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.5 }}
-                className="bg-white/90 backdrop-blur-xl border border-white rounded-[2rem] p-8 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)]"
-             >
-                <h3 className="text-[#08241b] font-black text-2xl mb-6">Recent Badges</h3>
-                <div className="space-y-6">
-                   {[
-                     { title: "React Master", sub: "Score > 90%", icon: "⚛️" },
-                     { title: "Node.js Guru", sub: "Completed Track", icon: "🚀" },
-                     { title: "Resume Fixed", sub: "ATS Optimized", icon: "✨" }
-                   ].map((badge, k) => (
-                     <div key={k} className="flex items-center gap-5 p-4 rounded-2xl hover:bg-[#f0f4f3] border border-transparent hover:border-gray-200 transition-colors cursor-pointer">
-                        <div className="w-14 h-14 bg-gradient-to-br from-gray-50 to-gray-100 shadow-sm border border-gray-200 rounded-full flex items-center justify-center text-2xl">
-                           {badge.icon}
-                        </div>
-                        <div>
-                           <h4 className="text-[#0b261d] font-black">{badge.title}</h4>
-                           <p className="text-[#11b589] font-bold text-xs uppercase tracking-widest">{badge.sub}</p>
-                        </div>
-                     </div>
-                   ))}
-                </div>
-             </motion.div>
-          </div>
+                             <div className="flex items-start gap-3 p-4 bg-emerald-50 rounded-2xl border border-emerald-100">
+                                <Zap className="w-4 h-4 text-[#11b589] shrink-0 mt-0.5" />
+                                <div>
+                                   <p className="text-[10px] font-black text-[#11b589] uppercase tracking-widest leading-none mb-1">AI Recommendation</p>
+                                   <p className="text-xs font-bold text-emerald-800 leading-relaxed">{item.improvement}</p>
+                                </div>
+                             </div>
+                          </div>
+                       ))
+                     ) : (
+                       <div className="flex flex-col items-center justify-center py-20 text-center opacity-40">
+                          <Cpu className="w-16 h-16 mb-4" />
+                          <p className="font-bold italic">Speak with our AI to unlock detailed interview analysis.</p>
+                       </div>
+                     )}
+                  </div>
+              </motion.div>
+
+              {/* Progress Chart Placeholder (Optimized for sidebar) */}
+              <motion.div 
+                 initial={{ opacity: 0, x: 20 }}
+                 animate={{ opacity: 1, x: 0 }}
+                 transition={{ delay: 0.5 }}
+                 className="flex flex-col gap-6"
+              >
+                 <div className="bg-gradient-to-br from-[#08241b] to-black rounded-[2rem] p-8 shadow-2xl relative overflow-hidden flex flex-col justify-between flex-1 min-h-[300px]">
+                    <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-full blur-[60px] pointer-events-none" />
+                    <div>
+                       <h3 className="text-white/60 font-black uppercase tracking-widest text-[10px] mb-4 flex items-center gap-2">
+                         <TrendingUp className="w-4 h-4 text-[#11b589]" /> Growth Rate
+                       </h3>
+                       <div className="flex items-end gap-3">
+                         <span className="text-4xl font-black text-white">+42%</span>
+                         <span className="text-white/40 font-bold mb-1 text-xs">MONTHLY</span>
+                       </div>
+                    </div>
+                    {/* Simplified Chart for Sidebar */}
+                    <div className="w-full h-24 mt-8 flex items-end gap-2">
+                       {[30, 50, 40, 70, 60, 90, 85].map((h, i) => (
+                         <div key={i} className="flex-1 bg-[#11b589]/30 rounded-t-md hover:bg-[#11b589] transition-colors" style={{ height: `${h}%` }} />
+                       ))}
+                    </div>
+                 </div>
+
+                 {/* Recent Badges Small */}
+                 <div className="bg-white/90 backdrop-blur-xl border border-white rounded-[2rem] p-6 shadow-sm border-gray-100">
+                    <h3 className="text-[#08241b] font-black text-base mb-4 flex items-center gap-2 italic"><Award className="w-4 h-4 text-[#11b589]" /> Recent Perks</h3>
+                    <div className="space-y-3">
+                       {[{ t: "React Master", i: "⚛️" }, { t: "Node Guru", i: "🚀" }].map((b, k) => (
+                          <div key={k} className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 border border-transparent hover:border-gray-200 transition-all">
+                             <span className="text-xl">{b.i}</span>
+                             <span className="text-sm font-black text-[#0b261d]">{b.t}</span>
+                          </div>
+                       ))}
+                    </div>
+                 </div>
+              </motion.div>
+           </div>
 
         </main>
       </div>

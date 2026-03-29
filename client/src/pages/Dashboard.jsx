@@ -11,6 +11,97 @@ import {
 } from "lucide-react";
 
 export default function Dashboard() {
+  const [userData, setUserData] = React.useState({ name: "User", targetRole: "Guest" });
+  const [stats, setStats] = React.useState({
+    readinessScore: 0,
+    skillsScore: 0,
+    interviewScore: 0,
+    roadmapScore: 0,
+    topMatches: [],
+    detectedSkillsCount: 0,
+    nextStep: { title: "Take a skill quiz", desc: "Test your skills to generate your roadmap." }
+  });
+
+  React.useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const headers = { "Authorization": `Bearer ${token}` };
+        
+        const profileRes = await fetch("http://localhost:5800/api/auth/profile", { headers });
+        const profileData = await profileRes.json();
+        const user = profileData?.data?.user;
+        if (user) setUserData(user);
+
+        const resumeScore = user?.lastResumeScore || 0;
+        const rawHistory = user?.readinessHistory || [];
+
+        const compRes = await fetch("http://localhost:5800/api/companies", { headers });
+        const compData = await compRes.json();
+        let topMatches = [];
+        let highestMatch = 0;
+        if (compRes.ok && compData.success && compData.data.companies) {
+           topMatches = compData.data.companies.slice(0, 3).map(c => ({
+             name: c.name, score: c.matchPercent, strong: c.matchPercent >= 70
+           }));
+           highestMatch = compData.data.bestMatch?.matchPercent || 0;
+        }
+
+        const roadRes = await fetch("http://localhost:5800/api/roadmap", { headers });
+        const roadData = await roadRes.json();
+        const roadmapScore = roadData.data?.completionPercent || 0;
+
+        const profRes = await fetch("http://localhost:5800/api/quiz/profiles", { headers });
+        const profData = await profRes.json();
+        let skillsScore = 0;
+        if (profData.data?.profiles && profData.data.profiles.length > 0) {
+           const profiles = profData.data.profiles;
+           const avg = profiles.reduce((sum, p) => sum + (p.depthScore || 0), 0) / (profiles.length || 1);
+           skillsScore = Math.round((avg / 10) * 100); 
+        }
+
+        const interviewScore = Math.min(100, skillsScore > 0 ? skillsScore + 5 : 0);
+        // Readiness = weighted average of resume, skills, and roadmap
+        const readinessScore = Math.round((resumeScore * 0.4) + (skillsScore * 0.4) + (roadmapScore * 0.2)) || 0;
+        
+        let nextStep = { title: "Upload Resume", desc: "Start by analyzing your resume for skill gaps.", link: "/resume" };
+        if (resumeScore > 0 && skillsScore === 0) {
+          nextStep = { title: "Take a Quiz", desc: "Verify your detected skills with a quick assessment.", link: "/quiz" };
+        } else if (skillsScore > 0 && roadmapScore === 0) {
+          nextStep = { title: "View Roadmap", desc: "Build your personalized learning path now.", link: "/roadmap" };
+        } else if (roadmapScore > 0 && roadmapScore < 100) {
+          nextStep = { title: "Continue Roadmap", desc: "Keep going! You're making great progress.", link: "/roadmap" };
+        } else if (highestMatch >= 70) {
+          nextStep = { title: "Apply Now", desc: "You have strong matches! Time to reach out.", link: "/company" };
+        }
+        
+        // Map history to chart bars
+        const historyBars = rawHistory.slice(-7).map(h => ({
+          date: new Date(h.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+          height: `${h.score}%`,
+          active: true
+        }));
+
+        setStats({
+          readinessScore,
+          skillsScore,
+          interviewScore,
+          roadmapScore,
+          topMatches,
+          nextStep,
+          detectedSkillsCount: user?.detectedSkills?.length || 0,
+          historyBars: historyBars.length > 0 ? historyBars : [
+            { date: "N/A", height: "0%", active: false }
+          ]
+        });
+
+      } catch (err) {
+        console.error("Dashboard data fetch error", err);
+      }
+    };
+    fetchDashboardData();
+  }, []);
+
   return (
     <div className="min-h-screen relative">
             <div className="max-w-5xl mx-auto space-y-8 relative">
@@ -35,10 +126,10 @@ export default function Dashboard() {
         <div className="bg-white/75 backdrop-blur-sm border border-[rgba(0,157,119,0.12)] rounded-2xl p-5 hover:border-[rgba(0,157,119,0.30)] transition-colors duration-200 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
           <div>
             <h2 className="text-2xl font-bold text-[#011813] tracking-tight mb-2">
-              Good morning, Rahul
+              Good morning, {userData.name.split(' ')[0]}
             </h2>
-            <p className="text-sm text-[#313233] leading-relaxed">
-              Backend developer · 68 days to placement season
+            <p className="text-sm text-[#313233] leading-relaxed capitalize">
+              {userData.targetRole} developer · 68 days to placement season
             </p>
           </div>
           <div className="flex items-center gap-4 flex-wrap">
@@ -47,7 +138,7 @@ export default function Dashboard() {
               68 days left
             </div>
             <p className="text-xs text-[#8D8E8F] font-medium">
-              Last active 2h ago
+              {stats.detectedSkillsCount > 0 ? `${stats.detectedSkillsCount} skills detected from resume` : "Resume not uploaded"}
             </p>
           </div>
         </div>
@@ -58,7 +149,7 @@ export default function Dashboard() {
             <div className="flex-shrink-0 flex flex-col items-center text-center md:text-left md:items-start">
               <div className="bg-[#011813] rounded-2xl p-5 text-white w-full max-w-[200px]">
                 <div className="text-5xl font-extrabold tracking-tight leading-none mb-1">
-                  62
+                  {stats.readinessScore}
                   <span className="text-2xl text-[rgba(255,255,255,0.45)]">
                     /100
                   </span>
@@ -67,7 +158,7 @@ export default function Dashboard() {
                   Readiness
                 </div>
                 <span className="inline-block bg-[#E8FAF5] text-[#009D77] text-[10px] font-bold px-2.5 py-0.5 rounded-full">
-                  Almost there
+                  {stats.readinessScore > 75 ? "Excellent" : stats.readinessScore > 40 ? "Getting there" : "Need to work"}
                 </span>
               </div>
             </div>
@@ -76,13 +167,13 @@ export default function Dashboard() {
               <div>
                 <div className="flex justify-between text-xs font-semibold text-[#8D8E8F] mb-2">
                   <span>0</span>
-                  <span className="text-[#009D77]">62 / 100</span>
+                  <span className="text-[#009D77]">{stats.readinessScore} / 100</span>
                   <span>100</span>
                 </div>
                 <div className="w-full h-1.5 bg-[#F0F0F0] rounded-full overflow-hidden">
                   <motion.div
                     initial={{ width: 0 }}
-                    animate={{ width: "62%" }}
+                    animate={{ width: `${stats.readinessScore}%` }}
                     transition={{ duration: 1, delay: 0.2 }}
                     className="h-full bg-[#009D77] rounded-full"
                   />
@@ -98,7 +189,7 @@ export default function Dashboard() {
                     </span>
                   </div>
                   <div className="text-2xl font-extrabold text-[#011813]">
-                    56%
+                    {stats.skillsScore}%
                   </div>
                   <p className="text-xs text-[#8D8E8F] font-medium mt-1">
                     Depth score
@@ -112,7 +203,7 @@ export default function Dashboard() {
                     </span>
                   </div>
                   <div className="text-2xl font-extrabold text-[#011813]">
-                    65%
+                    {stats.interviewScore}%
                   </div>
                   <p className="text-xs text-[#8D8E8F] font-medium mt-1">
                     Mock avg.
@@ -126,7 +217,7 @@ export default function Dashboard() {
                     </span>
                   </div>
                   <div className="text-2xl font-extrabold text-[#011813]">
-                    37%
+                    {stats.roadmapScore}%
                   </div>
                   <p className="text-xs text-[#8D8E8F] font-medium mt-1">
                     Completion
@@ -143,13 +234,9 @@ export default function Dashboard() {
               Top Matches
             </h3>
             <div className="space-y-5 flex-1">
-              {[
-                { name: "TCS", score: 78, strong: true },
-                { name: "Wipro", score: 71, strong: true },
-                { name: "Razorpay", score: 31, strong: false },
-              ].map((company) => (
+              {stats.topMatches.length > 0 ? stats.topMatches.map((company) => (
                 <div key={company.name} className="flex items-center gap-4">
-                  <div className="w-24 text-sm font-semibold text-[#011813] shrink-0">
+                  <div className="w-24 text-sm font-semibold text-[#011813] shrink-0 truncate">
                     {company.name}
                   </div>
                   <div className="flex-1 h-1.5 bg-[#F0F0F0] rounded-full overflow-hidden min-w-0">
@@ -170,13 +257,15 @@ export default function Dashboard() {
                     {company.score}%
                   </div>
                 </div>
-              ))}
+              )) : (
+                <div className="text-sm text-[#8D8E8F] py-4 text-center">No matches found yet. Upload your resume or take quizzes!</div>
+              )}
             </div>
             <Link
-              to="/match"
+              to="/company"
               className="mt-8 w-full flex items-center justify-center gap-2 border border-[rgba(0,157,119,0.3)] text-[#009D77] text-sm font-semibold px-5 py-2.5 rounded-xl bg-transparent hover:bg-[#E8FAF5] transition-colors duration-150"
             >
-              View all 25
+              View all companies
               <ChevronRight className="w-4 h-4" />
             </Link>
           </div>
@@ -190,20 +279,17 @@ export default function Dashboard() {
                 <Brain className="w-20 h-20 text-[#009D77]" />
               </div>
               <h4 className="text-xl font-bold text-[#011813] mb-2 relative z-10">
-                Retake the MongoDB quiz
+                {stats.nextStep.title}
               </h4>
               <p className="text-sm text-[#313233] leading-relaxed relative z-10">
-                Weakest skill · 30% depth ·{" "}
-                <span className="text-[#009D77] font-semibold">
-                  +7 pts expected
-                </span>
+                {stats.nextStep.desc}
               </p>
             </div>
             <Link
-              to="/quiz"
+              to={stats.nextStep.link}
               className="mt-6 w-full flex items-center justify-center gap-2 bg-[#009D77] text-white text-sm font-bold px-5 py-2.5 rounded-xl hover:bg-[#008a68] transition-colors duration-150"
             >
-              Go to MongoDB quiz
+              Get Started
               <ChevronRight className="w-5 h-5" />
             </Link>
           </div>
@@ -214,17 +300,9 @@ export default function Dashboard() {
             Readiness score history
           </h3>
           <div className="h-48 flex items-end justify-between gap-2">
-            {[
-              { date: "Mar 1", height: "15%", active: false },
-              { date: "Mar 5", height: "25%", active: false },
-              { date: "Mar 8", height: "35%", active: false },
-              { date: "Mar 11", height: "40%", active: false },
-              { date: "Mar 15", height: "42%", active: false },
-              { date: "Mar 17", height: "45%", active: false },
-              { date: "Mar 19", height: "62%", active: true },
-            ].map((bar) => (
+            {(stats.historyBars || []).map((bar, idx) => (
               <div
-                key={bar.date}
+                key={idx}
                 className="flex flex-col items-center flex-1 h-full justify-end min-w-0"
               >
                 <motion.div
@@ -236,7 +314,7 @@ export default function Dashboard() {
                   }`}
                 />
                 <div
-                  className={`mt-3 text-xs font-semibold ${
+                  className={`mt-3 text-[10px] font-semibold whitespace-nowrap ${
                     bar.active ? "text-[#009D77]" : "text-[#8D8E8F]"
                   }`}
                 >

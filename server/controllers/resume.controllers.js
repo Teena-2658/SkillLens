@@ -29,17 +29,21 @@ export const uploadResume = asyncHandler(async (req, res) => {
   let text;
   try {
     text = await extractText(req.file.buffer);
-  } catch {
+  } catch (error) {
     throw new ApiError(
       400,
-      "Could not read this PDF. Try another file or ensure it is not image-only"
+      `Could not read this PDF: ${error.message || "Unknown error"}. Ensure it is not image-only.`
     );
   }
 
   const analysis = detectSkills(text, targetRole);
 
   await User.findByIdAndUpdate(req.user.id, {
+    targetRole: targetRole,
     detectedSkills: analysis.detectedSkills,
+    resumeText: text,
+    lastResumeScore: analysis.coveragePercent,
+    $push: { readinessHistory: { score: analysis.coveragePercent } }
   });
 
   return res.status(200).json(
