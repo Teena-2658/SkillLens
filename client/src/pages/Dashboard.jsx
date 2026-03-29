@@ -22,6 +22,13 @@ export default function Dashboard() {
     nextStep: { title: "Take a skill quiz", desc: "Test your skills to generate your roadmap." }
   });
 
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return "Good morning";
+    if (hour < 17) return "Good afternoon";
+    return "Good evening";
+  };
+
   React.useEffect(() => {
     const fetchDashboardData = async () => {
       try {
@@ -57,11 +64,11 @@ export default function Dashboard() {
         if (profData.data?.profiles && profData.data.profiles.length > 0) {
            const profiles = profData.data.profiles;
            const avg = profiles.reduce((sum, p) => sum + (p.depthScore || 0), 0) / (profiles.length || 1);
-           skillsScore = Math.round((avg / 10) * 100); 
+           skillsScore = Math.round(avg); 
         }
 
         const interviewScore = Math.min(100, skillsScore > 0 ? skillsScore + 5 : 0);
-        // Readiness = weighted average of resume, skills, and roadmap
+        // Readiness = weighted average pf resume, skills, and roadmap
         const readinessScore = Math.round((resumeScore * 0.4) + (skillsScore * 0.4) + (roadmapScore * 0.2)) || 0;
         
         let nextStep = { title: "Upload Resume", desc: "Start by analyzing your resume for skill gaps.", link: "/resume" };
@@ -103,250 +110,276 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="min-h-screen relative">
-            <div className="max-w-5xl mx-auto space-y-8 relative">
+    <div className="min-h-screen relative pb-12">
+      <div className="max-w-5xl mx-auto space-y-6 relative">
         {/* Page title */}
-        <div className="mb-8 relative">
-          <p className="text-xs text-[#8D8E8F] mb-2">Home / Dashboard</p>
-          <div className="flex items-center gap-3 flex-wrap">
-            <h1 className="text-3xl font-extrabold text-[#011813] tracking-tight">
+        <div className="mb-2 relative flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-extrabold text-[#011813] tracking-tight">
               Dashboard
             </h1>
-            <span className="bg-[#E8FAF5] border border-[rgba(0,157,119,0.2)] text-[#009D77] text-xs font-mono font-semibold px-3 py-1 rounded-full">
-              /dashboard
-            </span>
-            <span className="text-xs text-[#8D8E8F] font-medium">
-              Protected · JWT required
-            </span>
+            <p className="text-sm text-[#475467] font-medium mt-1">Overview of your placement preparation progress.</p>
           </div>
-          <div className="absolute top-0 right-0 w-24 h-24 dot-grid opacity-60 rounded-xl pointer-events-none hidden sm:block" />
         </div>
 
-        {/* Greeting */}
-        <div className="bg-white/75 backdrop-blur-sm border border-[rgba(0,157,119,0.12)] rounded-2xl p-5 hover:border-[rgba(0,157,119,0.30)] transition-colors duration-200 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
-          <div>
-            <h2 className="text-2xl font-bold text-[#011813] tracking-tight mb-2">
-              Good morning, {userData.name.split(' ')[0]}
-            </h2>
-            <p className="text-sm text-[#313233] leading-relaxed capitalize">
-              {userData.targetRole} developer · 68 days to placement season
-            </p>
-          </div>
-          <div className="flex items-center gap-4 flex-wrap">
-            <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-[#FBF4C0] text-[#011813] text-sm font-bold border border-[rgba(0,157,119,0.12)]">
-              <AlertCircle className="w-4 h-4 text-[#009D77]" />
-              68 days left
+        {/* Greeting & Quick Status */}
+        <div className="bg-white border border-[#E7E7E8] rounded-2xl p-6 shadow-sm flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl font-bold shadow-sm overflow-hidden shrink-0 bg-gray-100 border border-[#E7E7E8]">
+              {userData.profileImage ? (
+                <img src={userData.profileImage} alt={userData.name} className="w-full h-full object-cover" />
+              ) : (
+                <div className="w-full h-full bg-gradient-to-br from-[#009D77] to-[#017A5D] flex items-center justify-center">
+                  {userData.name.charAt(0).toUpperCase()}
+                </div>
+              )}
             </div>
-            <p className="text-xs text-[#8D8E8F] font-medium">
-              {stats.detectedSkillsCount > 0 ? `${stats.detectedSkillsCount} skills detected from resume` : "Resume not uploaded"}
-            </p>
+            <div>
+              <h2 className="text-lg font-bold text-[#011813] tracking-tight">
+                {getGreeting()}, {userData.name.split(' ')[0]}
+              </h2>
+              <p className="text-sm text-[#475467] font-medium mt-0.5">
+                Targeting <span className="text-[#011813] font-semibold capitalize">{userData.targetRole}</span> roles
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-4 w-full lg:w-auto bg-[#F8F9FA] lg:bg-transparent p-4 lg:p-0 rounded-xl border border-[#E7E7E8] lg:border-none">
+            <div className="flex flex-col lg:items-end w-full">
+              <div className="flex items-center gap-2 text-sm font-semibold text-[#011813]">
+                <div className={`w-2 h-2 rounded-full ${stats.detectedSkillsCount > 0 ? 'bg-[#009D77]' : 'bg-[#F59E0B]'}`}></div>
+                {stats.detectedSkillsCount > 0 ? "Profile Active" : "Getting Started"}
+              </div>
+              <p className="text-xs text-[#475467] mt-1 font-medium">
+                {stats.detectedSkillsCount > 0 ? `${stats.detectedSkillsCount} skills detected from resume` : "Resume not uploaded"}
+              </p>
+            </div>
           </div>
         </div>
 
-        {/* Readiness */}
-        <div className="bg-white/75 backdrop-blur-sm border border-[rgba(0,157,119,0.12)] rounded-2xl p-5 hover:border-[rgba(0,157,119,0.30)] transition-colors duration-200">
-          <div className="flex flex-col md:flex-row items-center gap-10">
-            <div className="flex-shrink-0 flex flex-col items-center text-center md:text-left md:items-start">
-              <div className="bg-[#011813] rounded-2xl p-5 text-white w-full max-w-[200px]">
-                <div className="text-5xl font-extrabold tracking-tight leading-none mb-1">
+        {/* Core Metrics */}
+        <div className="bg-white border border-[#E7E7E8] rounded-2xl p-6 shadow-sm">
+          <div className="flex flex-col md:flex-row gap-8 items-stretch">
+            {/* Primary Score */}
+            <div className="flex-shrink-0 flex flex-col justify-center items-center bg-[#011813] rounded-2xl p-6 text-white w-full md:w-[220px] shadow-sm relative overflow-hidden">
+               {/* decorative backdrop */}
+              <div className="absolute top-0 right-0 opacity-[0.03] scale-150 -translate-y-4 translate-x-4">
+                <Target className="w-48 h-48" />
+              </div>
+              <div className="relative z-10 flex flex-col items-center">
+                <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-[rgba(255,255,255,0.6)] mb-2 text-center">
+                  Readiness Score
+                </span>
+                <div className="text-5xl font-extrabold tracking-tight leading-none mb-4 flex items-baseline">
                   {stats.readinessScore}
-                  <span className="text-2xl text-[rgba(255,255,255,0.45)]">
-                    /100
-                  </span>
+                  <span className="text-xl text-[rgba(255,255,255,0.4)] ml-1">/100</span>
                 </div>
-                <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-[rgba(255,255,255,0.55)] mb-3">
-                  Readiness
-                </div>
-                <span className="inline-block bg-[#E8FAF5] text-[#009D77] text-[10px] font-bold px-2.5 py-0.5 rounded-full">
-                  {stats.readinessScore > 75 ? "Excellent" : stats.readinessScore > 40 ? "Getting there" : "Need to work"}
+                <span className={`inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-full ${stats.readinessScore > 75 ? "bg-[#009D77]/20 text-[#2EEAAB]" : stats.readinessScore > 40 ? "bg-[#F59E0B]/20 text-[#FBCC14]" : "bg-red-500/20 text-red-400"}`}>
+                  <div className={`w-1.5 h-1.5 rounded-full ${stats.readinessScore > 75 ? "bg-[#2EEAAB]" : stats.readinessScore > 40 ? "bg-[#FBCC14]" : "bg-red-400"}`}></div>
+                  {stats.readinessScore > 75 ? "Excellent Match" : stats.readinessScore > 40 ? "Getting there" : "Need to work"}
                 </span>
               </div>
             </div>
 
-            <div className="flex-1 w-full space-y-8 min-w-0">
-              <div>
-                <div className="flex justify-between text-xs font-semibold text-[#8D8E8F] mb-2">
-                  <span>0</span>
-                  <span className="text-[#009D77]">{stats.readinessScore} / 100</span>
-                  <span>100</span>
+            {/* Sub Metrics */}
+            <div className="flex-1 flex flex-col justify-center min-w-0">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 h-full">
+                
+                <div className="bg-[#F8F9FA] border border-[#E7E7E8] rounded-2xl p-5 flex flex-col relative overflow-hidden group hover:border-[#D0D5DD] transition-colors">
+                  <div className="absolute top-3 right-3 text-[#E7E7E8] group-hover:text-[#009D77]/20 transition-colors">
+                    <BookOpen className="w-12 h-12" />
+                  </div>
+                  <div className="flex items-center gap-2 mb-auto z-10">
+                    <div className="w-6 h-6 rounded-md bg-white border border-[#E7E7E8] flex items-center justify-center">
+                      <BookOpen className="w-3.5 h-3.5 text-[#011813]" />
+                    </div>
+                    <span className="text-[11px] font-bold uppercase tracking-[0.1em] text-[#475467]">Skills</span>
+                  </div>
+                  <div className="mt-6 z-10">
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-3xl font-extrabold text-[#011813]">{stats.skillsScore}</span>
+                      <span className="text-sm font-semibold text-[#475467]">/ 100</span>
+                    </div>
+                    <p className="text-xs text-[#475467] font-medium mt-1">Depth analysis</p>
+                  </div>
                 </div>
-                <div className="w-full h-1.5 bg-[#F0F0F0] rounded-full overflow-hidden">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={{ width: `${stats.readinessScore}%` }}
-                    transition={{ duration: 1, delay: 0.2 }}
-                    className="h-full bg-[#009D77] rounded-full"
-                  />
-                </div>
-              </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-                <div className="bg-[#E8FAF5] rounded-xl p-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <BookOpen className="w-4 h-4 text-[#009D77]" />
-                    <span className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#8D8E8F]">
-                      Skills
-                    </span>
+                <div className="bg-[#F8F9FA] border border-[#E7E7E8] rounded-2xl p-5 flex flex-col relative overflow-hidden group hover:border-[#D0D5DD] transition-colors">
+                  <div className="absolute top-3 right-3 text-[#E7E7E8] group-hover:text-[#009D77]/20 transition-colors">
+                    <Briefcase className="w-12 h-12" />
                   </div>
-                  <div className="text-2xl font-extrabold text-[#011813]">
-                    {stats.skillsScore}%
+                  <div className="flex items-center gap-2 mb-auto z-10">
+                    <div className="w-6 h-6 rounded-md bg-white border border-[#E7E7E8] flex items-center justify-center">
+                      <Briefcase className="w-3.5 h-3.5 text-[#011813]" />
+                    </div>
+                    <span className="text-[11px] font-bold uppercase tracking-[0.1em] text-[#475467]">Interview</span>
                   </div>
-                  <p className="text-xs text-[#8D8E8F] font-medium mt-1">
-                    Depth score
-                  </p>
+                  <div className="mt-6 z-10">
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-3xl font-extrabold text-[#011813]">{stats.interviewScore}</span>
+                      <span className="text-sm font-semibold text-[#475467]">/ 100</span>
+                    </div>
+                    <p className="text-xs text-[#475467] font-medium mt-1">Mock average</p>
+                  </div>
                 </div>
-                <div className="bg-[#E8FAF5] rounded-xl p-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Briefcase className="w-4 h-4 text-[#009D77]" />
-                    <span className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#8D8E8F]">
-                      Interview
-                    </span>
+
+                <div className="bg-[#F8F9FA] border border-[#E7E7E8] rounded-2xl p-5 flex flex-col relative overflow-hidden group hover:border-[#D0D5DD] transition-colors">
+                  <div className="absolute top-3 right-3 text-[#E7E7E8] group-hover:text-[#009D77]/20 transition-colors">
+                    <Target className="w-12 h-12" />
                   </div>
-                  <div className="text-2xl font-extrabold text-[#011813]">
-                    {stats.interviewScore}%
+                  <div className="flex items-center gap-2 mb-auto z-10">
+                    <div className="w-6 h-6 rounded-md bg-white border border-[#E7E7E8] flex items-center justify-center">
+                      <Target className="w-3.5 h-3.5 text-[#011813]" />
+                    </div>
+                    <span className="text-[11px] font-bold uppercase tracking-[0.1em] text-[#475467]">Roadmap</span>
                   </div>
-                  <p className="text-xs text-[#8D8E8F] font-medium mt-1">
-                    Mock avg.
-                  </p>
+                  <div className="mt-6 z-10">
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-3xl font-extrabold text-[#011813]">{stats.roadmapScore}</span>
+                      <span className="text-sm font-semibold text-[#475467]">/ 100</span>
+                    </div>
+                    <p className="text-xs text-[#475467] font-medium mt-1">Completion progress</p>
+                  </div>
                 </div>
-                <div className="bg-[#E8FAF5] rounded-xl p-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Target className="w-4 h-4 text-[#009D77]" />
-                    <span className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#8D8E8F]">
-                      Roadmap
-                    </span>
-                  </div>
-                  <div className="text-2xl font-extrabold text-[#011813]">
-                    {stats.roadmapScore}%
-                  </div>
-                  <p className="text-xs text-[#8D8E8F] font-medium mt-1">
-                    Completion
-                  </p>
-                </div>
+
               </div>
             </div>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-white/75 backdrop-blur-sm border border-[rgba(0,157,119,0.12)] rounded-2xl p-5 hover:border-[rgba(0,157,119,0.30)] transition-colors duration-200 flex flex-col">
-            <h3 className="text-base font-bold text-[#011813] mb-6">
-              Top Matches
-            </h3>
+          {/* Top Matches */}
+          <div className="bg-white border border-[#E7E7E8] rounded-2xl p-6 shadow-sm flex flex-col">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-base font-bold text-[#011813]">Top Matches</h3>
+              <Link to="/company" className="text-xs font-bold text-[#009D77] hover:underline">View all</Link>
+            </div>
             <div className="space-y-5 flex-1">
               {stats.topMatches.length > 0 ? stats.topMatches.map((company) => (
-                <div key={company.name} className="flex items-center gap-4">
-                  <div className="w-24 text-sm font-semibold text-[#011813] shrink-0 truncate">
+                <div key={company.name} className="flex items-center gap-4 group">
+                  <div className="w-28 text-sm font-semibold text-[#011813] shrink-0 truncate">
                     {company.name}
                   </div>
-                  <div className="flex-1 h-1.5 bg-[#F0F0F0] rounded-full overflow-hidden min-w-0">
+                  <div className="flex-1 h-2 bg-[#F0F2F5] rounded-full overflow-hidden min-w-0">
                     <motion.div
                       initial={{ width: 0 }}
                       animate={{ width: `${company.score}%` }}
                       transition={{ duration: 1, delay: 0.35 }}
                       className={`h-full rounded-full ${
-                        company.strong ? "bg-[#009D77]" : "bg-[#EA4C89]"
+                        company.strong ? "bg-[#EC4899]" : "bg-[#F472B6]"
                       }`}
                     />
                   </div>
                   <div
-                    className={`w-12 text-right text-sm font-bold shrink-0 ${
-                      company.strong ? "text-[#009D77]" : "text-[#EA4C89]"
+                    className={`w-10 text-right text-sm font-extrabold shrink-0 ${
+                      company.strong ? "text-[#EC4899]" : "text-[#F472B6]"
                     }`}
                   >
                     {company.score}%
                   </div>
                 </div>
               )) : (
-                <div className="text-sm text-[#8D8E8F] py-4 text-center">No matches found yet. Upload your resume or take quizzes!</div>
+                <div className="h-full flex flex-col items-center justify-center text-center px-4 py-8">
+                  <div className="w-12 h-12 bg-[#F8F9FA] rounded-full flex items-center justify-center mb-3">
+                    <Briefcase className="w-6 h-6 text-[#98A2B3]" />
+                  </div>
+                  <p className="text-sm font-medium text-[#011813] mb-1">No matches found</p>
+                  <p className="text-xs text-[#475467]">Upload a resume and take quizzes to find matching roles.</p>
+                </div>
               )}
             </div>
-            <Link
-              to="/company"
-              className="mt-8 w-full flex items-center justify-center gap-2 border border-[rgba(0,157,119,0.3)] text-[#009D77] text-sm font-semibold px-5 py-2.5 rounded-xl bg-transparent hover:bg-[#E8FAF5] transition-colors duration-150"
-            >
-              View all companies
-              <ChevronRight className="w-4 h-4" />
-            </Link>
           </div>
 
-          <div className="bg-white/75 backdrop-blur-sm border border-[rgba(0,157,119,0.12)] rounded-2xl p-5 hover:border-[rgba(0,157,119,0.30)] transition-colors duration-200 flex flex-col">
-            <h3 className="text-base font-bold text-[#011813] mb-6">
-              Next step
-            </h3>
-            <div className="bg-[#E8FAF5]/60 rounded-2xl p-5 flex-1 flex flex-col justify-center relative overflow-hidden border border-[rgba(0,157,119,0.12)]">
-              <div className="absolute top-3 right-3 opacity-[0.12] pointer-events-none">
-                <Brain className="w-20 h-20 text-[#009D77]" />
-              </div>
-              <h4 className="text-xl font-bold text-[#011813] mb-2 relative z-10">
-                {stats.nextStep.title}
-              </h4>
-              <p className="text-sm text-[#313233] leading-relaxed relative z-10">
-                {stats.nextStep.desc}
-              </p>
+          {/* Next Step Banner */}
+          <div className="bg-[#011813] border border-[#011813] rounded-2xl p-6 shadow-sm flex flex-col overflow-hidden relative">
+            <div className="absolute top-0 right-[-10%] p-8 opacity-10 pointer-events-none">
+               <Brain className="w-40 h-40 text-white" />
             </div>
-            <Link
-              to={stats.nextStep.link}
-              className="mt-6 w-full flex items-center justify-center gap-2 bg-[#009D77] text-white text-sm font-bold px-5 py-2.5 rounded-xl hover:bg-[#008a68] transition-colors duration-150"
-            >
-              Get Started
-              <ChevronRight className="w-5 h-5" />
+            <div className="relative z-10 flex flex-col h-full">
+              <h3 className="text-xs font-bold uppercase tracking-[0.1em] text-[#009D77] mb-auto">
+                Next Recommendation
+              </h3>
+              <div className="mt-8 mb-6">
+                <h4 className="text-2xl font-extrabold text-white mb-2 leading-tight">
+                  {stats.nextStep.title}
+                </h4>
+                <p className="text-sm text-[rgba(255,255,255,0.7)] leading-relaxed max-w-xs">
+                  {stats.nextStep.desc}
+                </p>
+              </div>
+              <Link
+                to={stats.nextStep.link}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#009D77] text-white text-sm font-bold px-6 py-2.5 rounded-xl hover:bg-[#008a68] transition-colors focus:ring-4 focus:ring-[#009D77]/20"
+              >
+                Proceed exactly
+                <ChevronRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom insights row */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* Score History */}
+          <div className="bg-white border border-[#E7E7E8] rounded-2xl p-6 shadow-sm lg:col-span-2">
+            <div className="flex items-center justify-between mb-8">
+              <h3 className="text-base font-bold text-[#011813]">Score Progression</h3>
+              <span className="text-xs font-semibold text-[#475467] bg-[#F8F9FA] py-1 px-3 rounded-md">Last 7 updates</span>
+            </div>
+            <div className="h-40 flex items-end justify-between gap-3">
+              {(stats.historyBars || []).map((bar, idx) => (
+                <div key={idx} className="flex flex-col items-center flex-1 h-full justify-end group">
+                  <motion.div
+                    initial={{ height: 0 }}
+                    animate={{ height: bar.height }}
+                    transition={{ duration: 0.8, delay: 0.2 }}
+                    className={`w-full max-w-[2.5rem] rounded-t-lg transition-colors duration-200 ${
+                      bar.active 
+                        ? "bg-gradient-to-t from-[#E8FAF5] to-[#009D77] group-hover:to-[#008A68]" 
+                        : "bg-[#F0F2F5]"
+                    }`}
+                  />
+                  <div className={`mt-3 text-[10px] sm:text-[11px] font-bold whitespace-nowrap ${bar.active ? "text-[#475467]" : "text-[#98A2B3]"}`}>
+                    {bar.date}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Quick Tip */}
+          <div className="bg-gradient-to-b from-[#E8FAF5] to-white border border-[#E7E7E8] rounded-2xl p-6 shadow-sm flex flex-col items-center justify-center text-center relative lg:col-span-1">
+            <div className="w-12 h-12 bg-white rounded-xl shadow-sm border border-[#E7E7E8] flex items-center justify-center mx-auto mb-4">
+              <Target className="w-6 h-6 text-[#009D77]" />
+            </div>
+            <h2 className="text-base font-bold text-[#011813] mb-2 tracking-tight">
+              Placement Insight
+            </h2>
+            <p className="text-sm text-[#475467] leading-relaxed">
+              {stats.readinessScore > 75 
+                ? `You're in the top percentile. Keep practicing mock interviews.` 
+                : stats.readinessScore > 40 
+                ? `You have a solid foundation. Follow your roadmap to boost readiness.`
+                : `Start your journey by completing quizzes and building your roadmap.`}
+            </p>
+          </div>
+
+          {/* View Quiz Section */}
+          <div className="bg-gradient-to-b from-[#FFF0F6] to-white border border-[#E7E7E8] rounded-2xl p-6 shadow-sm flex flex-col justify-center text-center relative lg:col-span-1 group">
+            <div className="w-12 h-12 bg-white rounded-xl shadow-sm border border-[#E7E7E8] flex items-center justify-center mx-auto mb-4">
+              <BookOpen className="w-6 h-6 text-[#EC4899]" />
+            </div>
+            <h2 className="text-base font-bold text-[#011813] mb-2 tracking-tight">
+              Assessments
+            </h2>
+            <p className="text-sm text-[#475467] leading-relaxed mb-6">
+              Test your knowledge, review past mistakes, and improve your skills.
+            </p>
+            <Link to="/quiz" className="inline-flex items-center justify-center gap-2 text-sm font-bold text-white bg-[#EC4899] border border-[#EC4899] py-2 px-4 rounded-xl hover:bg-[#DB2777] transition-colors shadow-sm">
+              View Quizzes
             </Link>
           </div>
         </div>
 
-        <div className="bg-white/75 backdrop-blur-sm border border-[rgba(0,157,119,0.12)] rounded-2xl p-5 hover:border-[rgba(0,157,119,0.30)] transition-colors duration-200">
-          <h3 className="text-base font-bold text-[#011813] mb-8">
-            Readiness score history
-          </h3>
-          <div className="h-48 flex items-end justify-between gap-2">
-            {(stats.historyBars || []).map((bar, idx) => (
-              <div
-                key={idx}
-                className="flex flex-col items-center flex-1 h-full justify-end min-w-0"
-              >
-                <motion.div
-                  initial={{ height: 0 }}
-                  animate={{ height: bar.height }}
-                  transition={{ duration: 0.8, delay: 0.2 }}
-                  className={`w-full max-w-[3rem] rounded-t-lg transition-colors duration-200 ${
-                    bar.active ? "bg-[#009D77]" : "bg-[#BDF1E5]"
-                  }`}
-                />
-                <div
-                  className={`mt-3 text-[10px] font-semibold whitespace-nowrap ${
-                    bar.active ? "text-[#009D77]" : "text-[#8D8E8F]"
-                  }`}
-                >
-                  {bar.date}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <section className="cta-gradient rounded-3xl p-12 text-center mb-8">
-          <h2 className="text-3xl font-extrabold text-[#011813] mb-3 tracking-tight">
-            Stay placement-ready
-          </h2>
-          <p className="text-sm text-[#313233] mb-8 max-w-md mx-auto leading-relaxed">
-            Get weekly tips and role alerts tailored for Indian engineering
-            campuses.
-          </p>
-          <div className="flex items-center gap-3 bg-white rounded-xl px-4 py-2 max-w-sm mx-auto border border-[#E7E7E8]">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 text-sm outline-none border-none text-[#011813] placeholder:text-[#8D8E8F] bg-transparent"
-            />
-            <button
-              type="button"
-              className="bg-[#009D77] text-white text-sm font-bold px-4 py-2 rounded-lg flex items-center gap-1 hover:bg-[#008a68] transition-colors duration-150 shrink-0"
-            >
-              Join With Us →
-            </button>
-          </div>
-        </section>
       </div>
     </div>
   );
