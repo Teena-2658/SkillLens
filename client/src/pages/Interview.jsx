@@ -1,11 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Mic, ShieldAlert, Cpu, Settings2, Loader2, MessageSquare, Volume2, Zap, AlertCircle, X, ChevronRight } from 'lucide-react';
 
+const SpeechRecognition =
+  typeof window !== 'undefined'
+    ? window.SpeechRecognition || window.webkitSpeechRecognition
+    : null;
+
 export default function Interview() {
   const navigate = useNavigate();
   const [isRecording, setIsRecording] = useState(false);
+  const isRecordingRef = useRef(false);
+  const [speechSupported, setSpeechSupported] = useState(!!SpeechRecognition);
+  const [speechError, setSpeechError] = useState(null);
+  const recognitionRef = useRef(null);
+  const restartTimerRef = useRef(null);
+  const transcriptRef = useRef('');
+
   const [questions, setQuestions] = useState([]);
   const [currentIdx, setCurrentIdx] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -22,22 +34,73 @@ export default function Interview() {
   ]);
   const [showCreditModal, setShowCreditModal] = useState(false);
 
-  // Use Speech Recognition and Synthesis
-  const recognition = window.SpeechRecognition || window.webkitSpeechRecognition 
-    ? new (window.SpeechRecognition || window.webkitSpeechRecognition)() 
-    : null;
+  useEffect(() => {
+    transcriptRef.current = transcript;
+  }, [transcript]);
 
-  if (recognition) {
+  /** One SpeechRecognition instance for the whole session — must not be recreated each render. */
+  useEffect(() => {
+    if (!SpeechRecognition) {
+      setSpeechSupported(false);
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
     recognition.continuous = true;
     recognition.interimResults = true;
+    recognition.lang = 'en-US';
+    recognition.maxAlternatives = 1;
+
     recognition.onresult = (event) => {
-      let currentTranscript = "";
-      for (let i = event.resultIndex; i < event.results.length; i++) {
-        currentTranscript += event.results[i][0].transcript;
+      // `results` holds the full session buffer; build full text from every segment (fixes dropped words).
+      let line = '';
+      for (let i = 0; i < event.results.length; i++) {
+        line += event.results[i][0].transcript;
       }
-      setTranscript(currentTranscript);
+      const t = line.trim();
+      transcriptRef.current = t;
+      setTranscript(t);
     };
-  }
+
+    recognition.onerror = (event) => {
+      if (event.error === 'aborted' || event.error === 'no-speech') return;
+      setSpeechError(
+        event.error === 'not-allowed'
+          ? 'Microphone blocked — allow mic access for this site in the browser address bar.'
+          : event.error === 'network'
+            ? 'Speech recognition could not reach Google’s servers (offline, VPN/firewall, or Brave Shields blocking the request). In Brave: lion icon → Shields down for this site, or use Text mode.'
+            : `Voice: ${event.error}`
+      );
+    };
+
+    recognition.onend = () => {
+      // After a pause, Chrome ends the session; restart if user still wants to record.
+      if (!isRecordingRef.current) return;
+      restartTimerRef.current = window.setTimeout(() => {
+        if (!isRecordingRef.current || !recognitionRef.current) return;
+        try {
+          recognitionRef.current.start();
+        } catch (e) {
+          if (e.name !== 'InvalidStateError') console.warn('SpeechRecognition restart:', e);
+        }
+      }, 120);
+    };
+
+    recognitionRef.current = recognition;
+    return () => {
+      if (restartTimerRef.current) clearTimeout(restartTimerRef.current);
+      try {
+        recognition.abort();
+      } catch {
+        try {
+          recognition.stop();
+        } catch {
+          /* noop */
+        }
+      }
+      recognitionRef.current = null;
+    };
+  }, []);
 
   const speak = (text) => {
     const synth = window.speechSynthesis;
@@ -98,12 +161,15 @@ export default function Interview() {
   };
 
   const handleNext = async () => {
-    if (mode === "audio" && !isRecording && !transcript) {
-      startRecording();
-      return;
+    if (!transcript?.trim()) return;
+
+    if (mode === "audio" && isRecording) {
+      stopRecording();
+      await new Promise((r) => setTimeout(r, 220));
     }
 
-    if (!transcript) return;
+    const answerText = (transcriptRef.current || transcript).trim();
+    if (!answerText) return;
 
     setSubmitting(true);
     const currentQ = questions[currentIdx];
@@ -118,14 +184,14 @@ export default function Interview() {
         },
         body: JSON.stringify({
           question: currentQ.question,
-          answer: transcript,
+          answer: answerText,
           ideal: currentQ.ideal
         })
       });
       
       const data = await res.json();
       const evaluation = data.success ? data.data : {
-        rating: (transcript.toLowerCase().includes("know") || transcript.length < 20) ? 1 : 2,
+        rating: (answerText.toLowerCase().includes("know") || answerText.length < 20) ? 1 : 2,
         sentiment: "Poor",
         critique: "Validation failed. Response was either evasive or lacked technical substance."
       };
@@ -133,7 +199,7 @@ export default function Interview() {
       const newFeedback = {
         question: currentQ.question,
         ideal: currentQ.ideal,
-        answer: transcript,
+        answer: answerText,
         sentiment: evaluation.sentiment,
         rating: evaluation.rating,
         critique: evaluation.critique,
@@ -143,13 +209,13 @@ export default function Interview() {
       
       const updatedFeedback = [...feedback, newFeedback];
       setFeedback(updatedFeedback);
-      
-      if (isRecording) stopRecording();
 
       const nextIdx = currentIdx + 1;
       if (nextIdx < questions.length) {
         setCurrentIdx(nextIdx);
         setTranscript("");
+        transcriptRef.current = '';
+        setSpeechError(null);
         setTimeout(() => speak(questions[nextIdx].question), 500);
       } else {
         localStorage.setItem('interview_feedback', JSON.stringify(updatedFeedback));
@@ -162,15 +228,51 @@ export default function Interview() {
     }
   };
 
-  const startRecording = () => {
-    setIsRecording(true);
-    recognition?.start();
-  };
+  const startRecording = useCallback(() => {
+    setSpeechError(null);
+    const rec = recognitionRef.current;
+    if (!rec) {
+      setSpeechError('Speech recognition is not available. Use Text mode or open this app in Chrome or Edge.');
+      return;
+    }
+    try {
+      isRecordingRef.current = true;
+      rec.start();
+      setIsRecording(true);
+    } catch (e) {
+      isRecordingRef.current = false;
+      if (e?.name === 'InvalidStateError') {
+        setIsRecording(true);
+        isRecordingRef.current = true;
+      } else {
+        setSpeechError(e?.message || 'Could not start the microphone.');
+      }
+    }
+  }, []);
 
-  const stopRecording = () => {
+  const stopRecording = useCallback(() => {
+    isRecordingRef.current = false;
     setIsRecording(false);
-    recognition?.stop();
-  };
+    if (restartTimerRef.current) {
+      clearTimeout(restartTimerRef.current);
+      restartTimerRef.current = null;
+    }
+    const rec = recognitionRef.current;
+    if (!rec) return;
+    try {
+      rec.stop();
+    } catch {
+      try {
+        rec.abort();
+      } catch {
+        /* noop */
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (mode === 'text' && isRecording) stopRecording();
+  }, [mode, isRecording, stopRecording]);
 
   const topicIcons = {
     "React": <Cpu className="w-6 h-6" />,
@@ -252,7 +354,7 @@ export default function Interview() {
     <div className="min-h-screen flex items-center justify-center bg-[#fbfbfa]">
        <div className="text-center">
          <Loader2 className="w-12 h-12 animate-spin text-[#11b589] mx-auto mb-4" />
-         <p className="text-[#475467] font-bold text-sm uppercase tracking-widest">Generating Questions for {selectedTopic}...</p>
+         <p className="text-[#475467] font-bold text-sm uppercase tracking-widest">Loading questions for {selectedTopic}...</p>
        </div>
     </div>
   );
@@ -380,6 +482,24 @@ export default function Interview() {
             animate={{ opacity: 1, x: 0 }}
             className="lg:w-[55%] flex flex-col gap-4"
           >
+            {mode === 'audio' && hasStarted && (
+              <div className="space-y-2 shrink-0">
+                {!speechSupported && (
+                  <div className="flex items-start gap-2 rounded-xl border border-amber-200 bg-amber-50 px-3 py-2.5 text-[11px] text-amber-950">
+                    <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-amber-600" />
+                    <span>
+                      Speech recognition is not supported in this browser. Use <strong>Text</strong> mode, or open the app in <strong>Chrome</strong> or <strong>Edge</strong> (desktop).
+                    </span>
+                  </div>
+                )}
+                {speechError && (
+                  <div className="flex items-start gap-2 rounded-xl border border-red-200 bg-red-50 px-3 py-2.5 text-[11px] text-red-900">
+                    <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-red-500" />
+                    <span>{speechError}</span>
+                  </div>
+                )}
+              </div>
+            )}
             {/* Transcript/Input Box */}
             <div className="bg-white border border-[#E7E7E8] rounded-2xl flex-1 shadow-sm flex flex-col relative overflow-hidden">
                <div className="p-4 border-b border-[#E7E7E8] bg-[#F8F9FA] flex justify-between items-center shrink-0">
@@ -422,7 +542,11 @@ export default function Interview() {
                  ) : (
                     <textarea 
                        value={transcript}
-                       onChange={(e) => setTranscript(e.target.value)}
+                       onChange={(e) => {
+                         const v = e.target.value;
+                         transcriptRef.current = v;
+                         setTranscript(v);
+                       }}
                        placeholder="Describe your approach, technical choices, and specific examples here..."
                        className="w-full h-full bg-transparent border-none focus:ring-0 outline-none font-medium text-[#011813] text-sm resize-none placeholder:text-[#98A2B3]"
                     />
@@ -443,17 +567,20 @@ export default function Interview() {
                   <div className="flex gap-3">
                     {mode === 'audio' && (
                       <button 
+                        type="button"
                         onClick={isRecording ? stopRecording : startRecording}
-                        className={`flex-1 py-3.5 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-sm ${isRecording ? 'bg-[#EC4899] hover:bg-[#D93A86] text-white' : 'bg-[#009D77] hover:bg-[#008A68] text-white'}`}
+                        disabled={!speechSupported}
+                        className={`flex-1 py-3.5 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-sm ${!speechSupported ? 'bg-[#E7E7E8] text-[#98A2B3] cursor-not-allowed' : isRecording ? 'bg-[#EC4899] hover:bg-[#D93A86] text-white' : 'bg-[#009D77] hover:bg-[#008A68] text-white'}`}
                       >
                         <Mic className="w-4 h-4" />
-                        {isRecording ? 'Stop Recording' : 'Start Recording'}
+                        {!speechSupported ? 'Voice unavailable' : isRecording ? 'Stop Recording' : 'Start Recording'}
                       </button>
                     )}
                     <button 
+                      type="button"
                       onClick={handleNext}
-                      disabled={(!transcript && hasStarted) || submitting}
-                      className={`flex-1 py-3.5 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-sm ${!transcript || submitting ? 'bg-[#F8F9FA] text-[#98A2B3] border border-[#E7E7E8] cursor-not-allowed' : 'bg-[#011813] text-white hover:bg-[#08241b]'}`}
+                      disabled={(!transcript?.trim() && hasStarted) || submitting}
+                      className={`flex-1 py-3.5 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-sm ${!transcript?.trim() || submitting ? 'bg-[#F8F9FA] text-[#98A2B3] border border-[#E7E7E8] cursor-not-allowed' : 'bg-[#011813] text-white hover:bg-[#08241b]'}`}
                     >
                       {submitting ? (
                         <>
