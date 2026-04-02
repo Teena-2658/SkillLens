@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { apiUrl } from "../../config/api";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   X, 
@@ -42,7 +43,7 @@ export default function MockInterviewChat({ skill, onClose }) {
         "Content-Type": "application/json"
       };
 
-      const res = await fetch("http://localhost:5800/api/skill-roadmap/mock-interview", {
+      const res = await fetch(apiUrl("/api/skill-roadmap/mock-interview"), {
         method: "POST",
         headers,
         body: JSON.stringify({ 

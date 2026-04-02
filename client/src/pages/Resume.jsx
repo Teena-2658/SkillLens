@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { apiUrl } from '../config/api';
 import { motion } from 'framer-motion';
 import { UploadCloud, FileText, CheckCircle2, ChevronRight, BarChart3, Clock, AlertCircle, Loader2, ArrowRight, BookOpen, Target } from 'lucide-react';
 
@@ -29,7 +30,7 @@ export default function Resume() {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch("http://localhost:5800/api/resume/upload", {
+      const response = await fetch(apiUrl('/api/resume/upload'), {
         method: "POST",
         headers: { "Authorization": `Bearer ${token}` },
         body: formData,

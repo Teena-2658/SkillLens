@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { apiUrl } from "../../config/api";
 import { 
   X, 
   Calendar, 
@@ -20,7 +21,7 @@ export default function DailyPlanner({ skill, onClose }) {
     try {
       setLoading(true);
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:5800/api/skill-roadmap/daily-plan", {
+      const res = await fetch(apiUrl("/api/skill-roadmap/daily-plan"), {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${token}`,

@@ -9,6 +9,7 @@ import {
   Loader2,
 } from "lucide-react";
 
+import { apiUrl } from "../config/api";
 import { auth, googleProvider } from "../firebase";
 import { signInWithPopup } from "firebase/auth";
 
@@ -38,7 +39,7 @@ export default function Login() {
         throw new Error("Could not retrieve a valid email from your Google account. Please try again.");
       }
 
-      const response = await fetch("http://localhost:5800/api/auth/google", {
+      const response = await fetch(apiUrl("/api/auth/google"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

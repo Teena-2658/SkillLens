@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { apiUrl } from '../config/api';
 import { motion } from 'framer-motion';
 import { Trophy, CheckCircle, XCircle, Clock, ChevronRight, Loader2, ArrowRight, BookOpen, BarChart3, Target, Zap } from 'lucide-react';
 
@@ -11,9 +12,9 @@ export default function Results() {
       const params = new URLSearchParams(window.location.search);
       const id = params.get("id");
       
-      const url = id 
-        ? `http://localhost:5800/api/quiz/attempts/${id}`
-        : `http://localhost:5800/api/quiz/attempts/latest`;
+      const url = id
+        ? apiUrl(`/api/quiz/attempts/${id}`)
+        : apiUrl('/api/quiz/attempts/latest');
 
       try {
         const token = localStorage.getItem("token");

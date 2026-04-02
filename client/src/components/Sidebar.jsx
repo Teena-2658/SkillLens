@@ -1,4 +1,5 @@
 import React from "react";
+import { apiUrl } from "../config/api";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   BookOpen,
@@ -30,7 +31,7 @@ export default function Sidebar() {
       const fetchCredits = async () => {
         try {
           const token = localStorage.getItem("token");
-          const res = await fetch("http://localhost:5800/api/auth/profile", {
+          const res = await fetch(apiUrl("/api/auth/profile"), {
             headers: { Authorization: `Bearer ${token}` },
           });
           const data = await res.json();

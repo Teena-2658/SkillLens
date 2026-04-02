@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { apiUrl } from "../config/api";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   User,
@@ -38,12 +39,9 @@ export default function Profile() {
       try {
         const token = localStorage.getItem("token");
 
-        const profileRes = await fetch(
-          "http://localhost:5800/api/auth/profile",
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+        const profileRes = await fetch(apiUrl("/api/auth/profile"), {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         const profileData = await profileRes.json();
 
         if (profileData.success && profileData.data?.user) {
@@ -60,7 +58,7 @@ export default function Profile() {
           setDetectedSkills(u.detectedSkills || []);
         }
 
-        const statsRes = await fetch("http://localhost:5800/api/quiz/stats", {
+        const statsRes = await fetch(apiUrl("/api/quiz/stats"), {
           headers: { Authorization: `Bearer ${token}` },
         });
         const statsData = await statsRes.json();
@@ -102,7 +100,7 @@ export default function Profile() {
     setMessage("");
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:5800/api/auth/profile", {
+      const res = await fetch(apiUrl("/api/auth/profile"), {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,

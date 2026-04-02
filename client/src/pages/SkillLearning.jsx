@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { apiUrl } from "../config/api";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   BookOpen,
@@ -39,7 +40,7 @@ export default function SkillLearning() {
       const headers = { "Authorization": `Bearer ${token}` };
 
       // Get profile for missing skills
-      const profileRes = await fetch("http://localhost:5800/api/auth/profile", { headers });
+      const profileRes = await fetch(apiUrl('/api/auth/profile'), { headers });
       const profileData = await profileRes.json();
       const user = profileData?.data?.user;
 
@@ -47,7 +48,7 @@ export default function SkillLearning() {
         // In a real app, missingSkills would be calculated or stored. 
         // For now let's derive them from targetRole required skills vs detected.
         // We can use a helper or call an endpoint.
-        const roleRes = await fetch("http://localhost:5800/api/resume/analyze-current", {
+        const roleRes = await fetch(apiUrl('/api/resume/analyze-current'), {
           method: 'POST',
           headers: { ...headers, 'Content-Type': 'application/json' }
         });

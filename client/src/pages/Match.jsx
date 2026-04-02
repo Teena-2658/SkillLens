@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { apiUrl } from '../config/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Briefcase, Check, Zap, Loader2, ArrowUpRight } from 'lucide-react';
 
@@ -13,11 +14,11 @@ export default function Match() {
         const token = localStorage.getItem('token');
         const headers = { "Authorization": `Bearer ${token}` };
         
-        const profRes = await fetch("http://localhost:5800/api/auth/profile", { headers });
+        const profRes = await fetch(apiUrl('/api/auth/profile'), { headers });
         const profData = await profRes.json();
         setTargetRole(profData.data?.user?.targetRole || "fullstack");
 
-        const res = await fetch("http://localhost:5800/api/companies/gaps", { headers });
+        const res = await fetch(apiUrl('/api/companies/gaps'), { headers });
         const data = await res.json();
         if (data.success && data.data.companies.length > 0) {
            setMatches(data.data.companies.slice(0, 5)); // Get top 5
@@ -41,7 +42,7 @@ export default function Match() {
     setSelectedCompanyId("custom");
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch("http://localhost:5800/api/companies/custom-benchmark", {
+      const res = await fetch(apiUrl('/api/companies/custom-benchmark'), {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
@@ -67,13 +68,13 @@ export default function Match() {
     try {
       const token = localStorage.getItem('token');
       // We fetch the full detail including "aboutHiring" from the company endpoint
-      const res = await fetch(`http://localhost:5800/api/companies/${id}/gap`, {
+      const res = await fetch(apiUrl(`/api/companies/${id}/gap`), {
         headers: { "Authorization": `Bearer ${token}` }
       });
       const result = await res.json();
       
       // Let's also fetch the about description if not in gap
-      const companyRes = await fetch(`http://localhost:5800/api/companies/${id}`, {
+      const companyRes = await fetch(apiUrl(`/api/companies/${id}`), {
         headers: { "Authorization": `Bearer ${token}` }
       });
       const companyData = await companyRes.json();

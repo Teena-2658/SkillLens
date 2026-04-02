@@ -1,4 +1,5 @@
 import React from 'react';
+import { apiUrl } from '../config/api';
 import { motion } from 'framer-motion';
 import { Target, Zap, TrendingUp, CheckCircle, Flame, Star, Award, ShieldAlert, MessageSquare, Cpu, Loader2 } from 'lucide-react';
 
@@ -10,7 +11,7 @@ export default function Summary() {
     const fetchStats = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await fetch("http://localhost:5800/api/quiz/stats", {
+        const res = await fetch(apiUrl('/api/quiz/stats'), {
           headers: { "Authorization": `Bearer ${token}` }
         });
         const data = await res.json();

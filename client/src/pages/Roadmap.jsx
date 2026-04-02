@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { apiUrl } from '../config/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BookOpen, Clock, Activity, Flag, Plus, Loader2, CheckCircle2, ChevronRight } from 'lucide-react';
 import RoadmapModal from './RoadmapModal';
@@ -15,7 +16,7 @@ export default function Roadmap() {
   const fetchProfile = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch("http://localhost:5800/api/auth/profile", {
+      const response = await fetch(apiUrl('/api/auth/profile'), {
         headers: { "Authorization": `Bearer ${token}` }
       });
       const result = await response.json();
@@ -32,7 +33,7 @@ export default function Roadmap() {
   const fetchRoadmap = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch("http://localhost:5800/api/roadmap", {
+      const response = await fetch(apiUrl('/api/roadmap'), {
         headers: { "Authorization": `Bearer ${token}` }
       });
       const result = await response.json();
@@ -68,7 +69,7 @@ export default function Roadmap() {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch("http://localhost:5800/api/roadmap/generate", {
+      const response = await fetch(apiUrl('/api/roadmap/generate'), {
         method: "POST",
         headers: { 
           "Authorization": `Bearer ${token}`,
@@ -94,7 +95,7 @@ export default function Roadmap() {
   const handleToggleTask = async (weekNumber, taskId, done) => {
     try {
       const token = localStorage.getItem('token');
-      await fetch(`http://localhost:5800/api/roadmap/${weekNumber}/tasks/${taskId}`, {
+      await fetch(apiUrl(`/api/roadmap/${weekNumber}/tasks/${taskId}`), {
         method: "PATCH",
         headers: { 
           "Authorization": `Bearer ${token}`,
@@ -111,7 +112,7 @@ export default function Roadmap() {
   const handleToggleWeek = async (weekNumber, done) => {
     try {
       const token = localStorage.getItem('token');
-      await fetch(`http://localhost:5800/api/roadmap/${weekNumber}/complete`, {
+      await fetch(apiUrl(`/api/roadmap/${weekNumber}/complete`), {
         method: "PATCH",
         headers: { 
           "Authorization": `Bearer ${token}`,

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { apiUrl } from "../../config/api";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   BookOpen, 
@@ -40,7 +41,7 @@ export default function RoadmapDetails({ skill, onComplete }) {
       setLoading(true);
       const token = localStorage.getItem("token");
       const headers = { "Authorization": `Bearer ${token}` };
-      const res = await fetch(`http://localhost:5800/api/skill-roadmap?skill=${skill.id}`, { headers });
+      const res = await fetch(apiUrl(`/api/skill-roadmap?skill=${skill.id}`), { headers });
       
       if (!res.ok) throw new Error("Failed to fetch roadmap.");
       
@@ -61,7 +62,7 @@ export default function RoadmapDetails({ skill, onComplete }) {
         "Content-Type": "application/json"
       };
       
-      const res = await fetch(`http://localhost:5800/api/skill-roadmap/progress`, { 
+      const res = await fetch(apiUrl("/api/skill-roadmap/progress"), {
         method: 'POST',
         headers,
         body: JSON.stringify({ skill: skill.id, stepId, done: !currentStatus })
@@ -84,7 +85,7 @@ export default function RoadmapDetails({ skill, onComplete }) {
         "Content-Type": "application/json"
       };
       
-      const res = await fetch(`http://localhost:5800/api/skill-roadmap/project-progress`, { 
+      const res = await fetch(apiUrl("/api/skill-roadmap/project-progress"), {
         method: 'POST',
         headers,
         body: JSON.stringify({ skill: skill.id, projectId, done: !currentStatus })

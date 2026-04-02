@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { apiUrl } from "../config/api";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Building2,
@@ -26,7 +27,7 @@ export default function Company() {
         const headers = { Authorization: `Bearer ${token}` };
 
         // Fetch target role from profile
-        const profRes = await fetch("http://localhost:5800/api/auth/profile", {
+        const profRes = await fetch(apiUrl("/api/auth/profile"), {
           headers,
         });
         const profData = await profRes.json();
@@ -35,16 +36,15 @@ export default function Company() {
         }
 
         // Standard Companies
-        const response = await fetch("http://localhost:5800/api/companies", {
+        const response = await fetch(apiUrl("/api/companies"), {
           headers,
         });
         const result = await response.json();
 
         // Custom Targets
-        const customRes = await fetch(
-          "http://localhost:5800/api/custom-hiring",
-          { headers }
-        );
+        const customRes = await fetch(apiUrl("/api/custom-hiring"), {
+          headers,
+        });
         const customResult = await customRes.json();
 
         if (result.success) {
@@ -99,7 +99,7 @@ export default function Company() {
       const headers = { Authorization: `Bearer ${token}` };
 
       if (isCustom) {
-        const res = await fetch(`http://localhost:5800/api/custom-hiring`, {
+        const res = await fetch(apiUrl("/api/custom-hiring"), {
           headers,
         });
         const result = await res.json();
@@ -116,15 +116,13 @@ export default function Company() {
           });
         }
       } else {
-        const res = await fetch(
-          `http://localhost:5800/api/companies/${id}/gap`,
-          { headers }
-        );
+        const res = await fetch(apiUrl(`/api/companies/${id}/gap`), {
+          headers,
+        });
         const result = await res.json();
-        const companyRes = await fetch(
-          `http://localhost:5800/api/companies/${id}`,
-          { headers }
-        );
+        const companyRes = await fetch(apiUrl(`/api/companies/${id}`), {
+          headers,
+        });
         const companyResult = await companyRes.json();
 
         if (result.success && companyResult.success) {
@@ -153,7 +151,7 @@ export default function Company() {
     if (!window.confirm("Remove this custom benchmark?")) return;
     try {
       const token = localStorage.getItem("token");
-      await fetch(`http://localhost:5800/api/custom-hiring/${id}`, {
+      await fetch(apiUrl(`/api/custom-hiring/${id}`), {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -488,7 +486,7 @@ export default function Company() {
                   };
                   try {
                     const token = localStorage.getItem("token");
-                    await fetch("http://localhost:5800/api/custom-hiring", {
+                    await fetch(apiUrl("/api/custom-hiring"), {
                       method: "POST",
                       headers: {
                         Authorization: `Bearer ${token}`,

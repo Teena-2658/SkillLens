@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { apiUrl } from '../config/api';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Mic, ShieldAlert, Cpu, Settings2, Loader2, MessageSquare, Volume2, Zap, AlertCircle, X, ChevronRight } from 'lucide-react';
@@ -114,9 +115,9 @@ export default function Interview() {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const url = topic 
-        ? `http://localhost:5800/api/interview?topic=${encodeURIComponent(topic)}`
-        : "http://localhost:5800/api/interview";
+      const url = topic
+        ? apiUrl(`/api/interview?topic=${encodeURIComponent(topic)}`)
+        : apiUrl("/api/interview");
       
       const res = await fetch(url, {
         headers: { "Authorization": `Bearer ${token}` }
@@ -176,7 +177,7 @@ export default function Interview() {
     
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch("http://localhost:5800/api/interview/evaluate", {
+      const res = await fetch(apiUrl("/api/interview/evaluate"), {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",

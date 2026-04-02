@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { apiUrl } from "../config/api";
 import { motion } from "framer-motion";
 import { Check, Zap, Rocket, CreditCard, ChevronRight, Info } from "lucide-react";
 import { loadStripe } from "@stripe/stripe-js";
@@ -13,7 +14,7 @@ const Pricing = () => {
     const fetchCredits = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await fetch("http://localhost:5800/api/auth/profile", {
+        const res = await fetch(apiUrl("/api/auth/profile"), {
           headers: { Authorization: `Bearer ${token}` }
         });
         const data = await res.json();
@@ -31,7 +32,7 @@ const Pricing = () => {
     setLoading(true);
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:5800/api/payment/checkout", {
+      const res = await fetch(apiUrl("/api/payment/checkout"), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

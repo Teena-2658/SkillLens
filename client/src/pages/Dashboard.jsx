@@ -1,4 +1,5 @@
 import React from "react";
+import { apiUrl } from "../config/api";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
@@ -38,7 +39,7 @@ export default function Dashboard() {
         const token = localStorage.getItem("token");
         const headers = { "Authorization": `Bearer ${token}` };
 
-        const profileRes = await fetch("http://localhost:5800/api/auth/profile", { headers });
+        const profileRes = await fetch(apiUrl("/api/auth/profile"), { headers });
         const profileData = await profileRes.json();
         const user = profileData?.data?.user;
         if (user) setUserData(user);
@@ -46,7 +47,7 @@ export default function Dashboard() {
         const resumeScore = user?.lastResumeScore || 0;
         const rawHistory = user?.readinessHistory || [];
 
-        const compRes = await fetch("http://localhost:5800/api/companies", { headers });
+        const compRes = await fetch(apiUrl("/api/companies"), { headers });
         const compData = await compRes.json();
         let topMatches = [];
         let highestMatch = 0;
@@ -57,11 +58,11 @@ export default function Dashboard() {
           highestMatch = compData.data.bestMatch?.matchPercent || 0;
         }
 
-        const roadRes = await fetch("http://localhost:5800/api/roadmap", { headers });
+        const roadRes = await fetch(apiUrl("/api/roadmap"), { headers });
         const roadData = await roadRes.json();
         const roadmapScore = roadData.data?.completionPercent || 0;
 
-        const profRes = await fetch("http://localhost:5800/api/quiz/profiles", { headers });
+        const profRes = await fetch(apiUrl("/api/quiz/profiles"), { headers });
         const profData = await profRes.json();
         let skillsScore = 0;
         if (profData.data?.profiles && profData.data.profiles.length > 0) {

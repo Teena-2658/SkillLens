@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
+import { apiUrl } from "../config/api";
 import { motion } from "framer-motion";
 import {
   CheckCircle2,
@@ -57,8 +58,8 @@ export default function Quiz() {
         const token = localStorage.getItem("token");
         const headers = { Authorization: `Bearer ${token}` };
         const [skillsRes, profRes] = await Promise.all([
-          fetch("http://localhost:5800/api/quiz/skills", { headers }),
-          fetch("http://localhost:5800/api/quiz/profiles", { headers }),
+          fetch(apiUrl("/api/quiz/skills"), { headers }),
+          fetch(apiUrl("/api/quiz/profiles"), { headers }),
         ]);
         const skillsData = await skillsRes.json();
         const profData = await profRes.json();
@@ -108,7 +109,7 @@ export default function Quiz() {
     setLoading(true);
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:5800/api/quiz/questions", {
+      const res = await fetch(apiUrl("/api/quiz/questions"), {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -145,7 +146,7 @@ export default function Quiz() {
     setSubmitting(true);
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:5800/api/quiz/submit", {
+      const res = await fetch(apiUrl("/api/quiz/submit"), {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,

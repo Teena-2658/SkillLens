@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { apiUrl } from "../config/api";
 import { Link, useSearchParams } from "react-router-dom";
 import { CheckCircle2, ChevronRight, LayoutDashboard, Loader2, Zap } from "lucide-react";
 import { motion } from "framer-motion";
@@ -18,7 +19,7 @@ const Success = () => {
       
       try {
         const token = localStorage.getItem("token");
-        const res = await fetch(`http://localhost:5800/api/payment/verify-session?sessionId=${sessionId}`, {
+        const res = await fetch(apiUrl(`/api/payment/verify-session?sessionId=${sessionId}`), {
           headers: { "Authorization": `Bearer ${token}` }
         });
         const data = await res.json();
