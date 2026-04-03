@@ -197,9 +197,6 @@ export default function Sidebar({ isOpen, onClose }) {
                           }`}
                         />
                         <span className="flex-1 truncate">{item.name}</span>
-                        {item.isNew && !isActive && (
-                          <div className="w-1.5 h-1.5 rounded-full bg-[#009D77]" />
-                        )}
                       </Link>
                     );
                   })}
