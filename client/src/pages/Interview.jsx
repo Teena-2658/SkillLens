@@ -393,13 +393,13 @@ export default function Interview() {
       <main className="w-full max-w-6xl mx-auto flex flex-col gap-4 relative z-10 pt-4">
         
         {/* Header Compact */}
-        <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="flex justify-between items-center bg-white border border-[#E7E7E8] rounded-2xl p-4 shadow-sm shrink-0">
-          <div className="flex items-center gap-4">
-            <h1 className="text-xl font-extrabold text-[#011813] flex items-center gap-2">
-              <Cpu className="w-5 h-5 text-[#009D77]" /> {selectedTopic} Interview
+        <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white border border-[#E7E7E8] rounded-2xl p-4 gap-4 shadow-sm shrink-0">
+          <div className="flex flex-wrap items-center gap-3 md:gap-4">
+            <h1 className="text-base md:text-xl font-extrabold text-[#011813] flex items-center gap-2">
+              <Cpu className="w-4 h-4 md:w-5 h-5 text-[#009D77]" /> <span className="truncate max-w-[120px] md:max-w-none">{selectedTopic} Interview</span>
             </h1>
-            <div className="h-4 w-px bg-[#E7E7E8]" />
-            <div className="flex bg-[#F8F9FA] p-1 rounded-lg border border-[#E7E7E8]">
+            <div className="hidden md:block h-4 w-px bg-[#E7E7E8]" />
+            <div className="flex bg-[#F8F9FA] p-1 rounded-lg border border-[#E7E7E8] scale-90 md:scale-100">
               <button 
                 onClick={() => setMode('audio')}
                 className={`px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider transition-all ${mode === 'audio' ? 'bg-[#009D77] text-white shadow-sm' : 'text-[#475467] hover:text-[#011813]'}`}
@@ -415,33 +415,33 @@ export default function Interview() {
             </div>
             <button 
                 onClick={() => setSelectedTopic(null)}
-                className="text-[10px] font-bold uppercase tracking-wider text-[#EC4899] hover:underline"
+                className="text-[9px] md:text-[10px] font-bold uppercase tracking-wider text-[#EC4899] hover:underline"
               >
                 Change Topic
             </button>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center justify-between w-full md:w-auto gap-4 border-t md:border-none pt-3 md:pt-0">
             <div className="bg-[#E8FAF5] border border-[#009D77]/20 px-3 py-1.5 rounded-full flex items-center gap-2">
                <Zap className="w-3 h-3 text-[#009D77]" />
                <span className="text-[10px] font-black text-[#009D77] uppercase tracking-tighter">-5 Credits</span>
             </div>
-            <p className="text-xs font-semibold text-[#475467] hidden md:block">
-              {hasStarted ? `Question ${currentIdx + 1} of ${questions.length}` : 'Ready to begin evaluation'}
+            <p className="text-[10px] md:text-xs font-semibold text-[#475467]">
+              {hasStarted ? `Q ${currentIdx + 1} / ${questions.length}` : 'Ready to begin'}
             </p>
           </div>
         </motion.div>
 
         {/* Main Content Split */}
-        <div className="flex flex-col lg:flex-row gap-4">
+        <div className="flex flex-col lg:flex-row gap-4 items-stretch">
           
           {/* Left: Robot & Question View */}
           <motion.div 
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
-            className="lg:w-[45%] bg-white border border-[#E7E7E8] rounded-2xl overflow-hidden shadow-sm flex flex-col relative"
+            className="w-full lg:w-[45%] bg-white border border-[#E7E7E8] rounded-2xl overflow-hidden shadow-sm flex flex-col relative"
           >
             {/* Robot Image Container */}
-            <div className="relative flex-1 bg-gray-100 flex items-center justify-center p-6 border-b border-[#E7E7E8] overflow-hidden group">
+            <div className="relative min-h-[280px] md:min-h-[350px] flex-1 bg-gray-100 flex items-center justify-center p-6 border-b border-[#E7E7E8] overflow-hidden group">
               {/* Subtle pulsing background for realism */}
               <div className={`absolute inset-0 bg-[#009D77]/5 transition-opacity duration-700 ${isSpeaking ? 'opacity-100' : 'opacity-0'}`} />
               
@@ -501,7 +501,7 @@ export default function Interview() {
           <motion.div 
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
-            className="lg:w-[55%] flex flex-col gap-4 min-h-[400px]"
+            className="w-full lg:w-[55%] flex flex-col gap-4 min-h-[400px]"
           >
             {mode === 'audio' && hasStarted && (
               <div className="space-y-2 shrink-0">
