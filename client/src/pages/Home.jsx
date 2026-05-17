@@ -21,6 +21,7 @@ export default function Home() {
   const [isAuthenticated, setIsAuthenticated] = useState(
     () => !!localStorage.getItem("token")
   );
+  const [showDemoModal, setShowDemoModal] = useState(false);
 
   useEffect(() => {
     const sync = () => setIsAuthenticated(!!localStorage.getItem("token"));
@@ -55,6 +56,18 @@ export default function Home() {
     document.body.classList.add("skilllens-home-active");
     return () => document.body.classList.remove("skilllens-home-active");
   }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") setShowDemoModal(false);
+    };
+    if (showDemoModal) {
+      window.addEventListener("keydown", handleKeyDown);
+    }
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [showDemoModal]);
 
   return (
     <div className="home-page">
@@ -201,7 +214,11 @@ export default function Home() {
                     />
                   </svg>
                 </button>
-                <button type="button" className="btn btn-secondary">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => setShowDemoModal(true)}
+                >
                   <div className="play-wrap">
                     <svg viewBox="0 0 9 10" fill="none">
                       <path d="M2 1.5l5.5 3.5L2 8.5V1.5z" fill="#fff" />
@@ -745,8 +762,12 @@ export default function Home() {
               <button type="button" className="btn-cta primary">
                 Start Your Evaluation
               </button>
-              <button type="button" className="btn-cta secondary">
-                Watch Demo (Coming Soon)
+              <button
+                type="button"
+                className="btn-cta secondary"
+                onClick={() => setShowDemoModal(true)}
+              >
+                Watch Demo
               </button>
             </div>
             <div className="cta-note">
@@ -827,6 +848,53 @@ export default function Home() {
             </div>
           </div>
         </footer>
+
+        {showDemoModal && (
+          <div 
+            className="demo-modal-overlay"
+            onClick={() => setShowDemoModal(false)}
+          >
+            <div 
+              className="demo-modal-content"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="demo-modal-header">
+                <div className="demo-modal-title">
+                  <div className="demo-modal-title-dot"></div>
+                  SkillLens Platform Walkthrough
+                </div>
+                <button 
+                  type="button" 
+                  className="demo-modal-close"
+                  onClick={() => setShowDemoModal(false)}
+                  title="Close walkthrough"
+                >
+                  <svg 
+                    width="14" 
+                    height="14" 
+                    viewBox="0 0 14 14" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    strokeWidth="2" 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round"
+                  >
+                    <path d="M1 1l12 12M13 1L1 13" />
+                  </svg>
+                </button>
+              </div>
+              <div className="demo-modal-body">
+                <div className="demo-modal-video-wrapper">
+                  <img 
+                    className="demo-modal-video" 
+                    src="/demo.webp" 
+                    alt="SkillLens Product Demo Walkthrough"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

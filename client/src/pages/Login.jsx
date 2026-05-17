@@ -254,6 +254,7 @@ export default function Login() {
                       : "Continue with Google"}
                   </span>
                 </button>
+
               </motion.div>
             )}
           </AnimatePresence>
